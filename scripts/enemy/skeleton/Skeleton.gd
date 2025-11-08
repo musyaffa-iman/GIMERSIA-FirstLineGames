@@ -40,7 +40,7 @@ const REST_DURATION = 2.0   # Rest time after shooting 2 arrows
 const MAX_ARROWS = 2        # Number of arrows per burst
 
 # Arrow scene
-@export var arrow_scene: PackedScene = preload("res://scenes/arrow.tscn")
+@export var arrow_scene: PackedScene = preload("res://Scenes/arrow.tscn")
 
 func _ready():
 	super._ready()
