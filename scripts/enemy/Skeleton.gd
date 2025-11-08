@@ -3,6 +3,8 @@ extends Enemy
 # Shooting parameters
 @export var arrow_speed: float = 300.0
 @export var detection_range: float = 500.0
+# Local stat not present in base Enemy; keep as a local exported helper
+@export var defense: int = 20
 @export var arrow_rotation_offset_degrees: float = 0.0 # Set to -90 if your arrow texture points up
 @export var rotate_to_player: bool = false # If true, rotate the skeleton to face the player
 
@@ -43,6 +45,12 @@ const MAX_ARROWS = 2        # Number of arrows per burst
 @export var arrow_scene: PackedScene = preload("res://scenes/arrow.tscn")
 
 func _ready():
+	# Apply GDD-specified stats (do not modify base_enemy.gd)
+	# Set inherited exported properties at runtime so we don't change base class code.
+	max_health = 18
+	damage = 40 # BASE_VALUE for Skeleton shoot (GDD)
+
+	# Let base class perform its setup (it may rely on the updated max_health)
 	super._ready()
 	current_health = max_health
 	

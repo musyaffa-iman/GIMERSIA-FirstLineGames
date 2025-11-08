@@ -5,8 +5,8 @@ extends Enemy
 @export var telegraph_duration: float = 1.0  # How long the red circle shows before attack
 @export var attack_cooldown: float = 3.0     # Time between attacks
 @export var pillar_radius: float = 16.0      # Size of the attack area (radius in pixels, 32px diameter)
-@export var attack_damage: float = 15.0
-@export var defense: float = 3.0
+@export var attack_damage: float = 55.0 # BASE_VALUE for Dark Pillar (GDD)
+@export var defense: int = 20
 
 # Drag and drop scenes here in the Inspector!
 @export var dark_pillar_scene: PackedScene = null
@@ -21,6 +21,10 @@ var target_position: Vector2 = Vector2.ZERO
 var telegraph_instance: Node2D = null
 
 func _ready():
+	# Apply GDD HP to inherited property before base setup runs
+	max_health = 13
+
+	# Let base class perform its setup (it will initialize health/player lookup)
 	super._ready()
 
 	# Ensure this node is in the common enemy group so other systems find it

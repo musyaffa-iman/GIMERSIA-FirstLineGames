@@ -4,7 +4,8 @@ extends Enemy
 
 @export var detection_range: float = 300.0
 @export var attack_range: float = 36.0
-@export var attack_damage: float = 12.0
+@export var attack_damage: float = 40.0 # BASE_VALUE for Zombie swipe (GDD)
+@export var defense: int = 24
 @export var slash_scene: PackedScene
 @export var attack_cooldown: float = 1.0
 @export var knockback_strength: float = 150.0
@@ -16,6 +17,9 @@ var attack_timer: float = 0.0
 var player_in_hitbox: bool = false
 
 func _ready():
+	# Apply GDD HP to inherited property before base setup runs
+	max_health = 15
+
 	# Use base Enemy setup
 	super._ready()
 	current_health = max_health
