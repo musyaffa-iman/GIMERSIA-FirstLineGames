@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbuu8aicue6gp"]
+
+[ext_resource type="PackedScene" uid="uid://0vq5s3xjx0s1" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://cuxt7cpgawg7m" path="res://scenes/enemy/enemy_1.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://uytgyhf7bac5" path="res://scenes/enemy/boss/fire_boss.tscn" id="3_lnu2h"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Player" parent="." groups=["player"] instance=ExtResource("1_uwrxv")]
+
+[node name="Enemy1" parent="." instance=ExtResource("2_yqjtg")]
+position = Vector2(191, -64)
+
+[node name="Fire Boss" parent="." instance=ExtResource("3_lnu2h")]
+position = Vector2(-304, -135)
