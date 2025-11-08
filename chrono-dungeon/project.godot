@@ -1,0 +1,28 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Chrono Dungeon"
+run/main_scene="uid://dg5aq0ah1ek6v"
+config/features=PackedStringArray("4.5", "Forward Plus")
+config/icon="res://Sprites/icon.svg"
+
+[input]
+
+attack={
+"deadzone": 0.5,
+"events": [{
+"button_index": 1,
+"device": 0,
+"pressed": false,
+"type": "InputEventMouseButton"
+}]
+}
