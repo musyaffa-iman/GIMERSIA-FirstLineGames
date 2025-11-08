@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="StunningStompAbility" load_steps=2 format=3 uid="uid://lxqrpw5exl5j"]
+
+[ext_resource type="Script" uid="uid://d1y1bpbvassht" path="res://scripts/ability/stunning_stomp_ability.gd" id="1_bvpog"]
+
+[resource]
+script = ExtResource("1_bvpog")
+metadata/_custom_type_script = "uid://d1y1bpbvassht"

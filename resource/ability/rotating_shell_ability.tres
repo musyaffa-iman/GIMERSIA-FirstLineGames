@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="RotatingShellAbility" load_steps=2 format=3 uid="uid://b1k5sbnxvdveg"]
+
+[ext_resource type="Script" uid="uid://wf3pvimjcx21" path="res://scripts/ability/rotating_shell_ability.gd" id="1_gabyv"]
+
+[resource]
+script = ExtResource("1_gabyv")
+metadata/_custom_type_script = "uid://wf3pvimjcx21"

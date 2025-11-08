@@ -14,6 +14,9 @@ const KNOCKBACK_FORCE := 300.0
 @export var speed := 200.0
 @export var melee_damage := 30
 @export var melee_knockback_force: float = 1000.0
+@export_group("Abilities")
+@export var abilities: Array[BaseAbility] = []  # Drag & drop abilities in Inspector
+@export var ability_keys := ["ability_1", "ability_2"] # Input names for abilities
 
 signal update_health(current_health, max_health)
 
@@ -47,6 +50,8 @@ func _process(delta):
 	update_timers(delta)
 	check_enemy_collision()
 
+	handle_ability_input()
+
 func handle_input():
 	input = get_movement_input()
 	
@@ -78,13 +83,6 @@ func handle_dash_logic(delta):
 
 func can_dash() -> bool:
 	return not is_dashing and dash_cooldown_timer <= 0.0 and input != Vector2.ZERO and not is_dead
-
-
-func start_dash():
-	is_dashing = true
-	dash_timer = DASH_DURATION
-	dash_cooldown_timer = DASH_COOLDOWN
-	
 
 func handle_movement_and_animation():
 	# Animation logic
@@ -145,3 +143,34 @@ func die():
 func play_animation_if_not_playing(anim_name: String):
 	if animated_sprite.animation != anim_name:
 		animated_sprite.play(anim_name)
+
+#region Abilities
+func handle_ability_input():
+	for i in range(min(ability_keys.size(), abilities.size())):
+		if Input.is_action_just_pressed(ability_keys[i]):
+			var ability = abilities[i]
+			if ability:
+				ability.activate(self)
+
+# Cooldown handling (called by BaseAbility)
+func start_ability_cooldown(ability: BaseAbility, time: float):
+	await get_tree().create_timer(time).timeout
+	ability.is_on_cooldown = false
+
+
+func start_dash(dash_distance: float=0, invincibility_duration: float=0):
+	if can_dash():
+		is_dashing = true
+		dash_timer = DASH_DURATION
+		dash_cooldown_timer = DASH_COOLDOWN
+
+func cleave_attack():
+	# Simple cleave attack: damage all enemies in a radius around the player
+	var cleave_radius = 100.0
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	for enemy in enemies:
+		if global_position.distance_to(enemy.global_position) <= cleave_radius:
+			var direction = (enemy.global_position - global_position).normalized()
+			enemy.take_damage(melee_damage, direction, melee_knockback_force)
+
+#endregion

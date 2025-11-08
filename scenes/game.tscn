@@ -22,9 +22,9 @@ sources/1 = SubResource("TileSetAtlasSource_gee14")
 [node name="Game" type="Node2D"]
 script = ExtResource("1_iywne")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_uwrxv")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="Enemy1" parent="." instance=ExtResource("2_yqjtg")]
 position = Vector2(191, -64)

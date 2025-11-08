@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="VacuumMagicAbility" load_steps=2 format=3 uid="uid://cylwwyopxtsor"]
+
+[ext_resource type="Script" uid="uid://btgssqnxvyvk" path="res://scripts/ability/vacuum_magic_ability.gd" id="1_g32e1"]
+
+[resource]
+script = ExtResource("1_g32e1")
+metadata/_custom_type_script = "uid://btgssqnxvyvk"

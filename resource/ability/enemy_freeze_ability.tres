@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="EnemyFreezeAbility" load_steps=2 format=3 uid="uid://c3ktgxg08flx8"]
+
+[ext_resource type="Script" uid="uid://bye0tonpmqsgp" path="res://scripts/ability/enemy_freeze_ability.gd" id="1_s6h50"]
+
+[resource]
+script = ExtResource("1_s6h50")
+metadata/_custom_type_script = "uid://bye0tonpmqsgp"

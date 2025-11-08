@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="RevolvingFlamesAbility" load_steps=2 format=3 uid="uid://banm3dodxbe82"]
+
+[ext_resource type="Script" uid="uid://biy0d6uatjsjq" path="res://scripts/ability/revolving_flames_ability.gd" id="1_typ13"]
+
+[resource]
+script = ExtResource("1_typ13")
+metadata/_custom_type_script = "uid://biy0d6uatjsjq"

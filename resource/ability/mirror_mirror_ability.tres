@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="MirrorMirrorAbility" load_steps=2 format=3 uid="uid://csf352e20len7"]
+
+[ext_resource type="Script" uid="uid://gm25l0pjr2q0" path="res://scripts/ability/mirror_mirror_ability.gd" id="1_yb8df"]
+
+[resource]
+script = ExtResource("1_yb8df")
+metadata/_custom_type_script = "uid://gm25l0pjr2q0"

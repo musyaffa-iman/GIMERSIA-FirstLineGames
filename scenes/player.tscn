@@ -1,7 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://0vq5s3xjx0s1"]
+[gd_scene load_steps=10 format=3 uid="uid://0vq5s3xjx0s1"]
 
 [ext_resource type="Script" uid="uid://q2ptla7rsxjf" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://crso1hkaafsq7" path="res://scripts/ability/base_ability.gd" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://icon.svg" id="2_qhqgy"]
+[ext_resource type="Script" uid="uid://bd6xaxxqu7mfi" path="res://scripts/ability/dash_ability.gd" id="3_dqkch"]
+[ext_resource type="Script" uid="uid://bye0tonpmqsgp" path="res://scripts/ability/enemy_freeze_ability.gd" id="4_qlg0r"]
+
+[sub_resource type="Resource" id="Resource_qlg0r"]
+script = ExtResource("3_dqkch")
+metadata/_custom_type_script = "uid://bd6xaxxqu7mfi"
+
+[sub_resource type="Resource" id="Resource_tuyoq"]
+script = ExtResource("4_qlg0r")
+metadata/_custom_type_script = "uid://bye0tonpmqsgp"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qm0ti"]
 animations = [{
@@ -28,6 +39,7 @@ size = Vector2(32, 32)
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 2
 script = ExtResource("1_g2els")
+abilities = Array[ExtResource("2_dqkch")]([SubResource("Resource_qlg0r"), SubResource("Resource_tuyoq")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.25, 0.25)

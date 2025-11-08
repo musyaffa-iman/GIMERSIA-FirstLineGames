@@ -57,3 +57,9 @@ func apply_knockback(from_direction: Vector2, force: float) -> void:
 
 func die() -> void:
 	queue_free()
+
+func freeze(duration: float) -> void:
+	# Simple freeze implementation: stop movement for duration
+	set_physics_process(false)
+	await get_tree().create_timer(duration).timeout
+	set_physics_process(true)
