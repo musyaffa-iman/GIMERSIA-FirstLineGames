@@ -6,6 +6,7 @@ extends Enemy
 @export var attack_cooldown: float = 3.0     # Time between attacks
 @export var pillar_radius: float = 16.0      # Size of the attack area (radius in pixels, 32px diameter)
 @export var attack_damage: float = 55.0 # BASE_VALUE for Dark Pillar (GDD)
+@export var atk: int = 55
 @export var defense: int = 20
 
 # Drag and drop scenes here in the Inspector!
@@ -150,6 +151,10 @@ func spawn_dark_pillar():
 		pillar.set_radius(pillar_radius)
 	elif "radius" in pillar:
 		pillar.radius = pillar_radius
+
+	# Propagate owner so pillar can access attacker ATK for final damage calculation
+	if pillar.has_method("set_owner_enemy"):
+		pillar.set_owner_enemy(self)
 	
 	print("Mage: Dark pillar spawned at ", target_position)
 

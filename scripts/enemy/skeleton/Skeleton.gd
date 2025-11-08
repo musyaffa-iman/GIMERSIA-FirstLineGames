@@ -40,7 +40,8 @@ const REST_DURATION = 2.0   # Rest time after shooting 2 arrows
 const MAX_ARROWS = 2        # Number of arrows per burst
 
 # Arrow scene
-@export var arrow_scene: PackedScene = preload("res://Scenes/arrow.tscn")
+@export var arrow_scene: PackedScene = preload("res://scenes/arrow.tscn")
+@export var atk: int = 32
 
 func _ready():
 	super._ready()
@@ -138,7 +139,11 @@ func shoot_arrow():
 	arrow.global_position = global_position + direction * arrow_spawn_distance
 	arrow.rotation = direction.angle() + deg_to_rad(arrow_rotation_offset_degrees)
 	arrow.velocity = direction * arrow_speed
-	arrow.damage = damage
+	# Set projectile base value and attacker ATK so final damage can be calculated on hit
+	if arrow.has_method("set_base_value"):
+		arrow.set_base_value(damage)
+	if arrow.has_method("set_owner_atk"):
+		arrow.set_owner_atk(atk)
 
 	if debug_logs:
 		print("Skeleton: shot arrow at ", player.global_position, " from ", arrow.global_position)

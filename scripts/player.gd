@@ -10,7 +10,7 @@ const KNOCKBACK_FORCE := 300.0
 
 # EXPORTS
 @export_group("Properties")
-@export var max_health: int = 5
+@export var max_health: int = 25
 @export var speed := 200.0
 @export var melee_knockback_force: float = 1000.0
 

@@ -1,3 +1,4 @@
+
 extends Area2D
 
 # Configuration
@@ -8,6 +9,7 @@ extends Area2D
 
 var time_alive: float = 0.0
 var has_dealt_damage: bool = false
+var owner_enemy: Node = null
 
 func _ready():
 	# Set collision layers
@@ -40,6 +42,9 @@ func _physics_process(delta):
 func set_damage(new_damage: float):
 	damage = new_damage
 
+func set_owner_enemy(owner_node: Node) -> void:
+	owner_enemy = owner_node
+
 func set_radius(new_radius: float):
 	radius = new_radius
 	# Update collision shape if present
@@ -52,9 +57,29 @@ func _on_body_entered(body):
 	# Check if it's the player
 	if body.is_in_group("player") and not has_dealt_damage:
 		if body.has_method("take_damage"):
-			body.take_damage(damage)
+			# Compute defender DEF if available. Use GDD player default (25) when target is player
+			var def_val: float = 1.0
+			var maybe = body.get("defense")
+			if maybe != null:
+				def_val = float(maybe)
+			elif body.is_in_group("player"):
+				def_val = 25.0
+
+			# Determine attacker's ATK (null-safe checks)
+			var owner_atk = 1.0
+			if owner_enemy != null:
+				var maybe_atk = owner_enemy.get("atk")
+				if maybe_atk != null:
+					owner_atk = float(maybe_atk)
+				else:
+					var maybe_ad = owner_enemy.get("attack_damage")
+					if maybe_ad != null:
+						owner_atk = float(maybe_ad)
+
+			var final = DamageCalc.calculate_damage(damage, owner_atk, def_val)
+			body.take_damage(final)
 			has_dealt_damage = true
-			print("Dark pillar hit player for ", damage, " damage!")
+			print("Dark pillar hit player for ", final, " damage!")
 
 func _on_area_entered(area):
 	# Check if the area is the player (some games use Area2D for player)
@@ -67,6 +92,25 @@ func _on_area_entered(area):
 				target = target.get_parent()
 		
 		if target.is_in_group("player") and target.has_method("take_damage"):
-			target.take_damage(damage)
+			# Compute defender DEF if available. Use GDD player default (25) when target is player
+			var def_val: float = 1.0
+			var maybe = target.get("defense")
+			if maybe != null:
+				def_val = float(maybe)
+			elif target.is_in_group("player"):
+				def_val = 25.0
+
+			var owner_atk = 1.0
+			if owner_enemy != null:
+				var maybe_atk2 = owner_enemy.get("atk")
+				if maybe_atk2 != null:
+					owner_atk = float(maybe_atk2)
+				else:
+					var maybe_ad2 = owner_enemy.get("attack_damage")
+					if maybe_ad2 != null:
+						owner_atk = float(maybe_ad2)
+
+			var final = DamageCalc.calculate_damage(damage, owner_atk, def_val)
+			target.take_damage(final)
 			has_dealt_damage = true
-			print("Dark pillar hit player (Area2D) for ", damage, " damage!")
+			print("Dark pillar hit player (Area2D) for ", final, " damage!")

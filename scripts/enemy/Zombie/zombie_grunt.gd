@@ -5,6 +5,7 @@ extends Enemy
 @export var detection_range: float = 300.0
 @export var attack_range: float = 36.0
 @export var attack_damage: float = 40.0 # BASE_VALUE for Zombie swipe (GDD)
+@export var atk: int = 40
 @export var defense: int = 24
 @export var slash_scene: PackedScene
 @export var attack_cooldown: float = 1.0
@@ -120,9 +121,17 @@ func perform_attack() -> void:
 	else:
 		# fallback: directly damage the player if no slash scene is set
 		if player.has_method("take_damage"):
-			player.take_damage(attack_damage)
+			var def_val = 1.0
+			var maybe = player.get("defense")
+			if maybe != null:
+				def_val = float(maybe)
+			else:
+				# default GDD value for player
+				def_val = 25.0
+			var final = DamageCalc.calculate_damage(attack_damage, atk, def_val)
+			player.take_damage(final)
 			if debug_logs:
-				print("Zombie: fallback attacked player for", attack_damage)
+				print("Zombie: fallback attacked player for", final)
 	# try knockback on player if they have methods
 	if player.has_method("apply_impulse"):
 		player.apply_impulse(dir * knockback_strength)
