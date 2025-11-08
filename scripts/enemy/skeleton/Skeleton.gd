@@ -26,7 +26,6 @@ var dash_ready: bool = true
 @onready var dash_cooldown_timer: Timer = $DashCooldownTimer
 
 # State machine variables
-var current_health: float
 var can_shoot: bool = true
 var arrows_shot: int = 0
 var is_resting: bool = false
@@ -41,10 +40,6 @@ const MAX_ARROWS = 2        # Number of arrows per burst
 
 # Arrow scene
 @export var arrow_scene: PackedScene = preload("res://Scenes/arrow.tscn")
-
-func _ready():
-	super._ready()
-	current_health = max_health
 	
 func enemy_behavior(delta: float) -> void:
 	# Check if player is in range

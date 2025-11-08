@@ -2,16 +2,17 @@ extends CharacterBody2D
 
 # CONSTANTS
 const ACCELERATION = 10.0
-const DASH_SPEED := 500.0
+const DASH_SPEED := 700.0
 const DASH_DURATION := 0.2
 const DASH_COOLDOWN := 1.2
-const MELEE_DAMAGE := 1
+
 const KNOCKBACK_FORCE := 300.0
 
 # EXPORTS
 @export_group("Properties")
-@export var max_health: int = 5
+@export var max_health: int = 100
 @export var speed := 200.0
+@export var melee_damage := 30
 @export var melee_knockback_force: float = 1000.0
 
 signal update_health(current_health, max_health)
@@ -115,7 +116,7 @@ func check_enemy_collision():
 		if collider and collider.is_in_group("enemy"):
 			if collider.has_method("take_damage"):
 				var direction = (collider.global_position - global_position).normalized()
-				collider.take_damage(MELEE_DAMAGE, direction, melee_knockback_force)
+				collider.take_damage(melee_damage, direction, melee_knockback_force)
 				velocity = -direction * (melee_knockback_force)
 
 func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = KNOCKBACK_FORCE):

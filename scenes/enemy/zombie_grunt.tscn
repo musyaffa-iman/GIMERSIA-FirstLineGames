@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://cn1e62ecs0moa"]
+
+[ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://scenes/enemy/base_enemy.tscn" id="1_o2hik"]
+[ext_resource type="Script" uid="uid://bo3h24dhm0ra0" path="res://scripts/enemy/Zombie/zombie_grunt.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://5oihy2etq5fr" path="res://scenes/slash.tscn" id="3_r8q23"]
+
+[node name="zombie_grunt" instance=ExtResource("1_o2hik")]
+script = ExtResource("1_script")
+slash_scene = ExtResource("3_r8q23")
+
+[node name="AttackTimer" type="Timer" parent="." index="2"]
+one_shot = true
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

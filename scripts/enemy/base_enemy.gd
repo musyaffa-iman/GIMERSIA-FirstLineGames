@@ -2,7 +2,7 @@
 extends CharacterBody2D
 class_name Enemy
 
-@export var max_health: int = 3
+@export var max_health: int = 100
 @export var move_speed: float = 80.0
 @export var damage: int = 1
 @export var knockback_resistance: float = 0.5  # 0 = full knockback, 1 = no knockback
@@ -43,10 +43,10 @@ func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_
 	if invulnerable:
 		return
 
-	max_health -= amount
-	#print("Enemy ", self.name, " took ", amount, " damage! Current max_health: ", max_health)
+	health -= amount
+	#print("Enemy ", self.name, " took ", amount, " damage! Current health: ", health)
 	apply_knockback(from_direction, knockback_force)
-	if max_health <= 0:
+	if health <= 0:
 		die()
 
 	invulnerable = true
