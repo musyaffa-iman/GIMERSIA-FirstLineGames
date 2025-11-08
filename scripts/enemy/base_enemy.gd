@@ -9,7 +9,7 @@ class_name Enemy
 
 @onready var player: Node2D = null
 var knockback_velocity: Vector2 = Vector2.ZERO
-var knockback_decay: float = 100.0  # how quickly knockback fades
+var knockback_decay: float = 1000.0  # how quickly knockback fades
 var invulnerable: bool = false
 var invulnerability_time: float = 0.5
 var invulnerability_timer: float = 0.0
@@ -44,7 +44,7 @@ func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_
 		return
 
 	max_health -= amount
-	print("Enemy ", self.name, " took ", amount, " damage! Current max_health: ", max_health)
+	#print("Enemy ", self.name, " took ", amount, " damage! Current max_health: ", max_health)
 	apply_knockback(from_direction, knockback_force)
 	if max_health <= 0:
 		die()

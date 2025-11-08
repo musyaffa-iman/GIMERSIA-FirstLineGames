@@ -10,9 +10,9 @@ const KNOCKBACK_FORCE := 300.0
 
 # EXPORTS
 @export_group("Properties")
-@export var max_health: int = 100
+@export var max_health: int = 5
 @export var speed := 200.0
-@export var melee_knockback_force: float = 400.0
+@export var melee_knockback_force: float = 1000.0
 
 signal update_health(current_health, max_health)
 
@@ -115,8 +115,31 @@ func check_enemy_collision():
 		if collider and collider.is_in_group("enemy"):
 			if collider.has_method("take_damage"):
 				var direction = (collider.global_position - global_position).normalized()
-				collider.take_damage(MELEE_DAMAGE, direction, KNOCKBACK_FORCE)
-				velocity = -direction * (KNOCKBACK_FORCE)
+				collider.take_damage(MELEE_DAMAGE, direction, melee_knockback_force)
+				velocity = -direction * (melee_knockback_force)
+
+func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = KNOCKBACK_FORCE):
+	if not can_take_damage or is_dead:
+		return
+
+	print("Player took ", amount, " damage!, Current health: ", current_health - amount)
+	current_health -= amount
+	emit_signal("update_health", current_health, max_health)
+
+	if current_health <= 0:
+		die()
+		return
+
+	#is_hurt = true
+	#can_take_damage = false
+	#velocity = from_direction.normalized() * knockback_force
+
+func die():
+	is_dead = true
+	velocity = Vector2.ZERO
+	print("Player has died.")
+	queue_free()
+	#play_animation_if_not_playing("death")
 
 func play_animation_if_not_playing(anim_name: String):
 	if animated_sprite.animation != anim_name:
