@@ -61,7 +61,9 @@ func enemy_behavior(delta: float) -> void:
 		if distance_to_player > preferred_range_max:
 			move_dir = dir_to_player # approach
 		elif distance_to_player < preferred_range_min:
-			move_dir = -dir_to_player # back off
+			# Do not automatically back away when the player approaches.
+			# Leave movement zero so only the dash mechanic will push the skeleton back.
+			move_dir = Vector2.ZERO
 		else:
 			move_dir = Vector2.ZERO
 
@@ -75,7 +77,7 @@ func enemy_behavior(delta: float) -> void:
 
 	move_and_slide()
 
-func dash_behavior(delta: float) -> void:
+func dash_behavior(_delta: float) -> void:
 	var distance_to_player = global_position.distance_to(player.global_position)
 	if not is_dashing and dash_ready and distance_to_player < preferred_range_min:
 		# start dash away from player: configure and start timers instead of assigning floats
@@ -108,7 +110,7 @@ func dash_behavior(delta: float) -> void:
 			print("Skeleton: dashing away")
 		return
 
-func shoot_behavior(delta: float) -> void:
+func shoot_behavior(_delta: float) -> void:
 	# Handle shooting state machine
 	if not is_resting:
 		if can_shoot and arrows_shot < MAX_ARROWS:

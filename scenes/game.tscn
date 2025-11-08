@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbuu8aicue6gp"]
+[gd_scene load_steps=10 format=3 uid="uid://cbuu8aicue6gp"]
 
 [ext_resource type="Script" uid="uid://ct067bs7jk6md" path="res://scripts/game.gd" id="1_iywne"]
-[ext_resource type="PackedScene" uid="uid://0vq5s3xjx0s1" path="res://scenes/player.tscn" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://cuxt7cpgawg7m" path="res://scenes/enemy/enemy_1.tscn" id="2_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://uytgyhf7bac5" path="res://scenes/enemy/boss/fire_boss.tscn" id="3_lnu2h"]
-[ext_resource type="PackedScene" uid="uid://ck8ofg0rug4mn" path="res://scenes/enemy/skeleton_enemy.tscn" id="4_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://0vq5s3xjx0s1" path="res://Scenes/Player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://cuxt7cpgawg7m" path="res://Scenes/enemy/enemy_1.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://uytgyhf7bac5" path="res://Scenes/enemy/boss/fire_boss.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://ck8ofg0rug4mn" path="res://Scenes/enemy/skeleton_enemy.tscn" id="4_lbhrr"]
 [ext_resource type="Script" uid="uid://kfoapq5wkcbc" path="res://scripts/UI/game_ui.gd" id="6_p57ef"]
-[ext_resource type="PackedScene" uid="uid://c2bui6vmvmws1" path="res://scenes/Dialog.tscn" id="7_u5sy4"]
-[ext_resource type="PackedScene" uid="uid://rr7pg7tuecyn" path="res://scenes/zombie_grunt.tscn" id="8_ll5lq"]
+[ext_resource type="PackedScene" uid="uid://c2bui6vmvmws1" path="res://Scenes/Dialog.tscn" id="7_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://rr7pg7tuecyn" path="res://Scenes/enemy/zombie_grunt.tscn" id="8_ll5lq"]
+[ext_resource type="PackedScene" uid="uid://bhpim45w0sgya" path="res://Scenes/enemy/mage.tscn" id="9_h4fw4"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_iywne")
@@ -42,3 +43,6 @@ offset_bottom = 262.0
 
 [node name="zombie_grunt" parent="." instance=ExtResource("8_ll5lq")]
 position = Vector2(-381, 204)
+
+[node name="Mage" parent="." instance=ExtResource("9_h4fw4")]
+position = Vector2(-148, -15)

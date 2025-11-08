@@ -9,21 +9,22 @@ size = Vector2(90, 90)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_504w7"]
 size = Vector2(128, 129)
 
-[node name="zombie_grunt" type="CharacterBody2D"]
-scale = Vector2(0.25, 0.25)
+[node name="zombie_grunt" type="CharacterBody2D" groups=["enemy"]]
 script = ExtResource("1_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.20392157, 1, 0, 1)
-scale = Vector2(0.9, 0.9)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_tex")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
+scale = Vector2(0.125, 0.125)
 shape = SubResource("rect")
 
 [node name="hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 position = Vector2(0, -0.5)
+scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_504w7")

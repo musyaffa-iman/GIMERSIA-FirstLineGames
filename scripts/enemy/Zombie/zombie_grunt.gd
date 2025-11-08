@@ -4,7 +4,7 @@ extends Enemy
 
 @export var detection_range: float = 300.0
 @export var attack_range: float = 36.0
-@export var attack_damage: float = 12.0
+@export var attack_damage: float = 3.0
 @export var slash_scene: PackedScene
 @export var attack_cooldown: float = 1.0
 @export var knockback_strength: float = 150.0
@@ -16,14 +16,15 @@ var attack_timer: float = 0.0
 var player_in_hitbox: bool = false
 
 func _ready():
-	# Use base Enemy setup
+	# Let base Enemy do common setup (find player, initialize health)
 	super._ready()
+	# local mirror for previous code expectations
 	current_health = max_health
-	# Ensure this node is discoverable as an enemy
+	# Ensure this node is in the common enemy group so other systems find it
 	add_to_group("enemy")
 	# try to lazily load the slash scene at runtime to avoid preload errors
 	if not slash_scene:
-		var candidate = load("res://scenes/slash.tscn")
+		var candidate = load("res://Scenes/slash.tscn")
 		if candidate and candidate is PackedScene:
 			slash_scene = candidate
 			if debug_logs:
@@ -42,16 +43,17 @@ func _ready():
 			if not hb.is_connected("body_exited", Callable(self, "_on_hitbox_body_exited")):
 				hb.connect("body_exited", Callable(self, "_on_hitbox_body_exited"))
 
-	# Hook area_entered if the hitbox also receives Area2D overlaps (player projectiles)
-	if has_node("hitbox"):
-		var hit = $hitbox
+	# Also connect area_entered for hit detection from player projectiles/areas if present
+	if has_node("Hitbox"):
+		var hit = $Hitbox
 		if hit and hit is Area2D and hit.has_signal("area_entered"):
 			if not hit.is_connected("area_entered", Callable(self, "_on_hitbox_area_entered")):
 				hit.connect("area_entered", Callable(self, "_on_hitbox_area_entered"))
 
-# player lookup handled by base Enemy
+# player lookup is handled by Enemy base class
 
 func enemy_behavior(delta: float) -> void:
+	# Called from Enemy._physics_process once a player is found
 	if debug_logs:
 		print("Zombie: enemy_behavior tick; player valid?", player and is_instance_valid(player))
 
@@ -63,13 +65,17 @@ func enemy_behavior(delta: float) -> void:
 	var dist = to_player.length()
 
 	if dist <= detection_range:
+		# chase when outside attack range
 		if dist > attack_range:
 			var dir = to_player.normalized()
+			# set velocity; base will apply knockback and call move_and_slide()
 			velocity = dir * move_speed
 			if debug_logs:
 				print("Zombie: chasing player; dist=", dist, "dir=", dir)
 		else:
 			velocity = Vector2.ZERO
+			# attack when cooldown ready
+			# allow a small buffer so collision prevents being stopped just outside range
 			if dist <= attack_range or dist <= attack_range + attack_buffer:
 				if debug_logs:
 					print("Zombie: in attack range (dist=", dist, ") — attacking")
@@ -77,6 +83,7 @@ func enemy_behavior(delta: float) -> void:
 					perform_attack()
 					attack_timer = attack_cooldown
 	else:
+		# idle
 		velocity = Vector2.ZERO
 
 func perform_attack() -> void:
@@ -138,27 +145,36 @@ func _on_hitbox_body_exited(body: Node) -> void:
 			print("Zombie: player exited hitbox")
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
+	# Handle overlaps from player projectiles or other damaging Areas
 	if not area:
 		return
+	# Only respond to player attack areas/groups
 	if not area.is_in_group("player_attack"):
 		return
+	# Try to read damage value from the area, fallback to attack_damage
 	var dmg = attack_damage
 	var maybe = area.get("damage")
 	if maybe != null:
 		dmg = maybe
+	# Determine knockback direction: prefer projectile velocity if available
 	var from_dir = Vector2.ZERO
 	var vel = area.get("velocity")
 	if vel != null and vel is Vector2 and vel.length() > 0.0:
 		from_dir = vel.normalized()
 	else:
-		if is_instance_valid(area) and area.has_method("get_global_position"):
+		# fallback: direction from attacker to this enemy
+		if area.has_method("global_position"):
 			from_dir = (global_position - area.global_position).normalized()
 		else:
 			from_dir = (global_position - area.get_global_position()).normalized()
+	# Apply damage and knockback via base Enemy API
+	# Use this node's knockback_strength as default force
 	take_damage(dmg, from_dir, knockback_strength)
 
 func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = 300.0) -> void:
+	# Delegate core damage/knockback/invulnerability handling to base Enemy
 	super.take_damage(amount, from_direction, knockback_force)
+	# local visual feedback
 	modulate = Color(1, 0.6, 0.6)
 	await get_tree().create_timer(0.08).timeout
 	modulate = Color(1, 1, 1)
