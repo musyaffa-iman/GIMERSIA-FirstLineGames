@@ -2,8 +2,8 @@
 extends CharacterBody2D
 class_name Enemy
 
-@export var health: int = 3
-@export var speed: float = 80.0
+@export var max_health: int = 3
+@export var move_speed: float = 80.0
 @export var damage: int = 1
 @export var knockback_resistance: float = 0.5  # 0 = full knockback, 1 = no knockback
 
@@ -13,13 +13,15 @@ var knockback_decay: float = 100.0  # how quickly knockback fades
 var invulnerable: bool = false
 var invulnerability_time: float = 0.5
 var invulnerability_timer: float = 0.0
+var health: int = 0
 
 func _ready() -> void:
+	health = max_health
 	player = get_tree().get_first_node_in_group("player")
 
 func _physics_process(delta: float) -> void:
 	if player:
-		move_behavior(delta)
+		enemy_behavior(delta)
 	
 	# Handle invulnerability timer
 	if invulnerable:
@@ -35,16 +37,16 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 @abstract
-func move_behavior(delta: float) -> void
+func enemy_behavior(delta: float) -> void
 
 func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = 300.0) -> void:
 	if invulnerable:
 		return
 
-	health -= amount
-	print("Enemy ", self.name, " took ", amount, " damage! Current health: ", health)
+	max_health -= amount
+	print("Enemy ", self.name, " took ", amount, " damage! Current max_health: ", max_health)
 	apply_knockback(from_direction, knockback_force)
-	if health <= 0:
+	if max_health <= 0:
 		die()
 
 	invulnerable = true

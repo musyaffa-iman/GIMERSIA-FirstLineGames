@@ -2,7 +2,6 @@
 extends Enemy
 class_name BossBase
 
-@export var max_health: int = 10
 @export var phase_two_threshold: int = 25
 @export var attack_cooldown: float = 2.0
 var phase_two: bool = false
@@ -10,13 +9,12 @@ var attack_timer: float = 0.0
 
 func _ready() -> void:
 	super()
-	health = max_health
 	attack_timer = attack_cooldown
 	print("Boss spawned:", name)
 
 func _physics_process(delta: float) -> void:
 	if player:
-		move_behavior(delta)
+		enemy_behavior(delta)
 		attack_timer -= delta
 		if attack_timer <= 0:
 			perform_attack()

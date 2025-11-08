@@ -1,7 +1,11 @@
 extends Area2D
 
 var velocity: Vector2 = Vector2.ZERO
-var damage: float = 10.0
+var damage: float = 10.0:
+	get:
+		return damage
+	set(value):
+		damage = value
 var lifetime: float = 5.0  # Arrow disappears after 5 seconds
 
 func _ready():

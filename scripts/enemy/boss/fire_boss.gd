@@ -3,9 +3,9 @@ extends BossBase
 @export var fireball_scene: PackedScene
 @export var shoot_speed: float = 350.0
 
-func move_behavior(delta: float) -> void:
+func enemy_behavior(delta: float) -> void:
 	var direction = (player.global_position - global_position).normalized()
-	velocity = direction * speed
+	velocity = direction * move_speed
 
 func perform_attack():
 	if not fireball_scene:
@@ -18,6 +18,6 @@ func perform_attack():
 
 func enter_phase_two():
 	super()
-	speed *= 1.4
+	move_speed *= 1.4
 	attack_cooldown *= 0.7
 	print("FireBoss enraged!")
