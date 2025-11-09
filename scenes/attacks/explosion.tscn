@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cokr3vm1wuolw"]
+
+[ext_resource type="Script" uid="uid://i5j3bwehismo" path="res://scripts/enemy/skeleton/arrow_projectile.gd" id="1_h1vnk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8qitf"]
+radius = 60.0
+
+[node name="explosion" type="Area2D"]
+script = ExtResource("1_h1vnk")
+
+[node name="explosionParticle" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 50
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8qitf")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+autostart = true

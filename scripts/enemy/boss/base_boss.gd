@@ -2,9 +2,11 @@
 extends Enemy
 class_name BossBase
 
-@export var phase_two_threshold: int = 25
+@export var phase_two_threshold: int = 50
+@export var phase_three_threshold: int = 25
 @export var attack_cooldown: float = 2.0
 var phase_two: bool = false
+var phase_three: bool = false
 var attack_timer: float = 0.0
 
 func _ready() -> void:
@@ -25,6 +27,9 @@ func _physics_process(delta: float) -> void:
 
 	if not phase_two and health <= phase_two_threshold:
 		enter_phase_two()
+	
+	if not phase_three and health <= phase_three_threshold:
+		enter_phase_three()
 
 @abstract
 func perform_attack()
@@ -32,6 +37,9 @@ func perform_attack()
 func enter_phase_two():
 	phase_two = true
 	print(name, "entered PHASE TWO!")
+
+@abstract
+func enter_phase_three()
 
 func die():
 	print("Boss defeated!")

@@ -30,7 +30,7 @@ func _ready():
 	add_to_group("enemy")
 	# try to lazily load the slash scene at runtime to avoid preload errors
 	if not slash_scene:
-		var candidate = load("res://Scenes/slash.tscn")
+		var candidate = load("res://Scenes/attacks/slash.tscn")
 		if candidate and candidate is PackedScene:
 			slash_scene = candidate
 			if debug_logs:

@@ -5,7 +5,6 @@ extends Enemy
 @export var telegraph_duration: float = 1.0  # How long the red circle shows before attack
 @export var attack_cooldown: float = 3.0     # Time between attacks
 @export var pillar_radius: float = 16.0      # Size of the attack area (radius in pixels, 32px diameter)
-@export var attack_damage: float = 55.0 # BASE_VALUE for Dark Pillar (GDD)
 @export var atk: int = 55
 @export var defense: int = 20
 
@@ -24,6 +23,7 @@ var telegraph_instance: Node2D = null
 func _ready():
 	# Apply GDD HP to inherited property before base setup runs
 	max_health = 13
+	damage = 55  # GDD: BASE_VALUE for Dark Pillar
 
 	# Let base class perform its setup (it will initialize health/player lookup)
 	super._ready()
@@ -41,29 +41,22 @@ func _ready():
 
 	# If scenes weren't set in the Inspector, try lazy-loading common defaults so the mage works out-of-the-box.
 	if not dark_pillar_scene:
-		var _p = load("res://Scenes/pillar.tscn")
+		var _p = load("res://Scenes/attacks/pillar.tscn")
 		if _p and _p is PackedScene:
 			dark_pillar_scene = _p
 			print("Mage: lazily loaded dark_pillar_scene from res://Scenes/pillar.tscn")
-		else:
-			# Try alternate path used elsewhere in repo
-			_p = load("res://Scenes/enemy/pillar.tscn")
-			if _p and _p is PackedScene:
-				dark_pillar_scene = _p
-				print("Mage: lazily loaded dark_pillar_scene from res://Scenes/enemy/pillar.tscn")
 
 	if not telegraph_circle_scene:
-		var _c = load("res://Scenes/circle.tscn")
+		var _c = load("res://Scenes/attacks/circle.tscn")
 		if _c and _c is PackedScene:
 			telegraph_circle_scene = _c
 			print("Mage: lazily loaded telegraph_circle_scene from res://Scenes/circle.tscn")
-		else:
-			_c = load("res://Scenes/enemy/circle.tscn")
-			if _c and _c is PackedScene:
-				telegraph_circle_scene = _c
-				print("Mage: lazily loaded telegraph_circle_scene from res://Scenes/enemy/circle.tscn")
 
 func enemy_behavior(delta: float) -> void:
+	# QUICK FIX: Mage doesn't move, so reset velocity each frame
+	# This prevents knockback from accumulating infinitely
+	velocity = Vector2.ZERO
+	
 	# Debug: check if player exists
 	if not player:
 		print("Mage: No player found!")
@@ -142,9 +135,9 @@ func spawn_dark_pillar():
 	
 	# Set pillar damage if it has the property
 	if pillar.has_method("set_damage"):
-		pillar.set_damage(attack_damage)
+		pillar.set_damage(damage)
 	elif "damage" in pillar:
-		pillar.damage = attack_damage
+		pillar.damage = damage
 	
 	# Set pillar radius if it has the property
 	if pillar.has_method("set_radius"):
@@ -185,18 +178,16 @@ func _on_hitbox_area_entered(area):
 		if typeof(maybe) != TYPE_NIL:
 			dmg = int(maybe)
 
-	# Compute a reasonable knockback direction. Prefer explicit velocity from the attack.
+	# Always compute knockback direction AWAY from the attack source
+	# This ensures consistent knockback regardless of attack velocity
 	var from_dir = Vector2.ZERO
-	if area.has_method("get_velocity"):
-		from_dir = area.get_velocity()
-	elif "velocity" in area:
-		from_dir = area.velocity
-	elif area.has_method("get_linear_velocity"):
-		from_dir = area.get_linear_velocity()
-	else:
-		# Fallback: push away from the attack's position
-		if is_instance_valid(area) and area.global_position:
-			from_dir = (global_position - area.global_position)
+	if is_instance_valid(area):
+		from_dir = (global_position - area.global_position).normalized()
+		if from_dir == Vector2.ZERO:
+			# If positions are identical (shouldn't happen), default to moving right
+			from_dir = Vector2.RIGHT
+	
+	print("Mage: Hit by attack. from_dir=", from_dir, " area.global_pos=", area.global_position, " mage.global_pos=", global_position)
 
 	# Call take_damage with direction so base Enemy can apply knockback
 	take_damage(dmg, from_dir)
