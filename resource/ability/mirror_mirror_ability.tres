@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_yb8df")
+ability_name = "Mirror Mirror"
 metadata/_custom_type_script = "uid://gm25l0pjr2q0"

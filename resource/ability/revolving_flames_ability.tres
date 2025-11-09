@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_typ13")
+ability_name = "Revolving Flames"
 metadata/_custom_type_script = "uid://biy0d6uatjsjq"

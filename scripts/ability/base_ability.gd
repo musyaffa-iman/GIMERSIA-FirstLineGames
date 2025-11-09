@@ -9,6 +9,7 @@ var is_on_cooldown := false
 func activate(player):
 	if is_on_cooldown:
 		return
+	print("Activating ability: ", ability_name)
 	_execute(player)
 	_start_cooldown(player)
 

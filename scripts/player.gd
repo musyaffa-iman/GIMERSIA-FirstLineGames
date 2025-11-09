@@ -35,6 +35,7 @@ var dash_cooldown_timer := 0.0
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var input : Vector2
+var facing_direction : Vector2 = Vector2.RIGHT
 
 func _ready():
 	current_health = max_health
@@ -54,6 +55,7 @@ func _process(delta):
 
 func handle_input():
 	input = get_movement_input()
+	facing_direction = input if input != Vector2.ZERO else facing_direction
 	
 	# Handle orientation
 	if input.x > 0:
@@ -172,5 +174,48 @@ func cleave_attack():
 		if global_position.distance_to(enemy.global_position) <= cleave_radius:
 			var direction = (enemy.global_position - global_position).normalized()
 			enemy.take_damage(melee_damage, direction, melee_knockback_force)
+
+func spawn_mirror_clone(duration: float=5.0):
+	var clone = self.duplicate()
+	clone.set_name("MirrorClone")
+	clone.set_position(global_position + Vector2(50, 0))
+	clone.set_rotation(rotation)
+	get_tree().get_root().add_child(clone)
+	clone.start_lifetime_timer(duration)
+
+func start_lifetime_timer(duration: float):
+	await get_tree().create_timer(duration).timeout
+	queue_free()
+
+func add_area_damage(radius: float, damage: int):
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	for enemy in enemies:
+		if global_position.distance_to(enemy.global_position) <= radius:
+			enemy.take_damage(damage, (enemy.global_position - global_position).normalized(), melee_knockback_force)
+
+func spawn_rotating_shell(duration: float, shell_scene: PackedScene):
+	var shell = shell_scene.instantiate()
+	add_child(shell)
+	shell.owner = self
+	shell.start_lifetime_timer(duration)
+
+func create_stomp_effect(radius: float, damage_multiplier: float= 1.0):
+	var duration = 0.75
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	for enemy in enemies:
+		if global_position.distance_to(enemy.global_position) <= radius:
+			enemy.take_damage(int(melee_damage * damage_multiplier), (enemy.global_position - global_position).normalized(), melee_knockback_force)
+
+func spawn_vacuum_field(duration: float, distance: float, vacuum_field_scene: PackedScene):
+	var vacuum_field = vacuum_field_scene.instantiate()
+	add_child(vacuum_field)
+	vacuum_field.start_lifetime_timer(duration)
+	throw_vacuum_field(vacuum_field, distance)
+
+func throw_vacuum_field(vacuum_field: VacuumField, distance: float):
+	var direction = facing_direction.normalized()
+	var target_position = global_position + direction * distance
+	vacuum_field.global_position = target_position
+
 
 #endregion

@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_ppp44")
+ability_name = "Dash"
 metadata/_custom_type_script = "uid://bd6xaxxqu7mfi"
