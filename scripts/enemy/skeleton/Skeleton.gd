@@ -3,6 +3,8 @@ extends Enemy
 # Shooting parameters
 @export var arrow_speed: float = 300.0
 @export var detection_range: float = 500.0
+# Local stat not present in base Enemy; keep as a local exported helper
+@export var defense: int = 20
 @export var arrow_rotation_offset_degrees: float = 0.0 # Set to -90 if your arrow texture points up
 @export var rotate_to_player: bool = false # If true, rotate the skeleton to face the player
 
@@ -39,11 +41,17 @@ const SHOOT_INTERVAL = 0.2  # Time between arrows
 const REST_DURATION = 2.0   # Rest time after shooting 2 arrows
 const MAX_ARROWS = 2        # Number of arrows per burst
 
+@export var atk: int = 32
 # Arrow scene
 @export var arrow_scene: PackedScene = preload("res://scenes/arrow.tscn")
-@export var atk: int = 32
 
 func _ready():
+	# Apply GDD-specified stats (do not modify base_enemy.gd)
+	# Set inherited exported properties at runtime so we don't change base class code.
+	max_health = 18
+	damage = 40 # BASE_VALUE for Skeleton shoot (GDD)
+
+	# Let base class perform its setup (it may rely on the updated max_health)
 	super._ready()
 	current_health = max_health
 	
@@ -62,7 +70,9 @@ func enemy_behavior(delta: float) -> void:
 		if distance_to_player > preferred_range_max:
 			move_dir = dir_to_player # approach
 		elif distance_to_player < preferred_range_min:
-			move_dir = -dir_to_player # back off
+			# Do not automatically back away when the player approaches.
+			# Leave movement zero so only the dash mechanic will push the skeleton back.
+			move_dir = Vector2.ZERO
 		else:
 			move_dir = Vector2.ZERO
 
@@ -76,7 +86,7 @@ func enemy_behavior(delta: float) -> void:
 
 	move_and_slide()
 
-func dash_behavior(delta: float) -> void:
+func dash_behavior(_delta: float) -> void:
 	var distance_to_player = global_position.distance_to(player.global_position)
 	if not is_dashing and dash_ready and distance_to_player < preferred_range_min:
 		# start dash away from player: configure and start timers instead of assigning floats
@@ -109,7 +119,7 @@ func dash_behavior(delta: float) -> void:
 			print("Skeleton: dashing away")
 		return
 
-func shoot_behavior(delta: float) -> void:
+func shoot_behavior(_delta: float) -> void:
 	# Handle shooting state machine
 	if not is_resting:
 		if can_shoot and arrows_shot < MAX_ARROWS:
@@ -139,9 +149,13 @@ func shoot_arrow():
 	arrow.global_position = global_position + direction * arrow_spawn_distance
 	arrow.rotation = direction.angle() + deg_to_rad(arrow_rotation_offset_degrees)
 	arrow.velocity = direction * arrow_speed
-	# Set projectile base value and attacker ATK so final damage can be calculated on hit
+	# Prefer the projectile's setter API so we can pass base_value and owner ATK
 	if arrow.has_method("set_base_value"):
 		arrow.set_base_value(damage)
+	else:
+		# fallback for older arrow implementations
+		if "damage" in arrow:
+			arrow.damage = damage
 	if arrow.has_method("set_owner_atk"):
 		arrow.set_owner_atk(atk)
 

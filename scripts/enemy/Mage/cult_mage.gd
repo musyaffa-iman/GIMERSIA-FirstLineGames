@@ -159,18 +159,15 @@ func spawn_dark_pillar():
 	print("Mage: Dark pillar spawned at ", target_position)
 
 func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = 300.0) -> void:
-	# Apply defense reduction
-	var actual_damage = max(amount - int(defense), 0)
-	
 	# Visual feedback
 	modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
 	modulate = Color.WHITE
 	
-	# Delegate to base Enemy
-	super.take_damage(actual_damage, from_direction, knockback_force)
+	# Delegate to base Enemy (damage already computed by attacker using DamageCalc)
+	super.take_damage(amount, from_direction, knockback_force)
 	
-	print("Mage took ", actual_damage, " damage. HP: ", health)
+	print("Mage took ", amount, " damage. HP: ", health)
 
 func _on_hitbox_area_entered(area):
 	# Handle collision with player attack

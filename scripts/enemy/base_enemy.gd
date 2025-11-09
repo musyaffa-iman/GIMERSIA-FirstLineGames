@@ -43,10 +43,10 @@ func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_
 	if invulnerable:
 		return
 
-	max_health -= amount
-	#print("Enemy ", self.name, " took ", amount, " damage! Current max_health: ", max_health)
+	health -= amount
+	#print("Enemy ", self.name, " took ", amount, " damage! Current health: ", health)
 	apply_knockback(from_direction, knockback_force)
-	if max_health <= 0:
+	if health <= 0:
 		die()
 
 	invulnerable = true

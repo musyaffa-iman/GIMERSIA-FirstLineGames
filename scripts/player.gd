@@ -5,12 +5,14 @@ const ACCELERATION = 10.0
 const DASH_SPEED := 500.0
 const DASH_DURATION := 0.2
 const DASH_COOLDOWN := 1.2
-const MELEE_DAMAGE := 1
+const MELEE_BASE_VALUE := 40.0  # BASE_VALUE for player melee (for DamageCalc formula)
 const KNOCKBACK_FORCE := 300.0
 
 # EXPORTS
 @export_group("Properties")
-@export var max_health: int = 25
+@export var max_health: int = 1000 # for testing
+@export var atk: int = 35
+@export var defense: int = 25
 @export var speed := 200.0
 @export var melee_knockback_force: float = 1000.0
 
@@ -115,7 +117,15 @@ func check_enemy_collision():
 		if collider and collider.is_in_group("enemy"):
 			if collider.has_method("take_damage"):
 				var direction = (collider.global_position - global_position).normalized()
-				collider.take_damage(MELEE_DAMAGE, direction, melee_knockback_force)
+				
+				# Calculate damage using GDD formula: DMG = (6 * BASE_VALUE * (a.atk / b.def) * 0.02 + 2)
+				var enemy_def = 1.0
+				var maybe_def = collider.get("defense")
+				if maybe_def != null:
+					enemy_def = float(maybe_def)
+				
+				var final_damage = DamageCalc.calculate_damage(MELEE_BASE_VALUE, float(atk), enemy_def)
+				collider.take_damage(final_damage, direction, melee_knockback_force)
 				velocity = -direction * (melee_knockback_force)
 
 func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = KNOCKBACK_FORCE):

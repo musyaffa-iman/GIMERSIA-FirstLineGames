@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ck8ofg0rug4mn" path="res://Scenes/enemy/skeleton_enemy.tscn" id="4_lbhrr"]
 [ext_resource type="Script" uid="uid://kfoapq5wkcbc" path="res://scripts/UI/game_ui.gd" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://c2bui6vmvmws1" path="res://Scenes/Dialog.tscn" id="7_u5sy4"]
-[ext_resource type="PackedScene" uid="uid://rr7pg7tuecyn" path="res://Scenes/zombie_grunt.tscn" id="8_ll5lq"]
+[ext_resource type="PackedScene" uid="uid://rr7pg7tuecyn" path="res://Scenes/enemy/zombie_grunt.tscn" id="8_ll5lq"]
 [ext_resource type="PackedScene" uid="uid://bhpim45w0sgya" path="res://Scenes/enemy/mage.tscn" id="9_h4fw4"]
 
 [node name="Game" type="Node2D"]
@@ -41,7 +41,7 @@ offset_top = 139.0
 offset_right = 337.0
 offset_bottom = 262.0
 
-[node name="zombie_grunt" parent="." groups=["enemy"] instance=ExtResource("8_ll5lq")]
+[node name="zombie_grunt" parent="." instance=ExtResource("8_ll5lq")]
 position = Vector2(-381, 204)
 
 [node name="Mage" parent="." instance=ExtResource("9_h4fw4")]

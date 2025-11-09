@@ -7,6 +7,7 @@
 size = Vector2(128, 128)
 
 [node name="Mage" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
 script = ExtResource("1_script")
 max_health = 80
 damage = 15
@@ -17,12 +18,5 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_tex")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -2)
-scale = Vector2(0.125, 0.125)
-shape = SubResource("rect")
-
-[node name="Hitbox" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 scale = Vector2(0.25, 0.25)
 shape = SubResource("rect")
