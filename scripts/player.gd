@@ -10,9 +10,9 @@ const KNOCKBACK_FORCE := 300.0
 
 # EXPORTS
 @export_group("Properties")
-@export var max_health: int = 100
+@export var max_health: int = 25
 @export var speed := 200.0
-@export var melee_damage := 30
+@export var melee_damage := 35
 @export var melee_knockback_force: float = 1000.0
 @export_group("Abilities")
 @export var abilities: Array[BaseAbility] = []  # Drag & drop abilities in Inspector
@@ -159,7 +159,7 @@ func start_ability_cooldown(ability: BaseAbility, time: float):
 	await get_tree().create_timer(time).timeout
 	ability.is_on_cooldown = false
 
-
+#region dash ability
 func start_dash(dash_distance: float=0, invincibility_duration: float=0):
 	if can_dash():
 		is_dashing = true
@@ -174,11 +174,13 @@ func cleave_attack():
 		if global_position.distance_to(enemy.global_position) <= cleave_radius:
 			var direction = (enemy.global_position - global_position).normalized()
 			enemy.take_damage(melee_damage, direction, melee_knockback_force)
+#endregion
 
+#region mirror mirror ability
 func spawn_mirror_clone(duration: float=5.0):
 	var clone = self.duplicate()
 	clone.set_name("MirrorClone")
-	clone.set_position(global_position + Vector2(50, 0))
+	clone.set_position(global_position + 50 * facing_direction)
 	clone.set_rotation(rotation)
 	get_tree().get_root().add_child(clone)
 	clone.start_lifetime_timer(duration)
@@ -186,29 +188,37 @@ func spawn_mirror_clone(duration: float=5.0):
 func start_lifetime_timer(duration: float):
 	await get_tree().create_timer(duration).timeout
 	queue_free()
+#endregion
 
+#region revolving flame ability
 func add_area_damage(radius: float, damage: int):
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	for enemy in enemies:
 		if global_position.distance_to(enemy.global_position) <= radius:
 			enemy.take_damage(damage, (enemy.global_position - global_position).normalized(), melee_knockback_force)
+#endregion
 
+#region rotating shell ability
 func spawn_rotating_shell(duration: float, shell_scene: PackedScene):
 	var shell = shell_scene.instantiate()
 	add_child(shell)
 	shell.owner = self
 	shell.start_lifetime_timer(duration)
+#endregion
 
+#region stunning stomp ability
 func create_stomp_effect(radius: float, damage_multiplier: float= 1.0):
 	var duration = 0.75
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	for enemy in enemies:
 		if global_position.distance_to(enemy.global_position) <= radius:
 			enemy.take_damage(int(melee_damage * damage_multiplier), (enemy.global_position - global_position).normalized(), melee_knockback_force)
+#endregion
 
+#region vacuum magic ability
 func spawn_vacuum_field(duration: float, distance: float, vacuum_field_scene: PackedScene):
 	var vacuum_field = vacuum_field_scene.instantiate()
-	add_child(vacuum_field)
+	get_tree().get_root().add_child(vacuum_field)
 	vacuum_field.start_lifetime_timer(duration)
 	throw_vacuum_field(vacuum_field, distance)
 
@@ -216,6 +226,6 @@ func throw_vacuum_field(vacuum_field: VacuumField, distance: float):
 	var direction = facing_direction.normalized()
 	var target_position = global_position + direction * distance
 	vacuum_field.global_position = target_position
-
+#endregion
 
 #endregion

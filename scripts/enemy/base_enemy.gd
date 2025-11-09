@@ -8,6 +8,8 @@ class_name Enemy
 @export var knockback_resistance: float = 0.5  # 0 = full knockback, 1 = no knockback
 
 @onready var player: Node2D = null
+@onready var freeze_animation: AnimatedSprite2D = $FreezeAnimation
+
 var knockback_velocity: Vector2 = Vector2.ZERO
 var knockback_decay: float = 1000.0  # how quickly knockback fades
 var invulnerable: bool = false
@@ -61,5 +63,7 @@ func die() -> void:
 func freeze(duration: float) -> void:
 	# Simple freeze implementation: stop movement for duration
 	set_physics_process(false)
+	freeze_animation.visible = true
 	await get_tree().create_timer(duration).timeout
 	set_physics_process(true)
+	freeze_animation.visible = false

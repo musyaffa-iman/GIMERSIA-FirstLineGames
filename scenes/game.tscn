@@ -26,7 +26,7 @@ sources/1 = SubResource("TileSetAtlasSource_gee14")
 script = ExtResource("1_iywne")
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_uwrxv")]
-abilities = Array[ExtResource("3_kvpfn")]([ExtResource("4_kvpfn"), ExtResource("5_kvpfn")])
+abilities = Array[ExtResource("3_kvpfn")]([ExtResource("5_kvpfn"), ExtResource("4_kvpfn")])
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 

@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_3s14c"]
 radius = 5.0
 
-[node name="Fireball" type="Area2D"]
+[node name="Fireball" type="Area2D" groups=["projectile"]]
 collision_layer = 0
 script = ExtResource("1_1gl40")
 
