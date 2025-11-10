@@ -60,7 +60,7 @@ func _on_hitbox_body_entered(body: Node) -> void:
 	if not body or body == owner_enemy or exploded:
 		return
 	
-	if body.has_method("take_damage"):
+	if body.has_method("take_damage") and body.is_in_group("player"):
 		explode_on_contact()
 
 func explode_on_contact() -> void:
@@ -71,6 +71,7 @@ func explode_on_contact() -> void:
 	
 	print("Eye of Aberration exploding at ", global_position)
 	
+	await get_tree().create_timer(1.0).timeout
 	# Spawn visual effect if available
 	var explosion_scene = load("res://Scenes/attacks/explosion.tscn")
 	if explosion_scene:

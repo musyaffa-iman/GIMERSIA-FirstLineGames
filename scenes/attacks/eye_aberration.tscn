@@ -1,12 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dyf7cvckg0bq"]
+[gd_scene load_steps=4 format=3 uid="uid://dyf7cvckg0bq"]
 
+[ext_resource type="Script" uid="uid://drqgk6pmxs5sd" path="res://scripts/attacks/eye_aberration.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://icon.svg" id="1_texture"]
-[ext_resource type="Script" path="res://scripts/attacks/eye_aberration.gd" id="1_script"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxm5r"]
 radius = 80.0
 
 [node name="EyeAberration" type="CharacterBody2D"]
+motion_mode = 1
 script = ExtResource("1_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

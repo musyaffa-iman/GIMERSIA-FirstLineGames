@@ -20,8 +20,9 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 
 func _physics_process(delta: float) -> void:
-	if player:
-		enemy_behavior(delta)
+	if not player:
+		return
+	enemy_behavior(delta)
 	
 	# Handle invulnerability timer
 	if invulnerable:

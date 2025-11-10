@@ -15,15 +15,13 @@ func _ready() -> void:
 	print("Boss spawned:", name)
 
 func _physics_process(delta: float) -> void:
-	if player:
-		enemy_behavior(delta)
-		attack_timer -= delta
-		if attack_timer <= 0:
-			perform_attack()
-			attack_timer = attack_cooldown
-
 	# Handle knockback and physics from Enemy
 	super._physics_process(delta)
+	
+	attack_timer -= delta
+	if attack_timer <= 0:
+		perform_attack()
+		attack_timer = attack_cooldown
 
 	if not phase_two and health <= phase_two_threshold:
 		enter_phase_two()
@@ -34,9 +32,8 @@ func _physics_process(delta: float) -> void:
 @abstract
 func perform_attack()
 
-func enter_phase_two():
-	phase_two = true
-	print(name, "entered PHASE TWO!")
+@abstract
+func enter_phase_two()
 
 @abstract
 func enter_phase_three()

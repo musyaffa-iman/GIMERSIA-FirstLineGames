@@ -1,23 +1,24 @@
 [gd_scene load_steps=11 format=3 uid="uid://cbuu8aicue6gp"]
 
 [ext_resource type="Script" uid="uid://ct067bs7jk6md" path="res://scripts/game.gd" id="1_iywne"]
-[ext_resource type="PackedScene" uid="uid://0vq5s3xjx0s1" path="res://Scenes/Player.tscn" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://cuxt7cpgawg7m" path="res://Scenes/enemy/enemy_1.tscn" id="2_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://ck8ofg0rug4mn" path="res://Scenes/enemy/skeleton_enemy.tscn" id="4_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://0vq5s3xjx0s1" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://cuxt7cpgawg7m" path="res://scenes/enemy/enemy_1.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://ck8ofg0rug4mn" path="res://scenes/enemy/skeleton_enemy.tscn" id="4_lbhrr"]
 [ext_resource type="Script" uid="uid://kfoapq5wkcbc" path="res://scripts/UI/game_ui.gd" id="6_p57ef"]
-[ext_resource type="PackedScene" uid="uid://c2bui6vmvmws1" path="res://Scenes/Dialog.tscn" id="7_u5sy4"]
-[ext_resource type="PackedScene" uid="uid://rr7pg7tuecyn" path="res://Scenes/enemy/zombie_grunt.tscn" id="8_ll5lq"]
-[ext_resource type="PackedScene" uid="uid://bhpim45w0sgya" path="res://Scenes/enemy/mage.tscn" id="9_h4fw4"]
-[ext_resource type="PackedScene" uid="uid://dfw0qo5164s3w" path="res://Scenes/enemy/spider.tscn" id="10_ldgsr"]
-[ext_resource type="PackedScene" path="res://Scenes/enemy/boss/beholder.tscn" id="11_o5yvi"]
+[ext_resource type="PackedScene" uid="uid://c2bui6vmvmws1" path="res://scenes/Dialog.tscn" id="7_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://rr7pg7tuecyn" path="res://scenes/zombie_grunt.tscn" id="8_ll5lq"]
+[ext_resource type="PackedScene" uid="uid://bhpim45w0sgya" path="res://scenes/enemy/mage.tscn" id="9_h4fw4"]
+[ext_resource type="PackedScene" uid="uid://dfw0qo5164s3w" path="res://scenes/enemy/spider.tscn" id="10_ldgsr"]
+[ext_resource type="PackedScene" uid="uid://d04qpfxwvxlx" path="res://Scenes/enemy/boss/beholder.tscn" id="11_o5yvi"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_iywne")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_uwrxv")]
 position = Vector2(119, 71)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(-119, -71)
 
 [node name="Enemy1" parent="." instance=ExtResource("2_yqjtg")]
 position = Vector2(552, -412)
