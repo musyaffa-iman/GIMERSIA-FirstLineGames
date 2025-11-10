@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 # CONSTANTS
@@ -14,9 +15,10 @@ const KNOCKBACK_FORCE := 300.0
 @export var speed := 200.0
 @export var melee_damage := 35
 @export var melee_knockback_force: float = 1000.0
-@export_group("Abilities")
+@export_category("Abilities")
 @export var abilities: Array[BaseAbility] = []  # Drag & drop abilities in Inspector
 @export var ability_keys := ["ability_1", "ability_2"] # Input names for abilities
+@export var mirror_clone_scene: PackedScene
 
 signal update_health(current_health, max_health)
 
@@ -178,11 +180,14 @@ func cleave_attack():
 
 #region mirror mirror ability
 func spawn_mirror_clone(duration: float=5.0):
-	var clone = self.duplicate()
+	var clone = mirror_clone_scene.instantiate() as MirrorClone
 	clone.set_name("MirrorClone")
 	clone.set_position(global_position + 50 * facing_direction)
 	clone.set_rotation(rotation)
-	get_tree().get_root().add_child(clone)
+	clone.speed = speed * 0.8
+	clone.melee_damage = int(melee_damage * 0.5)
+
+	get_parent().add_child(clone)
 	clone.start_lifetime_timer(duration)
 
 func start_lifetime_timer(duration: float):

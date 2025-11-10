@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://cuxt7cpgawg7m" path="res://scenes/enemy/enemy_1.tscn" id="2_yqjtg"]
 [ext_resource type="Script" uid="uid://crso1hkaafsq7" path="res://scripts/ability/base_ability.gd" id="3_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://uytgyhf7bac5" path="res://scenes/enemy/boss/fire_boss.tscn" id="3_lnu2h"]
-[ext_resource type="Resource" uid="uid://cylwwyopxtsor" path="res://resource/ability/vacuum_magic_ability.tres" id="4_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://ck8ofg0rug4mn" path="res://scenes/enemy/skeleton_shooter.tscn" id="4_lbhrr"]
+[ext_resource type="Resource" uid="uid://csf352e20len7" path="res://resource/ability/mirror_mirror_ability.tres" id="5_dinhu"]
 [ext_resource type="Resource" uid="uid://b1k5sbnxvdveg" path="res://resource/ability/rotating_shell_ability.tres" id="5_kvpfn"]
 [ext_resource type="Script" uid="uid://kfoapq5wkcbc" path="res://scripts/UI/game_ui.gd" id="6_p57ef"]
 [ext_resource type="Texture2D" uid="uid://c7y5a4x7t6j0x" path="res://assets/placeholder_tile.png" id="8_gee14"]
@@ -26,7 +26,7 @@ sources/1 = SubResource("TileSetAtlasSource_gee14")
 script = ExtResource("1_iywne")
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_uwrxv")]
-abilities = Array[ExtResource("3_kvpfn")]([ExtResource("5_kvpfn"), ExtResource("4_kvpfn")])
+abilities = Array[ExtResource("3_kvpfn")]([ExtResource("5_kvpfn"), ExtResource("5_dinhu")])
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
