@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://0vq5s3xjx0s1"]
+
+[ext_resource type="Script" uid="uid://q2ptla7rsxjf" path="res://raddief/scripts/player.gd" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://raddief/icon.svg" id="2_qhqgy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qm0ti"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qhqgy")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qhqgy")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fhbv5"]
+size = Vector2(32, 32)
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 2
+script = ExtResource("1_g2els")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_qm0ti")
+animation = &"move"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fhbv5")

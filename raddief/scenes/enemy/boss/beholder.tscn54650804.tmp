@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://d04qpfxwvxlx"]
+
+[ext_resource type="PackedScene" uid="uid://f55s8lwq7h1j" path="res://scenes/enemy/boss/base_boss.tscn" id="1_a1wow"]
+[ext_resource type="Script" uid="uid://cu54kkcrdnc7w" path="res://scripts/enemy/boss/beholder.gd" id="2_beholder"]
+
+[node name="Beholder" instance=ExtResource("1_a1wow")]
+modulate = Color(0.5, 0.2, 1, 1)
+platform_on_leave = 2
+script = ExtResource("2_beholder")
+atk = null
+defense = null
+front_facing_angle_tolerance = null
+bite_range = null
+bite_base_value = null
+bite_knockback = null
+lightning_orb_base_value = null
+lightning_orb_speed = null
+lightning_orb_count = null
+lightning_orb_interval = null
+lightning_strike_base_value = null
+lightning_strike_count = null
+lightning_strike_telegraph_duration = null
+lightning_strike_cooldown = null
+lightning_burst_min_projectiles = null
+lightning_burst_max_projectiles = null
+eye_beam_base_value = null
+eye_beam_speed = null
+eye_beam_tracking = null
+eye_aberration_base_value = null
+eye_aberration_speed = null
+eye_aberration_explosion_radius = null
+phase_two_threshold = 100
+phase_three_threshold = 100
+attack_cooldown = 2.5
+max_health = null
+move_speed = null
+damage = null
+knockback_resistance = null

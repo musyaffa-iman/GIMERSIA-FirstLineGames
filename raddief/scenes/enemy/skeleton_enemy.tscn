@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://ck8ofg0rug4mn"]
+
+[ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://raddief/scenes/enemy/base_enemy.tscn" id="1_jeyaq"]
+[ext_resource type="Script" uid="uid://c1faap32lk8yp" path="res://raddief/scripts/enemy/skeleton/Skeleton.gd" id="2_khi1u"]
+
+[node name="SkeletonEnemy" instance=ExtResource("1_jeyaq")]
+script = ExtResource("2_khi1u")
+
+[node name="DashTimer" type="Timer" parent="." index="2"]
+one_shot = true
+
+[node name="DashCooldownTimer" type="Timer" parent="." index="3"]
+one_shot = true
+
+[node name="ShootTimer" type="Timer" parent="." index="4"]
+one_shot = true
+
+[node name="RestTimer" type="Timer" parent="." index="5"]
+one_shot = true
+
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="timeout" from="RestTimer" to="." method="_on_rest_timer_timeout"]

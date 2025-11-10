@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://jhqd1rxnl1jp"]
+
+[ext_resource type="Script" uid="uid://cpyl5hifjf3js" path="res://raddief/scripts/attacks/lightning_strike.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://crvdghk2a77i8" path="res://raddief/Sprites/Projectile/lightning.jpg" id="2_06dp1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_zg5sk"]
+radius = 31.016125
+
+[node name="LightningStrike" type="Area2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0, 1)
+scale = Vector2(0.18571429, 0.18571429)
+texture = ExtResource("2_06dp1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_zg5sk")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd2o8v1d4t5p"]
+
+[ext_resource type="Script" uid="uid://dwmw3nupfqw0c" path="res://raddief/scripts/attacks/eye_beam.gd" id="1_script"]
+
+[node name="EyeBeam" type="RayCast2D"]
+script = ExtResource("1_script")
+cast_speed = 2000.0
+max_length = 1200.0
