@@ -1,12 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://ck8ofg0rug4mn"]
+[gd_scene load_steps=3 format=3 uid="uid://ck8ofg0rug4mn"]
 
-[ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://scenes/enemy/base_enemy.tscn" id="1_jeyaq"]
-[ext_resource type="Script" uid="uid://c1faap32lk8yp" path="res://scripts/enemy/skeleton/Skeleton.gd" id="2_khi1u"]
-[ext_resource type="PackedScene" uid="uid://cvpn1foom287g" path="res://scenes/arrow.tscn" id="3_n05gw"]
+[ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://raddief/scenes/enemy/base_enemy.tscn" id="1_jeyaq"]
+[ext_resource type="Script" uid="uid://c1faap32lk8yp" path="res://raddief/scripts/enemy/skeleton/Skeleton.gd" id="2_khi1u"]
 
 [node name="SkeletonEnemy" instance=ExtResource("1_jeyaq")]
 script = ExtResource("2_khi1u")
-arrow_scene = ExtResource("3_n05gw")
 
 [node name="DashTimer" type="Timer" parent="." index="2"]
 one_shot = true

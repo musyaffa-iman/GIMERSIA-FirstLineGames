@@ -3,15 +3,15 @@
 [ext_resource type="Script" uid="uid://ct067bs7jk6md" path="res://scripts/game.gd" id="1_iywne"]
 [ext_resource type="PackedScene" uid="uid://0vq5s3xjx0s1" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://crso1hkaafsq7" path="res://scripts/ability/base_ability.gd" id="3_kvpfn"]
+[ext_resource type="PackedScene" uid="uid://ck8ofg0rug4mn" path="res://scenes/enemy/skeleton_shooter.tscn" id="4_lbhrr"]
 [ext_resource type="Resource" uid="uid://csf352e20len7" path="res://resource/ability/mirror_mirror_ability.tres" id="5_dinhu"]
 [ext_resource type="Resource" uid="uid://b1k5sbnxvdveg" path="res://resource/ability/rotating_shell_ability.tres" id="5_kvpfn"]
 [ext_resource type="Script" uid="uid://kfoapq5wkcbc" path="res://scripts/UI/game_ui.gd" id="6_p57ef"]
 [ext_resource type="Texture2D" uid="uid://c7y5a4x7t6j0x" path="res://assets/placeholder_tile.png" id="8_gee14"]
-[ext_resource type="PackedScene" uid="uid://rr7pg7tuecyn" path="res://scenes/enemy/zombie_grunt.tscn" id="8_ll5lq"]
-[ext_resource type="PackedScene" uid="uid://bhpim45w0sgya" path="res://scenes/enemy/mage.tscn" id="11_kvuet"]
-[ext_resource type="PackedScene" uid="uid://ck8ofg0rug4mn" path="res://scenes/enemy/skeleton_enemy.tscn" id="12_dinhu"]
-[ext_resource type="PackedScene" uid="uid://dfw0qo5164s3w" path="res://scenes/enemy/spider.tscn" id="12_trtic"]
-[ext_resource type="PackedScene" uid="uid://d04qpfxwvxlx" path="res://scenes/enemy/boss/beholder.tscn" id="13_ir15t"]
+[ext_resource type="PackedScene" uid="uid://cn1e62ecs0moa" path="res://scenes/enemy/zombie_grunt.tscn" id="8_ll5lq"]
+[ext_resource type="PackedScene" uid="uid://bhpim45w0sgya" path="res://raddief/scenes/enemy/mage.tscn" id="11_kvuet"]
+[ext_resource type="PackedScene" uid="uid://dfw0qo5164s3w" path="res://raddief/scenes/enemy/spider.tscn" id="12_trtic"]
+[ext_resource type="PackedScene" uid="uid://d04qpfxwvxlx" path="res://raddief/scenes/enemy/boss/beholder.tscn" id="13_ir15t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gee14"]
 texture = ExtResource("8_gee14")
@@ -30,6 +30,9 @@ script = ExtResource("1_iywne")
 abilities = Array[ExtResource("3_kvpfn")]([ExtResource("5_kvpfn"), ExtResource("5_dinhu")])
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="SkeletonEnemy" parent="." instance=ExtResource("4_lbhrr")]
+position = Vector2(-333, -43)
 
 [node name="zombie_grunt" parent="." instance=ExtResource("8_ll5lq")]
 position = Vector2(-299, 127)
@@ -57,5 +60,3 @@ position = Vector2(29, -250)
 
 [node name="Beholder" parent="." instance=ExtResource("13_ir15t")]
 position = Vector2(-180, 35)
-
-[node name="SkeletonEnemy" parent="." instance=ExtResource("12_dinhu")]

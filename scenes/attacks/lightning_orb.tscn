@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl3v8xblnq4m"]
+
+[ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://icon.svg" id="1_texture"]
+[ext_resource type="Script" uid="uid://dthga7aujgsxy" path="res://scripts/attacks/lightning_orb.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qb3vm"]
+radius = 8.0
+
+[node name="LightningOrb" type="Area2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.2, 0.8, 1, 1)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("1_texture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qb3vm")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
