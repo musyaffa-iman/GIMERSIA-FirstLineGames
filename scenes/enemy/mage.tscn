@@ -1,33 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhpim45w0sgya"]
+[gd_scene load_steps=5 format=3 uid="uid://ci8pm6mu8okyc"]
 
+[ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://scenes/enemy/base_enemy.tscn" id="1_hhdkm"]
 [ext_resource type="Script" uid="uid://bt208n6w48pp3" path="res://scripts/Mage/cult_mage.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://icon.svg" id="2_8boov"]
+[ext_resource type="PackedScene" uid="uid://b5h4hn2o5jal7" path="res://scenes/attacks/pillar.tscn" id="3_l527s"]
+[ext_resource type="PackedScene" uid="uid://bks6rccbf0sni" path="res://scenes/attacks/circle.tscn" id="4_whvh0"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_onhd1"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_8boov")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="RectangleShape2D" id="rect"]
-size = Vector2(128, 128)
-
-[node name="Mage" type="CharacterBody2D" groups=["enemy"]]
-collision_layer = 2
+[node name="Mage" instance=ExtResource("1_hhdkm")]
 script = ExtResource("1_script")
-max_health = 80
-damage = 15
+dark_pillar_scene = ExtResource("3_l527s")
+telegraph_circle_scene = ExtResource("4_whvh0")
+max_health = 13
+damage = 36
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" parent="." index="0"]
 modulate = Color(1, 0.40784314, 0, 1)
-scale = Vector2(0.25, 0.25)
-sprite_frames = SubResource("SpriteFrames_onhd1")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(0.25, 0.25)
-shape = SubResource("rect")

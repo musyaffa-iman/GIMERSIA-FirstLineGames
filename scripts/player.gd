@@ -22,6 +22,9 @@ const KNOCKBACK_FORCE := 300.0
 
 signal update_health(current_health, max_health)
 
+@onready var invulnerability_timer: Timer = $InvulnerabilityTimer
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
 # PLAYER STATE
 var current_health: int
 var can_take_damage: bool = true
@@ -32,9 +35,6 @@ var is_dead: bool = false
 # TIMERS
 var dash_timer := 0.0
 var dash_cooldown_timer := 0.0
-
-# NODE REFERENCES
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var input : Vector2
 var facing_direction : Vector2 = Vector2.RIGHT
@@ -127,15 +127,13 @@ func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_
 
 	print("Player took ", amount, " damage!, Current health: ", current_health - amount)
 	current_health -= amount
+	can_take_damage = false
+	invulnerability_timer.start()
 	emit_signal("update_health", current_health, max_health)
 
 	if current_health <= 0:
 		die()
 		return
-
-	#is_hurt = true
-	#can_take_damage = false
-	#velocity = from_direction.normalized() * knockback_force
 
 func die():
 	is_dead = true
@@ -234,3 +232,8 @@ func throw_vacuum_field(vacuum_field: VacuumField, distance: float):
 #endregion
 
 #endregion
+
+
+func _on_invulnerability_timer_timeout() -> void:
+	can_take_damage = true
+	is_hurt = false

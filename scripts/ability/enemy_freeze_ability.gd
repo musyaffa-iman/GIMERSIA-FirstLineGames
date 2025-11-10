@@ -8,4 +8,7 @@ func _execute(player):
 	var enemies = player.get_tree().get_nodes_in_group("enemy")
 	for enemy in enemies:
 		if player.global_position.distance_to(enemy.global_position) <= radius:
-			enemy.freeze(freeze_time)
+			if enemy.has_method("freeze"):
+				enemy.freeze(freeze_time)
+			else:
+				print(enemy.name, " does not have a freeze method.")

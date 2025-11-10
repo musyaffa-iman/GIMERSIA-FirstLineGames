@@ -7,6 +7,4 @@
 modulate = Color(0.5, 0.2, 1, 1)
 platform_on_leave = 2
 script = ExtResource("2_beholder")
-phase_two_threshold = 100
-phase_three_threshold = 100
 attack_cooldown = 2.5

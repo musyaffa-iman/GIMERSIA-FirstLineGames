@@ -50,3 +50,8 @@ animation = &"move"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_fhbv5")
+
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]

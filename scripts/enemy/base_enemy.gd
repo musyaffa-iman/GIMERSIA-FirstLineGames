@@ -9,6 +9,7 @@ class_name Enemy
 
 @onready var player: Node2D = null
 @onready var freeze_animation: AnimatedSprite2D = $FreezeAnimation
+@onready var label: Label = $Control/Label
 
 var knockback_velocity: Vector2 = Vector2.ZERO
 var knockback_decay: float = 1000.0  # how quickly knockback fades
@@ -18,12 +19,15 @@ var invulnerability_timer: float = 0.0
 var health: int = 0
 
 func _ready() -> void:
+	label.text = name
 	health = max_health
 	player = get_tree().get_first_node_in_group("player")
 
 func _physics_process(delta: float) -> void:
-	if player:
-		enemy_behavior(delta)
+	if not player:
+		return
+		
+	enemy_behavior(delta)
 	
 	# Handle invulnerability timer
 	if invulnerable:

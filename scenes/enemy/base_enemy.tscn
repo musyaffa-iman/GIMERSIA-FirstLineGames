@@ -45,3 +45,17 @@ texture_filter = 1
 scale = Vector2(2.125, 2)
 sprite_frames = SubResource("SpriteFrames_23iyx")
 animation = &"freeze"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -29.0
+offset_top = -42.0
+offset_right = 38.0
+offset_bottom = -19.0

@@ -1,33 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://rr7pg7tuecyn"]
+[gd_scene load_steps=3 format=3 uid="uid://rr7pg7tuecyn"]
 
-[ext_resource type="Script" uid="uid://bo3h24dhm0ra0" path="res://raddief/scripts/enemy/Zombie/zombie_grunt.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://raddief/icon.svg" id="2_6dncw"]
+[ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://scenes/enemy/base_enemy.tscn" id="1_o2hik"]
+[ext_resource type="Script" uid="uid://bo3h24dhm0ra0" path="res://scripts/Zombie/zombie_grunt.gd" id="1_script"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_n07u2"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_6dncw")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="RectangleShape2D" id="rect"]
-size = Vector2(96.42857, 93.57143)
-
-[node name="zombie_grunt" type="CharacterBody2D" groups=["enemy"]]
-collision_layer = 2
-script = ExtResource("1_script")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="ZombieGrunt" instance=ExtResource("1_o2hik")]
 modulate = Color(0.54901963, 1, 0.16862746, 1)
-position = Vector2(0, -7.1054274e-15)
-scale = Vector2(0.25, 0.25)
-sprite_frames = SubResource("SpriteFrames_n07u2")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.1920929e-07, -5.9604645e-08)
-scale = Vector2(0.35, 0.35)
-shape = SubResource("rect")
+script = ExtResource("1_script")

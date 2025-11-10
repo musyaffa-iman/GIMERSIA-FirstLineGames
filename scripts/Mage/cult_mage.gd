@@ -20,55 +20,8 @@ var cooldown_timer: float = 0.0
 var target_position: Vector2 = Vector2.ZERO
 var telegraph_instance: Node2D = null
 
-func _ready():
-	# Apply GDD HP to inherited property before base setup runs
-	max_health = 13
-	damage = 55  # GDD: BASE_VALUE for Dark Pillar
-
-	# Let base class perform its setup (it will initialize health/player lookup)
-	super._ready()
-
-	# Ensure this node is in the common enemy group so other systems find it
-	add_to_group("enemy")
-
-	# Auto-connect hitbox signal if exists (safe, idempotent)
-	if has_node("Hitbox"):
-		var hb = $Hitbox
-		if hb and hb.has_signal("area_entered"):
-			if not hb.is_connected("area_entered", Callable(self, "_on_hitbox_area_entered")):
-				hb.connect("area_entered", Callable(self, "_on_hitbox_area_entered"))
-				print("Mage: Hitbox connected!")
-
-	# If scenes weren't set in the Inspector, try lazy-loading common defaults so the mage works out-of-the-box.
-	if not dark_pillar_scene:
-		var _p = load("res://Scenes/attacks/pillar.tscn")
-		if _p and _p is PackedScene:
-			dark_pillar_scene = _p
-			print("Mage: lazily loaded dark_pillar_scene from res://Scenes/pillar.tscn")
-
-	if not telegraph_circle_scene:
-		var _c = load("res://Scenes/attacks/circle.tscn")
-		if _c and _c is PackedScene:
-			telegraph_circle_scene = _c
-			print("Mage: lazily loaded telegraph_circle_scene from res://Scenes/circle.tscn")
-
 func enemy_behavior(delta: float) -> void:
-	# QUICK FIX: Mage doesn't move, so reset velocity each frame
-	# This prevents knockback from accumulating infinitely
 	velocity = Vector2.ZERO
-	
-	# Debug: check if player exists
-	if not player:
-		print("Mage: No player found!")
-		return
-	
-	# Check if scenes are assigned
-	if not dark_pillar_scene:
-		print("Mage: No dark_pillar scene assigned! Drag pillar.tscn to Inspector.")
-		return
-	if not telegraph_circle_scene:
-		print("Mage: No telegraph_circle scene assigned! Drag circle.tscn to Inspector.")
-		return
 	
 	# Always face the player
 	var direction_to_player = player.global_position - global_position
