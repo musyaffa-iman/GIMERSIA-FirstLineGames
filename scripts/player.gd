@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # CONSTANTS
-const ACCELERATION = 10.0
+const ACCELERATION = 50.0
 const DASH_SPEED := 500.0
 const DASH_DURATION := 0.2
 const DASH_COOLDOWN := 1.2
@@ -11,7 +11,7 @@ const KNOCKBACK_FORCE := 300.0
 # EXPORTS
 @export_group("Properties")
 @export var max_health: int = 100
-@export var speed := 200.0
+@export var speed := 1000.0
 @export var melee_knockback_force: float = 400.0
 
 signal update_health(current_health, max_health)
