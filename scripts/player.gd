@@ -2,8 +2,6 @@ class_name Player
 extends CharacterBody2D
 
 # CONSTANTS
-const ACCELERATION = 10.0
-const DASH_SPEED := 10000.0
 const DASH_DURATION := 0.2
 const DASH_COOLDOWN := 1.2
 
