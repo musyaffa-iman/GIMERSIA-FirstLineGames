@@ -8,11 +8,14 @@ extends BossBase
 @export var front_facing_angle_tolerance: float = 45.0  # degrees
 
 # Bite attack (Phase 1+)
+@export_category("Beholder Attacks")
+@export_group("Bite")
 @export var bite_range: float = 36.0  # 0.75m in pixels (0.75 * 48)
 @export var bite_base_value: float = 55.0
 @export var bite_knockback: float = 96.0  # 2m knockback
 
 # Lightning Orb (Phase 1+)
+@export_group("Lightning Orb")
 @export var lightning_orb_scene: PackedScene = null
 @export var lightning_orb_base_value: float = 50.0
 @export var lightning_orb_speed: float = 300.0
@@ -20,6 +23,7 @@ extends BossBase
 @export var lightning_orb_interval: float = 0.2
 
 # Lightning Strike (Phase 1+)
+@export_group("Lightning Strike")
 @export var lightning_strike_scene: PackedScene = null
 @export var lightning_strike_telegraph_scene: PackedScene = null
 @export var lightning_strike_base_value: float = 55.0
@@ -28,16 +32,19 @@ extends BossBase
 @export var lightning_strike_cooldown: float = 1.5
 
 # Lightning Orb Burst (Phase 2+)
+@export_group("Lightning Burst")
 @export var lightning_burst_min_projectiles: int = 8
 @export var lightning_burst_max_projectiles: int = 12
 
 # Eye Beam (Phase 2+)
+@export_group("Eye Beam")
 @export var eye_beam_scene: PackedScene = null
 @export var eye_beam_base_value: float = 60.0
 @export var eye_beam_speed: float = 400.0
 @export var eye_beam_tracking: bool = true
 
 # Eye of Aberration (Phase 3)
+@export_group("Eye of Aberration")
 @export var eye_aberration_scene: PackedScene = null
 @export var eye_aberration_base_value: float = 65.0
 @export var eye_aberration_speed: float = 150.0

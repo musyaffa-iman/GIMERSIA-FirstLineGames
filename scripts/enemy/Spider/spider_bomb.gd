@@ -58,6 +58,7 @@ func explode() -> void:
 	if exploded:
 		return
 	exploded = true
+	set_physics_process(false)  # stop movement
 	if debug_logs:
 		print("SpiderBomb: exploding at", global_position)
 

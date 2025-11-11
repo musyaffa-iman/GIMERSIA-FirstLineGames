@@ -125,6 +125,17 @@ func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_
 	if not can_take_damage or is_dead:
 		return
 
+	modulate = Color.RED
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color.WHITE
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color.RED
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color.WHITE
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color.RED
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color.WHITE
 	print("Player took ", amount, " damage!, Current health: ", current_health - amount)
 	current_health -= amount
 	can_take_damage = false

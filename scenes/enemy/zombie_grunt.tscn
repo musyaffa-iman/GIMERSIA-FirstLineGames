@@ -50,7 +50,7 @@ animations = [{
 [node name="ZombieGrunt" instance=ExtResource("1_o2hik")]
 script = ExtResource("1_script")
 detection_range = 30000.0
-attack_range = 1500.0
+attack_range = 1000.0
 slash_scene = ExtResource("3_ywiqp")
 
 [node name="CollisionShape2D" parent="." index="0"]

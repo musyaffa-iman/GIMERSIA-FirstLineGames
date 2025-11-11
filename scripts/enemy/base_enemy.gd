@@ -50,6 +50,18 @@ func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_
 	if invulnerable:
 		return
 
+	# blink red to show damage taken
+	modulate = Color.RED
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color.WHITE
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color.RED
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color.WHITE
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color.RED
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color.WHITE
 	health -= amount
 	#print("Enemy ", self.name, " took ", amount, " damage! Current health: ", health)
 	apply_knockback(from_direction, knockback_force)
