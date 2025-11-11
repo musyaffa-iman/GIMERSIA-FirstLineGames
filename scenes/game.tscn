@@ -61,7 +61,7 @@ position = Vector2(3845, 537)
 position = Vector2(-1923, 4147)
 
 [node name="Beholder" parent="." instance=ExtResource("13_ir15t")]
-position = Vector2(-180, 35)
+position = Vector2(-1607, 172)
 
 [node name="SkeletonEnemy" parent="." instance=ExtResource("12_dinhu")]
 position = Vector2(-4841, -988)

@@ -6,6 +6,10 @@ extends Enemy
 @export var arrow_rotation_offset_degrees: float = 0.0 # Set to -90 if your arrow texture points up
 @export var rotate_to_player: bool = false # If true, rotate the skeleton to face the player
 
+# GDD Stats
+@export var atk: int = 32
+@export var defense: int = 20
+
 # Movement parameters
 @export var preferred_range_min: float = 200.0
 @export var preferred_range_max: float = 320.0
@@ -39,7 +43,13 @@ const REST_DURATION = 2.0   # Rest time after shooting 2 arrows
 const MAX_ARROWS = 2        # Number of arrows per burst
 
 # Arrow scene
-@export var arrow_scene: PackedScene = preload("res://Scenes/arrow.tscn")
+@export var arrow_scene: PackedScene = preload("res://Scenes/attacks/arrow.tscn")
+
+func _ready():
+	# Set GDD stats before calling super._ready()
+	max_health = 18  # GDD: Skeleton HP = 18
+	damage = 40      # GDD: BASE_VALUE = 40
+	super._ready()
 	
 func enemy_behavior(delta: float) -> void:
 	# Check if player is in range
@@ -47,23 +57,16 @@ func enemy_behavior(delta: float) -> void:
 	if debug_logs:
 		print("Distance to player: ", distance_to_player)
 	
-	# Basic chase/kite movement to maintain a preferred range, but only when the
-	# player is inside detection_range. Outside detection_range the skeleton idles.
+	# Don't move towards or away from player; only dash away when too close
 	var move_dir := Vector2.ZERO
 	if distance_to_player <= detection_range:
-		var dir_to_player: Vector2 = (player.global_position - global_position).normalized()
-		# Approach when too far, back off when too close
-		if distance_to_player > preferred_range_max:
-			move_dir = dir_to_player # approach
-		elif distance_to_player < preferred_range_min:
-			move_dir = -dir_to_player # back off
-		else:
-			move_dir = Vector2.ZERO
+		# Idle (don't approach or back away)
+		move_dir = Vector2.ZERO
 
 	# Apply movement when not dashing
 	velocity = move_dir * move_speed
 
-	# Handle dash behavior
+	# Handle dash behavior (only dashes when player gets close)
 	dash_behavior(delta)
 	# Handle shooting behavior
 	shoot_behavior(delta)
@@ -133,7 +136,12 @@ func shoot_arrow():
 	arrow.global_position = global_position + direction * arrow_spawn_distance
 	arrow.rotation = direction.angle() + deg_to_rad(arrow_rotation_offset_degrees)
 	arrow.velocity = direction * arrow_speed
-	arrow.damage = damage
+	
+	# Set arrow damage values for DamageCalc formula
+	if arrow.has_method("set_base_value"):
+		arrow.set_base_value(float(damage))  # damage = BASE_VALUE = 40
+	if arrow.has_method("set_owner_atk"):
+		arrow.set_owner_atk(float(atk))      # atk = 32
 
 	if debug_logs:
 		print("Skeleton: shot arrow at ", player.global_position, " from ", arrow.global_position)

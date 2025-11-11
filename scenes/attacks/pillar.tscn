@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b5h4hn2o5jal7"]
 
-[ext_resource type="Script" uid="uid://dgdtjsh5a5t8b" path="res://scripts/Mage/dark_pillar_impact.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dgdtjsh5a5t8b" path="res://scripts/enemy/Mage/dark_pillar_impact.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://x2f43fqjb7dr" path="res://assets/pillar.png" id="2_texture"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pillar"]
@@ -11,7 +11,6 @@ script = ExtResource("1_script")
 radius = 16.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.025, 0.025)
 texture = ExtResource("2_texture")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

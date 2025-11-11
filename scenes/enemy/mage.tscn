@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://ci8pm6mu8okyc"]
 
 [ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://scenes/enemy/base_enemy.tscn" id="1_hhdkm"]
-[ext_resource type="Script" uid="uid://bt208n6w48pp3" path="res://scripts/Mage/cult_mage.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://bt208n6w48pp3" path="res://scripts/enemy/Mage/cult_mage.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://b5h4hn2o5jal7" path="res://scenes/attacks/pillar.tscn" id="3_l527s"]
 [ext_resource type="PackedScene" uid="uid://bks6rccbf0sni" path="res://scenes/attacks/circle.tscn" id="4_whvh0"]
 [ext_resource type="Texture2D" uid="uid://cqt7xtgsmn3e" path="res://assets/enemies/Monster/Cult_Mage.png" id="5_whvh0"]

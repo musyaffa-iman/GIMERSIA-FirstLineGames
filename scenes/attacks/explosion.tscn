@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cokr3vm1wuolw"]
 
-[ext_resource type="Script" uid="uid://i5j3bwehismo" path="res://raddief/scripts/enemy/skeleton/arrow_projectile.gd" id="1_h1vnk"]
+[ext_resource type="Script" uid="uid://i5j3bwehismo" path="res://scripts/enemy/skeleton/arrow_projectile.gd" id="1_h1vnk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8qitf"]
 radius = 60.0

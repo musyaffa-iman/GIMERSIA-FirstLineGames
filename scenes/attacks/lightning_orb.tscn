@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bl3v8xblnq4m"]
 
 [ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://icon.svg" id="1_texture"]
-[ext_resource type="Script" uid="uid://dthga7aujgsxy" path="res://scripts/attacks/lightning_orb.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dthga7aujgsxy" path="res://scripts/boss/beholder/attacks/lightning_orb.gd" id="1_script"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qb3vm"]
 radius = 8.0

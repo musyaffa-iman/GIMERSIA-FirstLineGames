@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfw0qo5164s3w"]
+[gd_scene load_steps=8 format=3 uid="uid://dfw0qo5164s3w"]
 
-[ext_resource type="Script" uid="uid://jcgc08hi20yf" path="res://scripts/Spider/spider_bomb.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://jcgc08hi20yf" path="res://scripts/enemy/Spider/spider_bomb.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://scenes/enemy/base_enemy.tscn" id="1_xtqu1"]
+[ext_resource type="PackedScene" uid="uid://cokr3vm1wuolw" path="res://scenes/attacks/explosion.tscn" id="3_iq8wq"]
 [ext_resource type="Texture2D" uid="uid://ctrv1c541gm52" path="res://assets/enemies/Monster/Spider_Bomb.png" id="3_pf1qy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pf1qy"]
@@ -25,6 +26,7 @@ animations = [{
 [node name="Spider" instance=ExtResource("1_xtqu1")]
 script = ExtResource("1_script")
 detection_range = 30000.0
+explosion_scene = ExtResource("3_iq8wq")
 
 [node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource("RectangleShape2D_pf1qy")

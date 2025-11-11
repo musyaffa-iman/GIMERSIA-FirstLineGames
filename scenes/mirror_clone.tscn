@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://drrywdbhqlsmt"]
 
-[ext_resource type="Script" uid="uid://b7qgvxpuadqhn" path="res://scripts/mirror_clone.gd" id="1_dt6eq"]
+[ext_resource type="Script" uid="uid://b7qgvxpuadqhn" path="res://scripts/utils/mirror_clone.gd" id="1_dt6eq"]
 [ext_resource type="Script" uid="uid://crso1hkaafsq7" path="res://scripts/ability/base_ability.gd" id="2_8dqxu"]
 [ext_resource type="Script" uid="uid://wf3pvimjcx21" path="res://scripts/ability/rotating_shell_ability.gd" id="3_g0mjr"]
 [ext_resource type="Script" uid="uid://dwiisf3wu2v7p" path="res://scripts/ability/ability_object/rotating_shell.gd" id="4_8dqxu"]
