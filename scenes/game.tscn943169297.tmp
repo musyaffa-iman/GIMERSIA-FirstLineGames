@@ -1,18 +1,17 @@
-[gd_scene load_steps=16 format=4 uid="uid://cbuu8aicue6gp"]
+[gd_scene load_steps=15 format=4 uid="uid://cbuu8aicue6gp"]
 
 [ext_resource type="Script" uid="uid://ct067bs7jk6md" path="res://scripts/game.gd" id="1_iywne"]
 [ext_resource type="PackedScene" uid="uid://0vq5s3xjx0s1" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://crso1hkaafsq7" path="res://scripts/ability/base_ability.gd" id="3_kvpfn"]
-[ext_resource type="Resource" uid="uid://w7guvvq3ecdm" path="res://resource/ability/dash_ability.tres" id="4_dinhu"]
-[ext_resource type="Resource" uid="uid://c3ktgxg08flx8" path="res://resource/ability/enemy_freeze_ability.tres" id="5_kvuet"]
+[ext_resource type="PackedScene" uid="uid://ck8ofg0rug4mn" path="res://scenes/enemy/skeleton_shooter.tscn" id="4_lbhrr"]
+[ext_resource type="Resource" uid="uid://csf352e20len7" path="res://resource/ability/mirror_mirror_ability.tres" id="5_dinhu"]
+[ext_resource type="Resource" uid="uid://b1k5sbnxvdveg" path="res://resource/ability/rotating_shell_ability.tres" id="5_kvpfn"]
 [ext_resource type="Script" uid="uid://kfoapq5wkcbc" path="res://scripts/UI/game_ui.gd" id="6_p57ef"]
 [ext_resource type="Texture2D" uid="uid://c7y5a4x7t6j0x" path="res://assets/placeholder_tile.png" id="8_gee14"]
-[ext_resource type="PackedScene" uid="uid://rr7pg7tuecyn" path="res://scenes/enemy/zombie_grunt.tscn" id="8_ll5lq"]
-[ext_resource type="PackedScene" uid="uid://ci8pm6mu8okyc" path="res://scenes/enemy/mage.tscn" id="11_kvuet"]
-[ext_resource type="PackedScene" uid="uid://ck8ofg0rug4mn" path="res://scenes/enemy/skeleton_enemy.tscn" id="12_dinhu"]
-[ext_resource type="PackedScene" uid="uid://dfw0qo5164s3w" path="res://scenes/enemy/spider.tscn" id="12_trtic"]
-[ext_resource type="PackedScene" uid="uid://d04qpfxwvxlx" path="res://scenes/enemy/boss/beholder.tscn" id="13_ir15t"]
-[ext_resource type="Script" uid="uid://v2x2lfyg6dm5" path="res://scripts/camera_2d.gd" id="13_kvuet"]
+[ext_resource type="PackedScene" uid="uid://cn1e62ecs0moa" path="res://scenes/enemy/zombie_grunt.tscn" id="8_ll5lq"]
+[ext_resource type="PackedScene" uid="uid://bhpim45w0sgya" path="res://raddief/scenes/enemy/mage.tscn" id="11_kvuet"]
+[ext_resource type="PackedScene" uid="uid://dfw0qo5164s3w" path="res://raddief/scenes/enemy/spider.tscn" id="12_trtic"]
+[ext_resource type="PackedScene" uid="uid://d04qpfxwvxlx" path="res://raddief/scenes/enemy/boss/beholder.tscn" id="13_ir15t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gee14"]
 texture = ExtResource("8_gee14")
@@ -28,23 +27,15 @@ sources/1 = SubResource("TileSetAtlasSource_gee14")
 script = ExtResource("1_iywne")
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_uwrxv")]
-position = Vector2(1, 0)
-max_health = 1000
-melee_damage = 10
-melee_knockback_force = 5000.0
-abilities = Array[ExtResource("3_kvpfn")]([ExtResource("4_dinhu"), ExtResource("5_kvuet")])
+abilities = Array[ExtResource("3_kvpfn")]([ExtResource("5_kvpfn"), ExtResource("5_dinhu")])
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(-1, 0)
-zoom = Vector2(0.1, 0.1)
-position_smoothing_enabled = true
-position_smoothing_speed = 50.0
-script = ExtResource("13_kvuet")
-shake_decay = 20.0
-shake_strength = 50.0
+
+[node name="SkeletonEnemy" parent="." instance=ExtResource("4_lbhrr")]
+position = Vector2(-333, -43)
 
 [node name="zombie_grunt" parent="." instance=ExtResource("8_ll5lq")]
-position = Vector2(4772, 3285)
+position = Vector2(-299, 127)
 
 [node name="GameUI" type="Control" parent="."]
 process_mode = 3
@@ -55,7 +46,6 @@ offset_bottom = 40.0
 script = ExtResource("6_p57ef")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-visible = false
 z_index = -1
 y_sort_enabled = true
 texture_filter = 1
@@ -63,13 +53,10 @@ tile_map_data = PackedByteArray("AADc/9j/AQAAAAAAAADc/9n/AQAAAAAAAADc/9r/AQAAAAA
 tile_set = SubResource("TileSet_vtaks")
 
 [node name="Mage" parent="." instance=ExtResource("11_kvuet")]
-position = Vector2(3845, 537)
+position = Vector2(245, 0)
 
 [node name="spider" parent="." instance=ExtResource("12_trtic")]
-position = Vector2(-1923, 4147)
+position = Vector2(29, -250)
 
 [node name="Beholder" parent="." instance=ExtResource("13_ir15t")]
-position = Vector2(-25897, 4040)
-
-[node name="SkeletonEnemy" parent="." instance=ExtResource("12_dinhu")]
-position = Vector2(-4841, -988)
+position = Vector2(-180, 35)

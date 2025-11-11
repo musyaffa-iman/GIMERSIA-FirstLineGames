@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bks6rccbf0sni"]
+
+[ext_resource type="Script" uid="uid://d0vcgkcpjpukn" path="res://scripts/enemy/Mage/telegraph_circle.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://tdm63k0swex4" path="res://assets/circle.png" id="2_texture"]
+
+[node name="TelegraphCircle" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_texture")

@@ -1,13 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://0vq5s3xjx0s1"]
+[gd_scene load_steps=11 format=3 uid="uid://0vq5s3xjx0s1"]
 
 [ext_resource type="Script" uid="uid://q2ptla7rsxjf" path="res://scripts/player.gd" id="1_g2els"]
-[ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://icon.svg" id="2_qhqgy"]
+[ext_resource type="Script" uid="uid://crso1hkaafsq7" path="res://scripts/ability/base_ability.gd" id="2_dqkch"]
+[ext_resource type="Script" uid="uid://bd6xaxxqu7mfi" path="res://scripts/ability/dash_ability.gd" id="3_dqkch"]
+[ext_resource type="Script" uid="uid://bye0tonpmqsgp" path="res://scripts/ability/enemy_freeze_ability.gd" id="4_qlg0r"]
+[ext_resource type="PackedScene" uid="uid://drrywdbhqlsmt" path="res://scenes/mirror_clone.tscn" id="5_tuyoq"]
+[ext_resource type="Texture2D" uid="uid://k58dlpma6y56" path="res://assets/horse/southwest_horse.png" id="6_tuyoq"]
+
+[sub_resource type="Resource" id="Resource_qlg0r"]
+script = ExtResource("3_dqkch")
+metadata/_custom_type_script = "uid://bd6xaxxqu7mfi"
+
+[sub_resource type="Resource" id="Resource_tuyoq"]
+script = ExtResource("4_qlg0r")
+metadata/_custom_type_script = "uid://bye0tonpmqsgp"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qm0ti"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_qhqgy")
+"texture": ExtResource("6_tuyoq")
 }],
 "loop": true,
 "name": &"idle",
@@ -15,7 +27,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_qhqgy")
+"texture": ExtResource("6_tuyoq")
 }],
 "loop": true,
 "name": &"move",
@@ -23,16 +35,28 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fhbv5"]
-size = Vector2(32, 32)
+size = Vector2(800, 800)
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 2
 script = ExtResource("1_g2els")
+speed = 3000.0
+melee_knockback_force = 10000.0
+abilities = Array[ExtResource("2_dqkch")]([SubResource("Resource_qlg0r"), SubResource("Resource_tuyoq")])
+mirror_clone_scene = ExtResource("5_tuyoq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_qm0ti")
 animation = &"move"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_fhbv5")
+
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="RunTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]
+[connection signal="timeout" from="RunTimer" to="." method="_on_run_timer_timeout"]

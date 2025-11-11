@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://5oihy2etq5fr"]
+
+[ext_resource type="Script" uid="uid://b5m6txuujhm1y" path="res://scripts/enemy/Zombie/slash_attack.gd" id="1_3c2nd"]
+[ext_resource type="Texture2D" uid="uid://ecx65y7g831e" path="res://Sprites/Projectile/slash.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h5x2m"]
+size = Vector2(350, 800)
+
+[node name="slash" type="Area2D"]
+script = ExtResource("1_3c2nd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_h5x2m")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
