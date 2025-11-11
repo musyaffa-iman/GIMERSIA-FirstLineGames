@@ -1,10 +1,35 @@
-[gd_scene load_steps=3 format=3 uid="uid://d04qpfxwvxlx"]
+[gd_scene load_steps=7 format=3 uid="uid://d04qpfxwvxlx"]
 
 [ext_resource type="PackedScene" uid="uid://f55s8lwq7h1j" path="res://scenes/enemy/boss/base_boss.tscn" id="1_a1wow"]
 [ext_resource type="Script" uid="uid://cu54kkcrdnc7w" path="res://scripts/boss/beholder.gd" id="2_beholder"]
+[ext_resource type="Texture2D" uid="uid://c0qgwa8vtkr87" path="res://assets/enemies/Monster/Beholder.png" id="3_0h3ha"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ikva"]
+size = Vector2(1000, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xem0o"]
+atlas = ExtResource("3_0h3ha")
+region = Rect2(1250, 0, 1250, 1600)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_va5mv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xem0o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Beholder" instance=ExtResource("1_a1wow")]
-modulate = Color(0.5, 0.2, 1, 1)
 platform_on_leave = 2
 script = ExtResource("2_beholder")
 attack_cooldown = 2.5
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(-113, -11)
+shape = SubResource("RectangleShape2D_5ikva")
+
+[node name="AnimatedSprite2D" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_va5mv")

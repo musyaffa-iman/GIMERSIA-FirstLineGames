@@ -33,9 +33,10 @@ melee_damage = 25
 abilities = Array[ExtResource("3_kvpfn")]([ExtResource("4_dinhu"), ExtResource("5_kvuet")])
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(0.1, 0.1)
 
 [node name="zombie_grunt" parent="." instance=ExtResource("8_ll5lq")]
-position = Vector2(-299, 127)
+position = Vector2(4772, 3285)
 
 [node name="GameUI" type="Control" parent="."]
 process_mode = 3
@@ -54,12 +55,13 @@ tile_map_data = PackedByteArray("AADc/9j/AQAAAAAAAADc/9n/AQAAAAAAAADc/9r/AQAAAAA
 tile_set = SubResource("TileSet_vtaks")
 
 [node name="Mage" parent="." instance=ExtResource("11_kvuet")]
-position = Vector2(245, 0)
+position = Vector2(3845, 537)
 
 [node name="spider" parent="." instance=ExtResource("12_trtic")]
-position = Vector2(29, -250)
+position = Vector2(-1923, 4147)
 
 [node name="Beholder" parent="." instance=ExtResource("13_ir15t")]
 position = Vector2(-180, 35)
 
 [node name="SkeletonEnemy" parent="." instance=ExtResource("12_dinhu")]
+position = Vector2(-4841, -988)

@@ -32,7 +32,28 @@ func _on_body_entered(body: Node) -> void:
 	# only damage player group nodes
 	if body.is_in_group("player"):
 		if body.has_method("take_damage"):
-			body.take_damage(damage)
+			# Compute defender DEF if available. Use GDD player default (25) when target is player
+			var def_val: float = 1.0
+			var maybe = body.get("defense")
+			if maybe != null:
+				def_val = float(maybe)
+			elif body.is_in_group("player"):
+				def_val = 25.0
+
+			# Determine attacker's ATK (from owner_enemy if set). Use null-safe get() checks.
+			var owner_atk = 1.0
+			if owner_enemy != null:
+				var maybe_atk = owner_enemy.get("atk")
+				if maybe_atk != null:
+					owner_atk = float(maybe_atk)
+				else:
+					var maybe_ad = owner_enemy.get("attack_damage")
+					if maybe_ad != null:
+						owner_atk = float(maybe_ad)
+
+			var final = DamageCalc.calculate_damage(damage, owner_atk, def_val)
+			var dir = (body.global_position - global_position).normalized()
+			body.take_damage(final, dir)
 		queue_free()
 
 func set_owner_enemy(owner_node: Node) -> void:

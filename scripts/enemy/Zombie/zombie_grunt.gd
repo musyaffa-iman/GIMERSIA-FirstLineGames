@@ -5,10 +5,12 @@ extends Enemy
 @export var attack_range: float = 36.0
 @export var slash_scene: PackedScene
 @export var attack_cooldown: float = 1.0
+@export var attack_windup: float = 0.5
 @export var knockback_force: float = 150.0
 @export var debug_logs: bool = false
 @export var attack_buffer: float = 12.0 # extra buffer so collisions don't prevent melee triggering
 
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_timer: Timer = $AttackTimer
 var can_attack: bool = true
 
@@ -42,8 +44,6 @@ func enemy_behavior(delta: float) -> void:
 				if debug_logs:
 					print("Zombie: in attack range (dist=", dist, ") — attacking")
 				perform_attack()
-				can_attack = false
-				attack_timer.start()
 	else:
 		# idle
 		velocity = Vector2.ZERO
@@ -53,6 +53,9 @@ func perform_attack() -> void:
 		return
 	# melee: spawn a short-lived slash Area2D in front of the grunt
 	if slash_scene:
+		animated_sprite_2d.play("telegraph")
+		await get_tree().create_timer(attack_windup).timeout
+		animated_sprite_2d.play("attack")
 		var slash = slash_scene.instantiate()
 		var dir = (player.global_position - global_position).normalized()
 		if slash:
@@ -80,6 +83,11 @@ func perform_attack() -> void:
 			player.take_damage(damage)
 			if debug_logs:
 				print("Zombie: fallback attacked player for", damage)
+			
+	await get_tree().create_timer(0.2).timeout
+	animated_sprite_2d.play("idle")
+	can_attack = false
+	attack_timer.start()
 
 func _on_attack_timer_timeout() -> void:
 	can_attack = true

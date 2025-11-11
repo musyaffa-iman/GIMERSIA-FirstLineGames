@@ -1,10 +1,36 @@
-[gd_scene load_steps=3 format=3 uid="uid://ck8ofg0rug4mn"]
+[gd_scene load_steps=7 format=3 uid="uid://ck8ofg0rug4mn"]
 
-[ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://raddief/scenes/enemy/base_enemy.tscn" id="1_jeyaq"]
-[ext_resource type="Script" uid="uid://c1faap32lk8yp" path="res://raddief/scripts/enemy/skeleton/Skeleton.gd" id="2_khi1u"]
+[ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://scenes/enemy/base_enemy.tscn" id="1_jeyaq"]
+[ext_resource type="Script" uid="uid://c1faap32lk8yp" path="res://scripts/skeleton/Skeleton.gd" id="2_khi1u"]
+[ext_resource type="Texture2D" uid="uid://dym6nbmoopccc" path="res://assets/enemies/Monster/skeleton_shooter.png" id="3_khi1u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_khi1u"]
+size = Vector2(800, 1000)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fuyfl"]
+atlas = ExtResource("3_khi1u")
+region = Rect2(300, 0, 1000, 1600)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h7tu1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fuyfl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="SkeletonEnemy" instance=ExtResource("1_jeyaq")]
 script = ExtResource("2_khi1u")
+detection_range = 50000.0
+preferred_range_min = 20000.0
+preferred_range_max = 32000.0
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(-179, 0)
+shape = SubResource("RectangleShape2D_khi1u")
 
 [node name="DashTimer" type="Timer" parent="." index="2"]
 one_shot = true
@@ -17,6 +43,9 @@ one_shot = true
 
 [node name="RestTimer" type="Timer" parent="." index="5"]
 one_shot = true
+
+[node name="AnimatedSprite2D" parent="." index="6"]
+sprite_frames = SubResource("SpriteFrames_h7tu1")
 
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]

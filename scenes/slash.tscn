@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://5oihy2etq5fr"]
 
-[ext_resource type="Script" uid="uid://b5m6txuujhm1y" path="res://scripts/enemy/Zombie/slash_attack.gd" id="1_3c2nd"]
+[ext_resource type="Script" uid="uid://b5m6txuujhm1y" path="res://scripts/attacks/slash_attack.gd" id="1_3c2nd"]
 [ext_resource type="Texture2D" uid="uid://ecx65y7g831e" path="res://Sprites/Projectile/slash.png" id="2_tex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h5x2m"]

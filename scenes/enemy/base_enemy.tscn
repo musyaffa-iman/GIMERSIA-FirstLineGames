@@ -1,18 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://d1m1ventjvf1o"]
+[gd_scene load_steps=4 format=3 uid="uid://d1m1ventjvf1o"]
 
-[ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://icon.svg" id="1_jf5t1"]
 [ext_resource type="Texture2D" uid="uid://x5xqu7dwbx6p" path="res://assets/placeholder_ice.png" id="2_r8x88"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_r8x88"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_jf5t1")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_23iyx"]
 size = Vector2(32, 32)
@@ -32,10 +20,6 @@ animations = [{
 collision_layer = 2
 motion_mode = 1
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
-sprite_frames = SubResource("SpriteFrames_r8x88")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_23iyx")
 
@@ -46,16 +30,4 @@ scale = Vector2(2.125, 2)
 sprite_frames = SubResource("SpriteFrames_23iyx")
 animation = &"freeze"
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="Control"]
-texture_filter = 1
-layout_mode = 0
-offset_left = -29.0
-offset_top = -42.0
-offset_right = 38.0
-offset_bottom = -19.0
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

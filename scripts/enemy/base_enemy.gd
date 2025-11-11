@@ -3,13 +3,12 @@ extends CharacterBody2D
 class_name Enemy
 
 @export var max_health: int = 100
-@export var move_speed: float = 80.0
+@export var move_speed: float = 800.0
 @export var damage: int = 1
 @export var knockback_resistance: float = 0.5  # 0 = full knockback, 1 = no knockback
 
 @onready var player: Node2D = null
 @onready var freeze_animation: AnimatedSprite2D = $FreezeAnimation
-@onready var label: Label = $Control/Label
 
 var knockback_velocity: Vector2 = Vector2.ZERO
 var knockback_decay: float = 1000.0  # how quickly knockback fades
@@ -19,7 +18,6 @@ var invulnerability_timer: float = 0.0
 var health: int = 0
 
 func _ready() -> void:
-	label.text = name
 	health = max_health
 	player = get_tree().get_first_node_in_group("player")
 
@@ -40,6 +38,9 @@ func _physics_process(delta: float) -> void:
 	knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, knockback_decay * delta)
 	velocity += knockback_velocity
 
+	# flip sprite based on player direction
+	if player:
+		$AnimatedSprite2D.flip_h = (player.global_position.x - global_position.x) < 0
 	move_and_slide()
 
 @abstract
