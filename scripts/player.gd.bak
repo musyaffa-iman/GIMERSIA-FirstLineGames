@@ -10,13 +10,11 @@ const DASH_COOLDOWN := 1.2
 const KNOCKBACK_FORCE := 300.0
 
 # EXPORTS
-@export_group("GDD Stats")
-# GDD base stats (visible in Inspector)
-@export var max_health: int = 2500
+@export_group("Properties")
+@export var max_health: int = 2510
 @export var speed := 200.0
-@export var melee_damage := 10
-@export var atk: int = 35
-@export var defense: int = 25
+@export var melee_damage := 35
+@export var atk: int = 20
 @export var melee_knockback_force: float = 1000.0
 @export_category("Abilities")
 @export var abilities: Array[BaseAbility] = []  # Drag & drop abilities in Inspector
@@ -121,17 +119,10 @@ func check_enemy_collision():
 		if collider and collider.is_in_group("enemy"):
 			if collider.has_method("take_damage"):
 				var direction = (collider.global_position - global_position).normalized()
-				# Determine defender DEF (use enemy.defense if present, otherwise fallback to 25)
-				var def_val: float = 25.0
-				var maybe_def = collider.get("defense")
-				if maybe_def != null:
-					def_val = float(maybe_def)
-				# Compute final damage via DamageCalc and apply
-				var final = DamageCalc.calculate_damage(float(melee_damage), float(atk), def_val)
-				collider.take_damage(final, direction, melee_knockback_force)
+				collider.take_damage(melee_damage, direction, melee_knockback_force)
 				velocity = -direction * (melee_knockback_force)
 
-func take_damage(amount: int, _from_direction: Vector2 = Vector2.ZERO, _knockback_force: float = KNOCKBACK_FORCE):
+func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = KNOCKBACK_FORCE):
 	if not can_take_damage or is_dead:
 		return
 
@@ -181,7 +172,7 @@ func start_ability_cooldown(ability: BaseAbility, time: float):
 	ability.is_on_cooldown = false
 
 #region dash ability
-func start_dash(_dash_distance: float=0, _invincibility_duration: float=0):
+func start_dash(dash_distance: float=0, invincibility_duration: float=0):
 	if can_dash():
 		is_dashing = true
 		dash_timer = DASH_DURATION
@@ -194,13 +185,7 @@ func cleave_attack():
 	for enemy in enemies:
 		if global_position.distance_to(enemy.global_position) <= cleave_radius:
 			var direction = (enemy.global_position - global_position).normalized()
-			# Determine defender DEF (use enemy.defense if present, otherwise fallback to 25)
-			var def_val: float = 25.0
-			var maybe_def = enemy.get("defense")
-			if maybe_def != null:
-				def_val = float(maybe_def)
-			var final = DamageCalc.calculate_damage(float(melee_damage), float(atk), def_val)
-			enemy.take_damage(final, direction, melee_knockback_force)
+			enemy.take_damage(melee_damage, direction, melee_knockback_force)
 #endregion
 
 #region mirror mirror ability
@@ -238,18 +223,11 @@ func spawn_rotating_shell(duration: float, shell_scene: PackedScene):
 
 #region stunning stomp ability
 func create_stomp_effect(radius: float, damage_multiplier: float= 1.0):
-	var _duration = 0.75
+	var duration = 0.75
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	for enemy in enemies:
 		if global_position.distance_to(enemy.global_position) <= radius:
-			# Compute final damage using DamageCalc with scaled base value
-			var base_val = float(melee_damage) * float(damage_multiplier)
-			var def_val: float = 25.0
-			var maybe_def = enemy.get("defense")
-			if maybe_def != null:
-				def_val = float(maybe_def)
-			var final = DamageCalc.calculate_damage(base_val, float(atk), def_val)
-			enemy.take_damage(final, (enemy.global_position - global_position).normalized(), melee_knockback_force)
+			enemy.take_damage(int(melee_damage * damage_multiplier), (enemy.global_position - global_position).normalized(), melee_knockback_force)
 #endregion
 
 #region vacuum magic ability

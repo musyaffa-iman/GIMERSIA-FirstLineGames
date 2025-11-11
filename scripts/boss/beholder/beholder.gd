@@ -69,6 +69,18 @@ var strikes_completed: int = 0
 var is_transformed: bool = false
 var anchor_position: Vector2 = Vector2.ZERO
 
+func _get_valid_player():
+	"""Return a valid player node or null. Re-acquires from group if original was freed."""
+	if player and is_instance_valid(player):
+		return player
+	var nodes = get_tree().get_nodes_in_group("player")
+	if nodes.size() > 0:
+		var p = nodes[0]
+		if is_instance_valid(p):
+			player = p
+			return player
+	return null
+
 func _ready() -> void:
 	# Apply GDD HP before base setup
 	max_health = 100
@@ -108,7 +120,7 @@ func _ready() -> void:
 		if _a and _a is PackedScene:
 			eye_aberration_scene = _a
 
-func enemy_behavior(delta: float) -> void:
+func enemy_behavior(_delta: float) -> void:
 	if not player or not is_instance_valid(player):
 		return
 	
@@ -239,7 +251,12 @@ func perform_lightning_strike() -> void:
 	strikes_completed = 0
 	is_telegraphing_strike = true
 	strike_timer = 0.0
-	strike_target_position = player.global_position
+	var _p = _get_valid_player()
+	if _p:
+		strike_target_position = _p.global_position
+	else:
+		# Fallback to anchor position if player is not available
+		strike_target_position = anchor_position
 	current_attack_type = "lightning_strike"
 	print("Beholder: Starting Lightning Strike attack (3x)")
 	
@@ -287,10 +304,14 @@ func perform_eye_beam() -> void:
 	if beam:
 		# Position laser at Beholder's location
 		beam.global_position = global_position
-		
-		# Calculate direction toward player
-		var dir_to_player = (player.global_position - global_position).normalized()
-		
+		# Calculate direction toward player (safely)
+		var _p = _get_valid_player()
+		if not _p:
+			print("Beholder: No valid player to aim eye beam at; cancelling.")
+			return
+
+		var dir_to_player = (_p.global_position - global_position).normalized()
+
 		# Rotate laser to point toward player
 		beam.rotation = dir_to_player.angle()
 		
@@ -378,7 +399,13 @@ func update_lightning_orb_spawn(delta: float) -> void:
 			var orb = lightning_orb_scene.instantiate()
 			if orb:
 				orb.global_position = global_position
-				var dir = (player.global_position - global_position).normalized()
+				var _p = _get_valid_player()
+				if not _p:
+					# If player is gone, cancel the orb attack
+					current_attack_type = ""
+					return
+
+				var dir = (_p.global_position - global_position).normalized()
 				
 				if orb.has_method("set_velocity"):
 					orb.set_velocity(dir * lightning_orb_speed)
@@ -421,10 +448,14 @@ func update_lightning_strike_spawn(delta: float) -> void:
 			current_attack_type = ""
 			is_telegraphing_strike = false
 		else:
-			# Start next telegraph
+			# Start next telegraph; pick a safe target (player if valid, otherwise anchor)
 			is_telegraphing_strike = true
 			strike_timer = 0.0
-			strike_target_position = player.global_position
+			var _p = _get_valid_player()
+			if _p:
+				strike_target_position = _p.global_position
+			else:
+				strike_target_position = anchor_position
 			start_lightning_strike_telegraph()
 
 func start_lightning_strike_telegraph() -> void:
@@ -434,7 +465,8 @@ func start_lightning_strike_telegraph() -> void:
 	
 	var telegraph = lightning_strike_telegraph_scene.instantiate()
 	if telegraph:
-		telegraph.global_position = player.global_position
+		# Use the prepared strike_target_position (safer than querying player directly)
+		telegraph.global_position = strike_target_position
 		# Make it red for danger telegraph
 		if telegraph.has_node("Sprite2D"):
 			telegraph.get_node("Sprite2D").modulate = Color.RED
@@ -442,7 +474,7 @@ func start_lightning_strike_telegraph() -> void:
 			telegraph.lifetime = lightning_strike_telegraph_duration
 		get_tree().current_scene.add_child(telegraph)
 		strike_telegraph_instance = telegraph
-		print("Beholder: Telegraph strike #", strikes_completed + 1, " at ", player.global_position)
+		print("Beholder: Telegraph strike #", strikes_completed + 1, " at ", strike_target_position)
 
 func spawn_lightning_strike() -> void:
 	"""Spawn the actual lightning strike damage area"""

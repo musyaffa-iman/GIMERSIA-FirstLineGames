@@ -21,6 +21,13 @@ func _ready() -> void:
 	attack_timer.wait_time = attack_cooldown
 
 func enemy_behavior(delta: float) -> void:
+	# Guard: player may be freed (scene change, player death). Avoid accessing freed objects.
+	if not player or not is_instance_valid(player):
+		if debug_logs:
+			print("Zombie: no valid player - skipping behavior")
+		velocity = Vector2.ZERO
+		return
+
 	if debug_logs:
 		print("Zombie: _physics_process tick; player valid?", player and is_instance_valid(player))
 
@@ -49,7 +56,10 @@ func enemy_behavior(delta: float) -> void:
 		velocity = Vector2.ZERO
 	
 func perform_attack() -> void:
-	if not player:
+	# Ensure player reference is valid before using it (may have been freed)
+	if not player or not is_instance_valid(player):
+		if debug_logs:
+			print("Zombie: perform_attack aborted - player invalid")
 		return
 	# melee: spawn a short-lived slash Area2D in front of the grunt
 	if slash_scene:

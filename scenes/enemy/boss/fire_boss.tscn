@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://uytgyhf7bac5"]
+
+[ext_resource type="PackedScene" uid="uid://f55s8lwq7h1j" path="res://Scenes/enemy/boss/base_boss.tscn" id="1_a1wow"]
+[ext_resource type="Script" uid="uid://d0nxy5ntwsnf0" path="res://scripts/enemy/boss/fire_boss.gd" id="2_3de36"]
+[ext_resource type="PackedScene" uid="uid://oc6cvwqyxswh" path="res://Scenes/attacks/fireball.tscn" id="3_34un5"]
+
+[node name="Fire Boss" instance=ExtResource("1_a1wow")]
+modulate = Color(1, 0, 0, 1)
+script = ExtResource("2_3de36")
+fireball_scene = ExtResource("3_34un5")

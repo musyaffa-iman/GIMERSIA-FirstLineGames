@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://bhpim45w0sgya"]
+
+[ext_resource type="Script" uid="uid://bt208n6w48pp3" path="res://scripts/enemy/Mage/cult_mage.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://icon.svg" id="2_8boov"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_onhd1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_8boov")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="rect"]
+size = Vector2(128, 128)
+
+[node name="Mage" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
+script = ExtResource("1_script")
+max_health = 80
+damage = 15
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 0.40784314, 0, 1)
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_onhd1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.25, 0.25)
+shape = SubResource("rect")
