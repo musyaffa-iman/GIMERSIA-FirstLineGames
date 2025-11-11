@@ -15,6 +15,7 @@ extends Enemy
 @export var preferred_range_max: float = 320.0
 @export var debug_logs: bool = false
 @export var arrow_spawn_distance: float = 24.0
+@export var shoot_windup_time: float = 0.3
 @export var dash_speed: float = 500.0
 @export var dash_duration: float = 0.1
 @export var dash_cooldown: float = 5.0
@@ -28,6 +29,7 @@ var is_dashing: bool = false
 var dash_ready: bool = true
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown_timer: Timer = $DashCooldownTimer
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 # State machine variables
 var can_shoot: bool = true
@@ -110,6 +112,7 @@ func shoot_behavior(delta: float) -> void:
 	# Handle shooting state machine
 	if not is_resting:
 		if can_shoot and arrows_shot < MAX_ARROWS:
+			animated_sprite_2d.play("attack")
 			# Line-of-sight check (optional)
 			var can_fire := true
 			if use_los_check and player:
@@ -120,6 +123,9 @@ func shoot_behavior(delta: float) -> void:
 				shoot_timer.wait_time = SHOOT_INTERVAL
 				shoot_timer.start()
 				arrows_shot += 1
+		else:
+			await get_tree().create_timer(shoot_windup_time).timeout
+			animated_sprite_2d.play("idle")
 
 func shoot_arrow():
 	if not arrow_scene or not player:

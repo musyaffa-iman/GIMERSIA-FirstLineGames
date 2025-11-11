@@ -12,6 +12,8 @@ extends Enemy
 @export var dark_pillar_scene: PackedScene = null
 @export var telegraph_circle_scene: PackedScene = null
 
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+
 # State machine
 var is_telegraphing: bool = false
 var can_attack: bool = true
@@ -22,10 +24,6 @@ var telegraph_instance: Node2D = null
 
 func enemy_behavior(delta: float) -> void:
 	velocity = Vector2.ZERO
-	
-	# Always face the player
-	var direction_to_player = player.global_position - global_position
-	rotation = direction_to_player.angle()
 	
 	# Check if player is in range
 	var distance_to_player = global_position.distance_to(player.global_position)
@@ -55,6 +53,7 @@ func enemy_behavior(delta: float) -> void:
 			start_telegraph()
 
 func start_telegraph():
+	animated_sprite_2d.play("telegraph")
 	is_telegraphing = true
 	telegraph_timer = 0.0
 	
@@ -103,6 +102,8 @@ func spawn_dark_pillar():
 		pillar.set_owner_enemy(self)
 	
 	print("Mage: Dark pillar spawned at ", target_position)
+
+	animated_sprite_2d.play("idle")
 
 func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = 300.0) -> void:
 	# Visual feedback

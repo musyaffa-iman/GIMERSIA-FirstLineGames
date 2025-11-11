@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ci8pm6mu8okyc"]
+[gd_scene load_steps=10 format=3 uid="uid://ci8pm6mu8okyc"]
 
 [ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://scenes/enemy/base_enemy.tscn" id="1_hhdkm"]
 [ext_resource type="Script" uid="uid://bt208n6w48pp3" path="res://scripts/enemy/Mage/cult_mage.gd" id="1_script"]
@@ -13,6 +13,10 @@ size = Vector2(800, 1200)
 atlas = ExtResource("5_whvh0")
 region = Rect2(0, 0, 1000, 1600)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_o10pu"]
+atlas = ExtResource("5_whvh0")
+region = Rect2(1000, 0, 1000, 1600)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_o10pu"]
 animations = [{
 "frames": [{
@@ -20,7 +24,15 @@ animations = [{
 "texture": SubResource("AtlasTexture_whvh0")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o10pu")
+}],
+"loop": true,
+"name": &"telegraph",
 "speed": 5.0
 }]
 
@@ -38,3 +50,5 @@ shape = SubResource("RectangleShape2D_whvh0")
 
 [node name="AnimatedSprite2D" parent="." index="2"]
 sprite_frames = SubResource("SpriteFrames_o10pu")
+animation = &"telegraph"
+autoplay = "idle"

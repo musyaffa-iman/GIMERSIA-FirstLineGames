@@ -18,6 +18,8 @@ extends Enemy
 
 @export var debug_logs: bool = false
 
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+
 var exploded: bool = false
 
  
@@ -59,6 +61,10 @@ func explode() -> void:
 	if debug_logs:
 		print("SpiderBomb: exploding at", global_position)
 
+	animated_sprite_2d.play("telegraph_1")
+	await get_tree().create_timer(0.5).timeout  # brief delay before explosion
+	animated_sprite_2d.play("telegraph_2")
+	await get_tree().create_timer(0.5).timeout  # brief delay before explosion
 	# Spawn visual explosion effect with particles
 	if not explosion_scene:
 		var _e = load("res://Scenes/attacks/explosion.tscn")
@@ -128,5 +134,3 @@ func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_
 		if debug_logs:
 			print("SpiderBomb: killed — exploding before death")
 		explode()
-	# Delegate to base for knockback/invulnerability and normal death handling
-	super.take_damage(amount, from_direction, knockback_force)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dfw0qo5164s3w"]
+[gd_scene load_steps=10 format=3 uid="uid://dfw0qo5164s3w"]
 
 [ext_resource type="Script" uid="uid://jcgc08hi20yf" path="res://scripts/enemy/Spider/spider_bomb.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://scenes/enemy/base_enemy.tscn" id="1_xtqu1"]
@@ -8,18 +8,42 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pf1qy"]
 size = Vector2(800, 1000)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pf1qy"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_iq8wq"]
 atlas = ExtResource("3_pf1qy")
-region = Rect2(600, 0, 1200, 1600)
+region = Rect2(6400, 0, 1200, 1600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nt8et"]
+atlas = ExtResource("3_pf1qy")
+region = Rect2(5300, 0, 1100, 1600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scdb1"]
+atlas = ExtResource("3_pf1qy")
+region = Rect2(4100, 0, 1200, 1600)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_iq8wq"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pf1qy")
+"texture": SubResource("AtlasTexture_iq8wq")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nt8et")
+}],
+"loop": true,
+"name": &"telegraph_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scdb1")
+}],
+"loop": true,
+"name": &"telegraph_2",
 "speed": 5.0
 }]
 
@@ -33,3 +57,5 @@ shape = SubResource("RectangleShape2D_pf1qy")
 
 [node name="AnimatedSprite2D" parent="." index="2"]
 sprite_frames = SubResource("SpriteFrames_iq8wq")
+animation = &"idle"
+autoplay = "idle"
