@@ -4,5 +4,6 @@
 
 [resource]
 script = ExtResource("1_s6h50")
+radius = 10000.0
 ability_name = "Enemy Freeze"
 metadata/_custom_type_script = "uid://bye0tonpmqsgp"

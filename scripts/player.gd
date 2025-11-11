@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 # CONSTANTS
 const ACCELERATION = 10.0
-const DASH_SPEED := 700.0
+const DASH_SPEED := 10000.0
 const DASH_DURATION := 0.2
 const DASH_COOLDOWN := 1.2
 
@@ -15,6 +15,10 @@ const KNOCKBACK_FORCE := 300.0
 @export var speed := 200.0
 @export var melee_damage := 35
 @export var melee_knockback_force: float = 1000.0
+@export_group("Run State")
+@export var run_threshold_time: float = 5.0         # seconds of continuous movement required
+@export var run_speed_multiplier: float = 1.5
+@export var run_damage_multiplier: float = 1.5
 @export_category("Abilities")
 @export var abilities: Array[BaseAbility] = []  # Drag & drop abilities in Inspector
 @export var ability_keys := ["ability_1", "ability_2"] # Input names for abilities
@@ -24,6 +28,7 @@ signal update_health(current_health, max_health)
 
 @onready var invulnerability_timer: Timer = $InvulnerabilityTimer
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var run_timer: Timer = $RunTimer
 
 # PLAYER STATE
 var current_health: int
@@ -39,9 +44,18 @@ var dash_cooldown_timer := 0.0
 var input : Vector2
 var facing_direction : Vector2 = Vector2.RIGHT
 
+var is_running: bool = false
+var _base_speed: float
+var _base_melee_damage: int
+
 func _ready():
 	current_health = max_health
 	update_health.emit(current_health, max_health)
+
+	_base_speed = speed
+	_base_melee_damage = melee_damage
+	run_timer.wait_time = run_threshold_time
+
 
 func _process(delta):
 	if is_dead:
@@ -54,6 +68,8 @@ func _process(delta):
 	check_enemy_collision()
 
 	handle_ability_input()
+
+	update_run_state(delta)
 
 func handle_input():
 	input = get_movement_input()
@@ -99,7 +115,7 @@ func handle_movement_and_animation():
 	if is_dashing:
 		velocity = input * DASH_SPEED
 	else:
-		velocity = lerp(velocity, input * speed, ACCELERATION * get_process_delta_time())
+		velocity = input * speed
 
 	move_and_slide()
 
@@ -117,6 +133,8 @@ func check_enemy_collision():
 
 		if collider and collider.is_in_group("enemy"):
 			if collider.has_method("take_damage"):
+				is_dashing = false
+				stop_running()
 				var direction = (collider.global_position - global_position).normalized()
 				collider.take_damage(melee_damage, direction, melee_knockback_force)
 				velocity = -direction * (melee_knockback_force)
@@ -124,6 +142,17 @@ func check_enemy_collision():
 func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = KNOCKBACK_FORCE):
 	if not can_take_damage or is_dead:
 		return
+	can_take_damage = false
+	
+	stop_running()
+
+	get_tree().paused = true
+	await get_tree().create_timer(0.05).timeout
+	get_tree().paused = false
+
+	var camera = get_viewport().get_camera_2d()
+	if camera:
+		camera.start_shake(1.0)
 
 	modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
@@ -138,7 +167,6 @@ func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_
 	modulate = Color.WHITE
 	print("Player took ", amount, " damage!, Current health: ", current_health - amount)
 	current_health -= amount
-	can_take_damage = false
 	invulnerability_timer.start()
 	emit_signal("update_health", current_health, max_health)
 
@@ -156,6 +184,31 @@ func die():
 func play_animation_if_not_playing(anim_name: String):
 	if animated_sprite.animation != anim_name:
 		animated_sprite.play(anim_name)
+
+func update_run_state(delta):
+	if input != Vector2.ZERO:
+		if not is_running:
+			if not run_timer.is_stopped():
+				# Timer is already running
+				pass
+			else:
+				run_timer.start()
+		else:
+			# Already running
+			pass
+	else:
+		# Reset running state
+		if is_running:
+			stop_running()
+		run_timer.stop()
+		run_timer.start()  # Restart timer when player stops moving
+
+func stop_running():
+	is_running = false
+	speed = _base_speed
+	melee_damage = _base_melee_damage
+	run_timer.stop()
+	run_timer.start()
 
 #region Abilities
 func handle_ability_input():
@@ -248,3 +301,10 @@ func throw_vacuum_field(vacuum_field: VacuumField, distance: float):
 func _on_invulnerability_timer_timeout() -> void:
 	can_take_damage = true
 	is_hurt = false
+
+
+func _on_run_timer_timeout() -> void:
+	is_running = true
+	speed = _base_speed * run_speed_multiplier
+	melee_damage = int(_base_melee_damage * run_damage_multiplier)
+	print("Player is now running! Speed and damage increased.")

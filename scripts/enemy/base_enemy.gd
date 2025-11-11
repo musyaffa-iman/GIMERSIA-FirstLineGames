@@ -49,6 +49,19 @@ func enemy_behavior(delta: float) -> void
 func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = 300.0) -> void:
 	if invulnerable:
 		return
+		
+	invulnerable = true
+	invulnerability_timer = invulnerability_time
+
+	get_tree().paused = true
+	await get_tree().create_timer(0.02).timeout
+	get_tree().paused = false
+
+	health -= amount
+	#print("Enemy ", self.name, " took ", amount, " damage! Current health: ", health)
+	apply_knockback(from_direction, knockback_force)
+	if health <= 0:
+		die()
 
 	# blink red to show damage taken
 	modulate = Color.RED
@@ -62,14 +75,6 @@ func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_
 	modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
 	modulate = Color.WHITE
-	health -= amount
-	#print("Enemy ", self.name, " took ", amount, " damage! Current health: ", health)
-	apply_knockback(from_direction, knockback_force)
-	if health <= 0:
-		die()
-
-	invulnerable = true
-	invulnerability_timer = invulnerability_time
 	
 func apply_knockback(from_direction: Vector2, force: float) -> void:
 	knockback_velocity = from_direction.normalized() * force * (1.0 - knockback_resistance)

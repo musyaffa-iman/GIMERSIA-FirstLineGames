@@ -215,7 +215,7 @@ func perform_bite() -> void:
 	
 	# Apply damage and knockback
 	player.take_damage(final_damage, direction, bite_knockback)
-	print("Beholder: BITE! Damage=", final_damage)
+	#print("Beholder: BITE! Damage=", final_damage)
 
 func perform_lightning_orb() -> void:
 	"""Shoot 5 lightning orbs over 1 second (0.2s intervals)"""
@@ -227,7 +227,7 @@ func perform_lightning_orb() -> void:
 	orb_count = 0
 	orb_spawn_timer = 0.0
 	current_attack_type = "lightning_orb"
-	print("Beholder: Starting Lightning Orb attack")
+	#print("Beholder: Starting Lightning Orb attack")
 
 func perform_lightning_strike() -> void:
 	"""Telegraph and strike 3 times at player location"""
@@ -241,7 +241,7 @@ func perform_lightning_strike() -> void:
 	strike_timer = 0.0
 	strike_target_position = player.global_position
 	current_attack_type = "lightning_strike"
-	print("Beholder: Starting Lightning Strike attack (3x)")
+	#print("Beholder: Starting Lightning Strike attack (3x)")
 	
 	# Start first telegraph
 	start_lightning_strike_telegraph()
@@ -275,7 +275,7 @@ func perform_lightning_burst() -> void:
 			
 			get_tree().current_scene.add_child(orb)
 	
-	print("Beholder: Lightning Burst! Fired ", num_projectiles, " orbs")
+	#print("Beholder: Lightning Burst! Fired ", num_projectiles, " orbs")
 
 func perform_eye_beam() -> void:
 	"""Fire laser beam across the map toward player"""
@@ -304,7 +304,7 @@ func perform_eye_beam() -> void:
 		
 		get_tree().current_scene.add_child(beam)
 	
-	print("Beholder: Eye Beam (laser) fired!")
+	#print("Beholder: Eye Beam (laser) fired!")
 
 func transform_to_eye_aberration() -> void:
 	"""Transform into massive Eye of Aberration (Phase 3)"""
@@ -346,7 +346,7 @@ func enter_phase_two() -> void:
 	# Increase attack frequency
 	attack_cooldown *= 0.8
 	
-	print("Beholder: PHASE TWO! More dangerous attacks incoming!")
+	#print("Beholder: PHASE TWO! More dangerous attacks incoming!")
 
 func enter_phase_three() -> void:
 	"""Transition to Phase 3 at 25% HP"""
@@ -356,7 +356,7 @@ func enter_phase_three() -> void:
 	# Keep anchor position at current location
 	anchor_position = global_position
 	
-	print("Beholder: PHASE THREE! Preparing Eye of Aberration transformation!")
+	#print("Beholder: PHASE THREE! Preparing Eye of Aberration transformation!")
 
 func _physics_process(delta: float) -> void:
 	# Update timers for ongoing attacks
@@ -442,7 +442,7 @@ func start_lightning_strike_telegraph() -> void:
 			telegraph.lifetime = lightning_strike_telegraph_duration
 		get_tree().current_scene.add_child(telegraph)
 		strike_telegraph_instance = telegraph
-		print("Beholder: Telegraph strike #", strikes_completed + 1, " at ", player.global_position)
+		#print("Beholder: Telegraph strike #", strikes_completed + 1, " at ", player.global_position)
 
 func spawn_lightning_strike() -> void:
 	"""Spawn the actual lightning strike damage area"""
@@ -462,7 +462,7 @@ func spawn_lightning_strike() -> void:
 			strike.set_owner_enemy(self)
 		
 		get_tree().current_scene.add_child(strike)
-		print("Beholder: Lightning strike #", strikes_completed + 1, " spawned at ", strike_target_position)
+		#print("Beholder: Lightning strike #", strikes_completed + 1, " spawned at ", strike_target_position)
 
 func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = 300.0) -> void:
 	# Beholder cannot be damaged from the front
@@ -478,7 +478,7 @@ func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_
 	# Delegate to base Enemy (damage already computed by attacker using DamageCalc)
 	super.take_damage(amount, from_direction, knockback_force)
 	
-	print("Beholder took ", amount, " damage. HP: ", health)
+	#print("Beholder took ", amount, " damage. HP: ", health)
 
 func die() -> void:
 	print("Beholder defeated!")

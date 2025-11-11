@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://cbuu8aicue6gp"]
+[gd_scene load_steps=16 format=4 uid="uid://cbuu8aicue6gp"]
 
 [ext_resource type="Script" uid="uid://ct067bs7jk6md" path="res://scripts/game.gd" id="1_iywne"]
 [ext_resource type="PackedScene" uid="uid://0vq5s3xjx0s1" path="res://scenes/player.tscn" id="1_uwrxv"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://ck8ofg0rug4mn" path="res://scenes/enemy/skeleton_enemy.tscn" id="12_dinhu"]
 [ext_resource type="PackedScene" uid="uid://dfw0qo5164s3w" path="res://scenes/enemy/spider.tscn" id="12_trtic"]
 [ext_resource type="PackedScene" uid="uid://d04qpfxwvxlx" path="res://scenes/enemy/boss/beholder.tscn" id="13_ir15t"]
+[ext_resource type="Script" uid="uid://v2x2lfyg6dm5" path="res://scripts/camera_2d.gd" id="13_kvuet"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gee14"]
 texture = ExtResource("8_gee14")
@@ -29,11 +30,18 @@ script = ExtResource("1_iywne")
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_uwrxv")]
 position = Vector2(1, 0)
 max_health = 1000
-melee_damage = 25
+melee_damage = 10
+melee_knockback_force = 5000.0
 abilities = Array[ExtResource("3_kvpfn")]([ExtResource("4_dinhu"), ExtResource("5_kvuet")])
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(-1, 0)
 zoom = Vector2(0.1, 0.1)
+position_smoothing_enabled = true
+position_smoothing_speed = 50.0
+script = ExtResource("13_kvuet")
+shake_decay = 20.0
+shake_strength = 50.0
 
 [node name="zombie_grunt" parent="." instance=ExtResource("8_ll5lq")]
 position = Vector2(4772, 3285)
@@ -61,7 +69,7 @@ position = Vector2(3845, 537)
 position = Vector2(-1923, 4147)
 
 [node name="Beholder" parent="." instance=ExtResource("13_ir15t")]
-position = Vector2(-1607, 172)
+position = Vector2(-25897, 4040)
 
 [node name="SkeletonEnemy" parent="." instance=ExtResource("12_dinhu")]
 position = Vector2(-4841, -988)

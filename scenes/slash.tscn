@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ecx65y7g831e" path="res://Sprites/Projectile/slash.png" id="2_tex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h5x2m"]
-size = Vector2(343, 804)
+size = Vector2(350, 800)
 
 [node name="slash" type="Area2D"]
 script = ExtResource("1_3c2nd")
@@ -14,7 +14,6 @@ scale = Vector2(2, 2)
 texture = ExtResource("2_tex")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-30.5, 3)
 shape = SubResource("RectangleShape2D_h5x2m")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
