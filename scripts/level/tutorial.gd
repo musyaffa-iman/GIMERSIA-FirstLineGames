@@ -64,6 +64,7 @@ func _process(delta: float) -> void:
 		resets()
 
 func updatekeys():
+	$GUI.update(0)
 	if KEYA :
 		$RoomEffect/SpeedUp/Area.visible = false
 	elif !KEYA :

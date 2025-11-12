@@ -2,6 +2,8 @@ extends Control
 
 @onready var menu_music: AudioStreamPlayer2D = $AudioStreamPlayer2D if has_node("AudioStreamPlayer2D") else null
 
+var clicked
+
 func _ready() -> void:
 	# Ensure the menu music is playing. If the underlying AudioStream resource supports looping,
 	# enable it on the resource itself (AudioStreamPlayer2D does not expose `loop`).
@@ -42,7 +44,11 @@ func _on_play_pressed() -> void:
 	# Stop menu music (instant stop). For a fade, implement a coroutine.
 	if menu_music and menu_music.playing:
 		menu_music.stop()
-	# Change to Level1 scene
+	# Change to Tutorial scene
+	$AnimationPlayer.play("Fade_out")
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	var level_path := "res://scenes/Level/Tutorial.tscn"
 	if ResourceLoader.exists(level_path):
 		get_tree().change_scene_to_file(level_path)
