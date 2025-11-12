@@ -1,6 +1,9 @@
+<<<<<<< Updated upstream
 [gd_scene load_steps=22 format=4 uid="uid://dglfonokgbbb8"]
+=======
+[gd_scene load_steps=19 format=4 uid="uid://dglfonokgbbb8"]
+>>>>>>> Stashed changes
 
-[ext_resource type="Script" uid="uid://dg7rd4vddae6" path="res://scripts/level/tutorial.gd" id="1_3aekd"]
 [ext_resource type="Texture2D" uid="uid://c6lebdos0tx2j" path="res://assets/Tileset/breakable_wall.png" id="2_khw7m"]
 [ext_resource type="Texture2D" uid="uid://dxe3m02eapq3d" path="res://assets/Tileset/brick_wall.png" id="4_cd1f0"]
 [ext_resource type="Texture2D" uid="uid://b4yyl10yme1pc" path="res://assets/Tileset/floors.png" id="5_k83s3"]
@@ -76,8 +79,7 @@ sources/2 = SubResource("TileSetAtlasSource_l206y")
 sources/3 = SubResource("TileSetAtlasSource_ei5ly")
 sources/4 = SubResource("TileSetAtlasSource_m6ekv")
 
-[node name="Tutorial" type="Node2D"]
-script = ExtResource("1_3aekd")
+[node name="Level2" type="Node2D"]
 
 [node name="Ground" type="TileMapLayer" parent="."]
 y_sort_enabled = true

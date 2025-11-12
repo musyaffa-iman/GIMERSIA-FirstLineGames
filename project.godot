@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GIMERSIA FirstLineGames"
-run/main_scene="uid://cbuu8aicue6gp"
+run/main_scene="uid://cd86k2ecatib8"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 

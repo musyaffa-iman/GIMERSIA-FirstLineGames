@@ -252,9 +252,10 @@ func reset():
 	current_health = max_health
 
 func die():
-	is_dead = true
 	velocity = Vector2.ZERO
+	is_dead = true
 	print("Player has died.")
+<<<<<<< Updated upstream
 	# Play a one-shot ambient SFX (ambients3) at the player's location.
 	# Add the player as a sibling so the sound continues after the player node is freed.
 	var stream = ResourceLoader.load("res://assets/audio/sfx/ambients3.wav")
@@ -273,6 +274,10 @@ func die():
 		ap.connect("finished", Callable(ap, "queue_free"))
 
 	queue_free()
+=======
+	if get_parent().has_method("resets") :
+		get_parent().resets()
+>>>>>>> Stashed changes
 	#play_animation_if_not_playing("death")
 
 func play_animation_if_not_playing(anim_name: String):

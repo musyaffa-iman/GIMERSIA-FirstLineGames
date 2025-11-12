@@ -39,7 +39,7 @@ animations = [{
 [node name="SkeletonEnemy" instance=ExtResource("1_jeyaq")]
 script = ExtResource("2_khi1u")
 arrow_speed = 3000.0
-detection_range = 50000.0
+detection_range = 10000.0
 preferred_range_min = 20000.0
 preferred_range_max = 32000.0
 dash_speed = 5000.0

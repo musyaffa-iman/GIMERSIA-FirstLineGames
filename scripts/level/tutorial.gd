@@ -10,10 +10,12 @@ onready var spawnpoints = $Spawnpoint
 var zombiescene = preload("res://scenes/enemy/zombie_grunt.tscn")
 var magescene = preload("res://scenes/enemy/mage.tscn")
 var skeletonscene = preload("res://scenes/enemy/skeleton_enemy.tscn")
+var level1scene = preload("res://scenes/Level/Level1.tscn")
 var enemylist = []
+var enemypool = []
 var time_speed : int = 1
 var time_left : int = 60
-var keys = false
+var KEYA = false
 
 ## Jarak deteksi dalam 'tile'. 
 @export var detection_radius: int = 2
@@ -57,17 +59,33 @@ func spawnmonster():
 		elif enemylist[i] == 1 : newMonster = skeletonscene.instantiate()
 		else : newMonster = magescene.instantiate()
 		newMonster.position = spawnpos.get_position()
+		enemypool.push_front(newMonster)
 		add_child(newMonster)
 
 func _process(delta: float) -> void:
 	times.set_text(str(time_left))
 	if time_left <= 0 :
-		time_left = 60
-		$Timer.start(1)
-		time_speed = 1
-		player.reset()
-		spawnmonster()
-		player.position = $Spawnpoint/PlayerSpawn.get_position()
+		resets()
+
+func updatekeys():
+	if KEYA :
+		$RoomEffect/SpeedUp/Area.visible = false
+	elif !KEYA :
+		$RoomEffect/SpeedUp/Area.visible = true
+
+func resets():
+	time_left = 60
+	if player.is_dead : 
+		KEYA = false
+		player.is_dead = false
+	$Timer.start(1)
+	time_speed = 1
+	player.reset()
+	for i in range(enemypool.size()) :
+		if enemypool[i] != null :
+			enemypool[i].queue_free()
+	spawnmonster()
+	player.position = $Spawnpoint/PlayerSpawn.get_position()
 
 func _physics_process(delta):
 	if not is_instance_valid(player) or not is_instance_valid(walls_layer):
@@ -134,16 +152,31 @@ func _set_low_health_state(enabled: bool) -> void:
 
 func _on_next_level_body_entered(body: Node2D) -> void:
 	if body.name == "Player" :
-		get_tree().change_scene_to_packed(load("res://scenes/Level/Level1.tscn"))
+		var tree = get_tree()
+		var cur = get_tree().get_current_scene()
+		var next = level1scene.instantiate()
+		tree.get_root().remove_child(cur)
+		tree.get_root().add_child(next)
+		tree.set_current_scene(next)
 
 func _on_timer_timeout() -> void:
 	time_left -= time_speed
 
 func _on_speed_up_body_entered(body: Node2D) -> void:
 	if body.name == "Player" :
-		time_speed = 3
-		$Timer.start(0.1)
+		if !KEYA :
+			time_speed = 13
+			$Timer.start(0.1)
 
 func _on_speed_up_body_exited(body: Node2D) -> void:
+	if body.name == "Player" :
+		time_speed = 1
+
+func _on_speed_up_2_body_entered(body: Node2D) -> void:
+	if body.name == "Player" :
+		time_speed = 7
+		$Timer.start(0.01)
+
+func _on_speed_up_2_body_exited(body: Node2D) -> void:
 	if body.name == "Player" :
 		time_speed = 1

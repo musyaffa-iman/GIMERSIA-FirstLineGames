@@ -39,7 +39,7 @@ animations = [{
 
 [node name="Mage" instance=ExtResource("1_hhdkm")]
 script = ExtResource("1_script")
-detection_range = 35000.0
+detection_range = 10000.0
 dark_pillar_scene = ExtResource("3_l527s")
 telegraph_circle_scene = ExtResource("4_whvh0")
 max_health = 13

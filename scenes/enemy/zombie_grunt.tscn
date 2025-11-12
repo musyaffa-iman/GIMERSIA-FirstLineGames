@@ -4,10 +4,13 @@
 [ext_resource type="Script" uid="uid://bo3h24dhm0ra0" path="res://scripts/enemy/Zombie/zombie_grunt.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://3eqqpbukxgmt" path="res://assets/Monster/Zombie_Grunt.png" id="3_r8q23"]
 [ext_resource type="PackedScene" uid="uid://5oihy2etq5fr" path="res://scenes/attacks/slash.tscn" id="3_ywiqp"]
+<<<<<<< Updated upstream
 [ext_resource type="PackedScene" uid="uid://cbnkhmycyihnf" path="res://scenes/polyphonic_audio_player.tscn" id="5_rbm15"]
 [ext_resource type="Script" uid="uid://mg3clxcy0rhq" path="res://scripts/audio/AudioLibrary.gd" id="6_v5puu"]
 [ext_resource type="Script" uid="uid://bcnpyl8t252dq" path="res://scripts/audio/soundEffect.gd" id="7_6mvy4"]
 [ext_resource type="AudioStream" uid="uid://dvrb2tc55s08e" path="res://assets/audio/sfx/zombie_grunt1.wav" id="8_e8q4h"]
+=======
+>>>>>>> Stashed changes
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r8q23"]
 size = Vector2(800, 1000)
@@ -63,7 +66,7 @@ metadata/_custom_type_script = "uid://mg3clxcy0rhq"
 
 [node name="ZombieGrunt" instance=ExtResource("1_o2hik")]
 script = ExtResource("1_script")
-detection_range = 30000.0
+detection_range = 5000.0
 attack_range = 1000.0
 slash_scene = ExtResource("3_ywiqp")
 attack_windup = 3.0

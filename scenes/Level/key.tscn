@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5wlvevj5harc"]
+
+[ext_resource type="Script" uid="uid://cmv3v8trhhvdt" path="res://scripts/level/key.gd" id="1_pyagd"]
+[ext_resource type="Texture2D" uid="uid://tdm63k0swex4" path="res://assets/circle.png" id="2_frdo5"]
+
+[sub_resource type="Animation" id="Animation_frdo5"]
+resource_name = "Anim"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 1, 1, 1), Color(0, 0, 1, 1), Color(0, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_0d21a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0d21a"]
+_data = {
+&"Anim": SubResource("Animation_frdo5"),
+&"RESET": SubResource("Animation_0d21a")
+}
+
+[node name="Key" type="Area2D"]
+script = ExtResource("1_pyagd")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+self_modulate = Color(0, 1, 1, 1)
+texture = ExtResource("2_frdo5")
+
+[node name="Collision" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-15, -270, -15, -268.9, -36.200012, -267, -41.200012, -267, -91.100006, -255, -92.8, -255, -97, -250.8, -123.399994, -240, -124.600006, -240, -147.5, -226, -148.7, -226, -178.7, -200, -180.9, -200, -208.9, -170, -210.1, -170, -222, -152.6, -222, -151.3, -224.5, -150, -226.3, -150, -227.4, -147.5, -226, -146.2, -226, -145.5, -246.1, -110, -247.5, -110, -260.4, -70, -261.3, -70, -262.4, -67.5, -260.1, -65.2, -264.5, -50, -265.9, -50, -266.9, -36, -267.8, -36, -270, -14.100006, -270, 7.100006, -267, 35.200012, -267, 41.200012, -256, 85, -256, 87.399994, -248, 107.399994, -248, 108.5, -222, 155.6, -222, 157.1, -215.6, 161, -214.9, 161, -196, 183.70001, -196, 185.9, -158, 219.79999, -158, 221.29999, -155.5, 222.40002, -154.2, 221, -152.6, 221, -129, 238, -129, 240.59998, -122.899994, 239, -114, 244.90002, -114, 246.29999, -111.5, 247.40002, -110.2, 246, -108.3, 246, -84, 256.2, -84, 257.59998, -63, 262.5, -63, 263.8, -12.100006, 270, 12.100006, 270, 55.299988, 264, 60.799988, 264, 64, 260.8, 84.399994, 256, 87.399994, 256, 111.399994, 245, 114.600006, 245, 151, 223.09998, 155.29999, 222, 157.1, 222, 161.70001, 215, 164.79999, 215, 195.79999, 185, 196.9, 185, 219.90002, 158, 221.20001, 158, 246.20001, 110, 247.40002, 110, 252.40002, 95, 253.5, 95, 262.5, 62, 263.8, 62, 268.8, 20, 270, 20, 270, -21.200012, 264, -59.300003, 264, -60.300003, 255.40002, -85, 255, -92.8, 251.79999, -96, 250.5, -96, 248, -106, 248, -108.5, 234, -132.5, 234, -135.6, 208, -171.7, 208, -172.9, 166, -212.9, 166, -215, 160.6, -215, 137, -232.1, 137, -233.3, 110, -246.3, 110, -247.5, 61, -262.5, 61, -263.8, 23, -268.8, 23, -270)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_0d21a")
+}
+autoplay = "Anim"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -90,10 +90,16 @@ anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 14.0
-offset_top = -163.0
+offset_top = -229.0
 offset_right = 142.0
-offset_bottom = 229.0
+offset_bottom = 295.0
 grow_vertical = 2
+
+[node name="Dash" type="TextureProgressBar" parent="PowerUpIcon"]
+layout_mode = 2
+value = 37.0
+fill_mode = 4
+texture_progress = ExtResource("1_nq88q")
 
 [node name="RevolvingFlames" type="TextureProgressBar" parent="PowerUpIcon"]
 layout_mode = 2
