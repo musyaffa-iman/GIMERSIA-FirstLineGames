@@ -29,6 +29,7 @@ signal update_health(current_health, max_health)
 
 @onready var invulnerability_timer: Timer = $InvulnerabilityTimer
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var fire_animation: AnimatedSprite2D = $FireAnimation
 @onready var run_timer: Timer = $RunTimer
 @onready var sfx_hit: AudioStreamPlayer2D = $hit
 @onready var sfx_snore1: AudioStreamPlayer2D = $snore1
@@ -255,7 +256,6 @@ func die():
 	velocity = Vector2.ZERO
 	is_dead = true
 	print("Player has died.")
-<<<<<<< Updated upstream
 	# Play a one-shot ambient SFX (ambients3) at the player's location.
 	# Add the player as a sibling so the sound continues after the player node is freed.
 	var stream = ResourceLoader.load("res://assets/audio/sfx/ambients3.wav")
@@ -274,10 +274,6 @@ func die():
 		ap.connect("finished", Callable(ap, "queue_free"))
 
 	queue_free()
-=======
-	if get_parent().has_method("resets") :
-		get_parent().resets()
->>>>>>> Stashed changes
 	#play_animation_if_not_playing("death")
 
 func play_animation_if_not_playing(anim_name: String):
@@ -357,11 +353,20 @@ func start_lifetime_timer(duration: float):
 #endregion
 
 #region revolving flame ability
-func add_area_damage(radius: float, damage: int):
+func add_area_damage(radius: float, duration: float):
+	# Damage all enemies in radius over duration
+	play_revolving_flame_animation(duration)
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	for enemy in enemies:
 		if global_position.distance_to(enemy.global_position) <= radius:
-			enemy.take_damage(damage, (enemy.global_position - global_position).normalized(), melee_knockback_force)
+			enemy.take_damage(MELEE_DAMAGE, (enemy.global_position - global_position).normalized(), melee_knockback_force)
+
+func play_revolving_flame_animation(duration: float):
+	fire_animation.visible = true
+	fire_animation.play("revolving_flame")
+	await get_tree().create_timer(duration).timeout
+	fire_animation.stop()
+	fire_animation.visible = false
 #endregion
 
 #region rotating shell ability
