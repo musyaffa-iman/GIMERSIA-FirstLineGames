@@ -30,6 +30,8 @@ var dash_ready: bool = true
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown_timer: Timer = $DashCooldownTimer
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var sfx_walk: AudioStreamPlayer2D = $walk
+@onready var sfx_shoot: AudioStreamPlayer2D = $shoot
 
 # State machine variables
 var can_shoot: bool = true
@@ -67,6 +69,15 @@ func enemy_behavior(delta: float) -> void:
 
 	# Apply movement when not dashing
 	velocity = move_dir * move_speed
+
+	# Walk SFX: play when moving and not dashing/resting
+	if sfx_walk:
+		if velocity.length() > 1 and not is_dashing and not is_resting:
+			if not sfx_walk.playing:
+				sfx_walk.play()
+		else:
+			if sfx_walk.playing:
+				sfx_walk.stop()
 
 	# Handle dash behavior (only dashes when player gets close)
 	dash_behavior(delta)
@@ -151,6 +162,10 @@ func shoot_arrow():
 
 	if debug_logs:
 		print("Skeleton: shot arrow at ", player.global_position, " from ", arrow.global_position)
+
+	# Play shooting SFX
+	if sfx_shoot:
+		sfx_shoot.play()
 
 func has_line_of_sight_to_player() -> bool:
 	# Raycast from skeleton to player to detect walls/obstacles.
