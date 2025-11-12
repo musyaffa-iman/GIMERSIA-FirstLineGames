@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://0vq5s3xjx0s1"]
+[gd_scene load_steps=57 format=3 uid="uid://0vq5s3xjx0s1"]
 
 [ext_resource type="Script" uid="uid://q2ptla7rsxjf" path="res://scripts/core/player.gd" id="1_g2els"]
 [ext_resource type="Script" uid="uid://crso1hkaafsq7" path="res://scripts/ability/base_ability.gd" id="2_dqkch"]
@@ -50,6 +50,7 @@
 [ext_resource type="Texture2D" uid="uid://cicljk3822gsn" path="res://assets/horse/southwest_6.png" id="35_dpsa6"]
 [ext_resource type="Texture2D" uid="uid://u50yx038pjrb" path="res://assets/horse/southwest_7.png" id="36_7k2fe"]
 [ext_resource type="Texture2D" uid="uid://lskj8eyobp68" path="res://assets/horse/southeast_7.png" id="36_bly60"]
+[ext_resource type="AudioStream" uid="uid://hcsaj0a13fvc" path="res://assets/audio/sfx/ambients3.wav" id="51_ntscv"]
 
 [sub_resource type="Resource" id="Resource_qlg0r"]
 script = ExtResource("3_dqkch")
@@ -315,6 +316,9 @@ stream = ExtResource("13_paeg5")
 [node name="whine2" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("14_5n7gj")
+
+[node name="dead" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("51_ntscv")
 
 [connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]
 [connection signal="timeout" from="RunTimer" to="." method="_on_run_timer_timeout"]

@@ -255,6 +255,23 @@ func die():
 	is_dead = true
 	velocity = Vector2.ZERO
 	print("Player has died.")
+	# Play a one-shot ambient SFX (ambients3) at the player's location.
+	# Add the player as a sibling so the sound continues after the player node is freed.
+	var stream = ResourceLoader.load("res://assets/audio/sfx/ambients3.wav")
+	if stream:
+		var ap := AudioStreamPlayer2D.new()
+		ap.stream = stream
+		# place it in the same parent as the player so it does not get freed with the player
+		if is_instance_valid(get_parent()):
+			get_parent().add_child(ap)
+		else:
+			get_tree().get_root().add_child(ap)
+		ap.global_position = global_position
+		ap.play()
+		# free the player-created audio node when it finishes playing
+		# AudioStreamPlayer2D emits "finished" when the stream ends
+		ap.connect("finished", Callable(ap, "queue_free"))
+
 	queue_free()
 	#play_animation_if_not_playing("death")
 

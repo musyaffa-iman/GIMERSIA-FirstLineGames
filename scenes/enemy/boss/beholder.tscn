@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d04qpfxwvxlx"]
+[gd_scene load_steps=16 format=3 uid="uid://d04qpfxwvxlx"]
 
 [ext_resource type="PackedScene" uid="uid://f55s8lwq7h1j" path="res://scenes/enemy/boss/base_boss.tscn" id="1_a1wow"]
 [ext_resource type="Script" uid="uid://cu54kkcrdnc7w" path="res://scripts/boss/beholder/beholder.gd" id="2_beholder"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bcnpyl8t252dq" path="res://scripts/audio/soundEffect.gd" id="6_13sxn"]
 [ext_resource type="AudioStream" uid="uid://bd1848ykhqurh" path="res://assets/audio/sfx/behold_laser1.wav" id="7_5j44w"]
 [ext_resource type="AudioStream" uid="uid://wrjhnmvqlupq" path="res://assets/audio/sfx/behold_thunder1.wav" id="8_goitn"]
+[ext_resource type="AudioStream" uid="uid://o7miwd7uycim" path="res://assets/audio/song/song_boss.mp3" id="9_goitn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5ikva"]
 size = Vector2(1000, 1000)
@@ -58,3 +59,7 @@ sprite_frames = SubResource("SpriteFrames_va5mv")
 
 [node name="PolyphonicAudioPlayer" parent="." index="3" instance=ExtResource("4_5ikva")]
 audio_library = SubResource("Resource_5j44w")
+
+[node name="bossMusic" type="AudioStreamPlayer2D" parent="." index="4"]
+stream = ExtResource("9_goitn")
+autoplay = true

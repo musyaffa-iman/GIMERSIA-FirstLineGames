@@ -6,6 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_8bf4a"]
 script = ExtResource("2_ex4x5")
+sound_effects = Array[ExtResource("3_lcwcw")]([null])
 metadata/_custom_type_script = "uid://mg3clxcy0rhq"
 
 [node name="PolyphonicAudioPlayer" type="AudioStreamPlayer2D"]

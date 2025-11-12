@@ -1,7 +1,34 @@
-[gd_scene load_steps=3 format=3 uid="uid://c64n46a1mo78e"]
+[gd_scene load_steps=14 format=3 uid="uid://c64n46a1mo78e"]
 
 [ext_resource type="Script" uid="uid://uqlcxs4ni425" path="res://scripts/core/mainmenu.gd" id="1_0ykhv"]
 [ext_resource type="PackedScene" uid="uid://ciebr8eu82h4m" path="res://scenes/UI/BaseButton.tscn" id="1_yqorp"]
+[ext_resource type="AudioStream" uid="uid://wtypa08mf6l0" path="res://assets/audio/song/song_menu.mp3" id="3_gto4g"]
+[ext_resource type="PackedScene" uid="uid://cbnkhmycyihnf" path="res://scenes/polyphonic_audio_player.tscn" id="4_7vvmf"]
+[ext_resource type="Script" uid="uid://mg3clxcy0rhq" path="res://scripts/audio/AudioLibrary.gd" id="5_36hce"]
+[ext_resource type="Script" uid="uid://bcnpyl8t252dq" path="res://scripts/audio/soundEffect.gd" id="6_n2ugg"]
+[ext_resource type="AudioStream" uid="uid://1mqo7tpeq515" path="res://assets/audio/sfx/ui_click1.wav" id="7_sgmvx"]
+[ext_resource type="AudioStream" uid="uid://cjxmd11twoa41" path="res://assets/audio/sfx/ui_play1.wav" id="8_dsrf1"]
+[ext_resource type="AudioStream" uid="uid://yobr7tfwhnih" path="res://assets/audio/sfx/ui_hover1.wav" id="9_5xsof"]
+
+[sub_resource type="Resource" id="Resource_cxumm"]
+script = ExtResource("6_n2ugg")
+stream = ExtResource("7_sgmvx")
+metadata/_custom_type_script = "uid://bcnpyl8t252dq"
+
+[sub_resource type="Resource" id="Resource_5smjv"]
+script = ExtResource("6_n2ugg")
+stream = ExtResource("8_dsrf1")
+metadata/_custom_type_script = "uid://bcnpyl8t252dq"
+
+[sub_resource type="Resource" id="Resource_pkqc8"]
+script = ExtResource("6_n2ugg")
+stream = ExtResource("9_5xsof")
+metadata/_custom_type_script = "uid://bcnpyl8t252dq"
+
+[sub_resource type="Resource" id="Resource_6etek"]
+script = ExtResource("5_36hce")
+sound_effects = Array[ExtResource("6_n2ugg")]([SubResource("Resource_cxumm"), SubResource("Resource_5smjv"), SubResource("Resource_pkqc8")])
+metadata/_custom_type_script = "uid://mg3clxcy0rhq"
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -59,3 +86,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 metadata/_edit_lock_ = true
+
+[node name="menuMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_gto4g")
+autoplay = true
+
+[node name="PolyphonicAudioPlayer" parent="." instance=ExtResource("4_7vvmf")]
+audio_library = SubResource("Resource_6etek")

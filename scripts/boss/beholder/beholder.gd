@@ -81,6 +81,7 @@ var is_transformed: bool = false
 var anchor_position: Vector2 = Vector2.ZERO
 
 @onready var polyphonic_audio_player := $PolyphonicAudioPlayer if has_node("PolyphonicAudioPlayer") else null
+@onready var boss_music: AudioStreamPlayer2D = $bossMusic if has_node("bossMusic") else null
 
 func _play_sfx(tag: String) -> void:
 	if not tag or tag == "":
@@ -99,6 +100,13 @@ func _ready() -> void:
 	
 	# Ensure this node is in the common enemy group
 	add_to_group("enemy")
+
+	# Play boss music (if an AudioStreamPlayer2D named 'bossMusic' is present)
+	if boss_music:
+		# To loop the music, enable "Loop" on the assigned AudioStream resource in the Inspector
+		# (AudioStreamPlayer2D itself does not expose a top-level `loop` property).
+		if not boss_music.playing:
+			boss_music.play()
 	
 	# Store starting anchor position
 	anchor_position = global_position
@@ -521,4 +529,7 @@ func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_
 
 func die() -> void:
 	print("Beholder defeated!")
+	# Stop boss music if playing
+	if boss_music and boss_music.playing:
+		boss_music.stop()
 	super.die()

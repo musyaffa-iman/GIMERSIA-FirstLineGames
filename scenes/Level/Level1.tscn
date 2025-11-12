@@ -1,21 +1,18 @@
-[gd_scene load_steps=24 format=4 uid="uid://cl314xdisqnqc"]
+[gd_scene load_steps=22 format=4 uid="uid://cl314xdisqnqc"]
 
 [ext_resource type="Script" uid="uid://dg7rd4vddae6" path="res://scripts/level/tutorial.gd" id="1_jxjwb"]
 [ext_resource type="Texture2D" uid="uid://c6lebdos0tx2j" path="res://assets/Tileset/breakable_wall.png" id="2_2meft"]
-[ext_resource type="Texture2D" uid="uid://ck03vhf55j6eo" path="res://assets/Tileset/brick_wall_normals.png" id="3_0xqs2"]
 [ext_resource type="Texture2D" uid="uid://dxe3m02eapq3d" path="res://assets/Tileset/brick_wall.png" id="4_ipmer"]
 [ext_resource type="Texture2D" uid="uid://b4yyl10yme1pc" path="res://assets/Tileset/floors.png" id="5_av1gt"]
-[ext_resource type="Texture2D" uid="uid://ibysvhpadcp3" path="res://assets/Tileset/floors_normals.png" id="6_r7dij"]
 [ext_resource type="Texture2D" uid="uid://dh54hl3o7i387" path="res://assets/Tileset/smooth_wall_1.png" id="7_2ouud"]
-[ext_resource type="Texture2D" uid="uid://dcfh5kockgof7" path="res://assets/Tileset/smooth_wall_1_normals.png" id="8_i2gr7"]
+[ext_resource type="AudioStream" uid="uid://cgccbbdvapoub" path="res://assets/audio/sfx/ambients1.wav" id="9_rsq5u"]
 [ext_resource type="Texture2D" uid="uid://bfl8k23i0vw85" path="res://assets/Tileset/smooth_wall_2.png" id="9_t46sy"]
-[ext_resource type="Texture2D" uid="uid://dldovrcb45ot" path="res://assets/Tileset/smooth_wall_2_normals.png" id="10_thv4y"]
+[ext_resource type="AudioStream" uid="uid://cvk1wpujlxej1" path="res://assets/audio/sfx/ambients2.wav" id="10_a7ub4"]
 [ext_resource type="Script" uid="uid://ojwceli5jatt" path="res://scripts/level/walls.gd" id="11_u4kti"]
 [ext_resource type="PackedScene" uid="uid://0vq5s3xjx0s1" path="res://scenes/core/player.tscn" id="12_0ybwg"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_wl8cv"]
 diffuse_texture = ExtResource("2_2meft")
-normal_texture = ExtResource("3_0xqs2")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_calcg"]
 texture = SubResource("CanvasTexture_wl8cv")
@@ -25,7 +22,6 @@ texture_region_size = Vector2i(1024, 2560)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_npjuv"]
 diffuse_texture = ExtResource("4_ipmer")
-normal_texture = ExtResource("3_0xqs2")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lyiqi"]
 texture = SubResource("CanvasTexture_npjuv")
@@ -36,7 +32,6 @@ texture_region_size = Vector2i(1024, 2560)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_v5f6i"]
 diffuse_texture = ExtResource("5_av1gt")
-normal_texture = ExtResource("6_r7dij")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l206y"]
 texture = SubResource("CanvasTexture_v5f6i")
@@ -54,7 +49,6 @@ texture_region_size = Vector2i(1024, 2048)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_jw24r"]
 diffuse_texture = ExtResource("7_2ouud")
-normal_texture = ExtResource("8_i2gr7")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ei5ly"]
 texture = SubResource("CanvasTexture_jw24r")
@@ -64,7 +58,6 @@ texture_region_size = Vector2i(1024, 2560)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_l4yix"]
 diffuse_texture = ExtResource("9_t46sy")
-normal_texture = ExtResource("10_thv4y")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m6ekv"]
 texture = SubResource("CanvasTexture_l4yix")
@@ -85,6 +78,9 @@ sources/4 = SubResource("TileSetAtlasSource_m6ekv")
 
 [node name="Tutorial" type="Node2D"]
 script = ExtResource("1_jxjwb")
+detection_radius = null
+xray_alpha = null
+fade_speed = null
 
 [node name="Ground" type="TileMapLayer" parent="."]
 y_sort_enabled = true
@@ -106,3 +102,9 @@ scale = Vector2(16, 16)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.1, 0.1)
+
+[node name="bgmNormal" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_rsq5u")
+
+[node name="bgmLowHealth" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_a7ub4")

@@ -3,8 +3,10 @@ extends Node
 ## Variable Node
 @onready var player: CharacterBody2D = $Player
 @onready var walls_layer: TileMapLayer = $Walls
-@onready var spawnpoints = $Spawnpoint
+onready var spawnpoints = $Spawnpoint
 @onready var times = $GUI/Timer
+@onready var bgm_normal: AudioStreamPlayer2D = $bgmNormal
+@onready var bgm_low: AudioStreamPlayer2D = $bgmLowHealth
 var zombiescene = preload("res://scenes/enemy/zombie_grunt.tscn")
 var magescene = preload("res://scenes/enemy/mage.tscn")
 var skeletonscene = preload("res://scenes/enemy/skeleton_enemy.tscn")
@@ -24,12 +26,28 @@ var keys = false
 
 var is_occluded: bool = false
 var active_tween: Tween
+var _low_health_active: bool = false
+@export var low_health_threshold_percent: float = 0.30
+var _ambient_tween: Tween
 
 func _ready() -> void:
 	time_left = 60
 	for i in range(spawnpoints.get_child_count()) :
 		enemylist.push_front(randi_range(0,2))
 	spawnmonster()
+
+	# Ambient music setup: ensure both streams are playing so we can cross-fade
+	if is_instance_valid(bgm_normal):
+		bgm_normal.volume_db = 0.0
+		bgm_normal.play()
+	if is_instance_valid(bgm_low):
+		# start muted
+		bgm_low.volume_db = -80.0
+		bgm_low.play()
+
+	# Connect to player's health updates to trigger ambient changes
+	if is_instance_valid(player) and player.has_signal("update_health"):
+		player.connect("update_health", callable(self, "_on_player_health_updated"))
 
 func spawnmonster():
 	for i in range(spawnpoints.get_child_count() - 1) :
@@ -85,6 +103,33 @@ func update_wall_alpha():
 	active_tween = create_tween()
 	active_tween.set_trans(Tween.TRANS_SINE) # Transisi yang mulus
 	active_tween.tween_property(walls_layer, "modulate:a", target_alpha, fade_speed)
+
+
+func _on_player_health_updated(current: int, max: int) -> void:
+	# current and max from Player signal; compute percentage
+	if max == 0:
+		return
+	var perc := float(current) / float(max)
+	if perc <= low_health_threshold_percent and not _low_health_active:
+		_set_low_health_state(true)
+	elif perc > low_health_threshold_percent and _low_health_active:
+		_set_low_health_state(false)
+
+
+func _set_low_health_state(enabled: bool) -> void:
+	# Cross-fade: when enabled == true, fade bgm_normal down and bgm_low up
+	_low_health_active = enabled
+	if _ambient_tween and _ambient_tween.is_valid():
+		_ambient_tween.kill()
+	_ambient_tween = create_tween()
+	_ambient_tween.set_trans(Tween.TRANS_SINE)
+	_ambient_tween.set_ease(Tween.EASE_IN_OUT)
+	if is_instance_valid(bgm_normal):
+		var target_normal_db = -80.0 if enabled else 0.0
+		_ambient_tween.tween_property(bgm_normal, "volume_db", target_normal_db, fade_speed)
+	if is_instance_valid(bgm_low):
+		var target_low_db = 0.0 if enabled else -80.0
+		_ambient_tween.tween_property(bgm_low, "volume_db", target_low_db, fade_speed)
 
 
 func _on_next_level_body_entered(body: Node2D) -> void:
