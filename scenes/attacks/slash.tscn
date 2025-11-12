@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://5oihy2etq5fr"]
+
+[ext_resource type="Script" uid="uid://b5m6txuujhm1y" path="res://scripts/attacks/slash_attack.gd" id="1_4f4bq"]
+[ext_resource type="Texture2D" uid="uid://ecx65y7g831e" path="res://Sprites/Projectile/slash.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h5x2m"]
+size = Vector2(260, 419)
+
+[node name="slash" type="Area2D"]
+script = ExtResource("1_4f4bq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(33.987503, 58.987495)
+texture = ExtResource("2_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(39, 56.5)
+shape = SubResource("RectangleShape2D_h5x2m")

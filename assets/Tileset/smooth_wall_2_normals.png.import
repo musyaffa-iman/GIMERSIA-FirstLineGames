@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://dldovrcb45ot"
+path="res://.godot/imported/smooth_wall_2_normals.png-4ff972323d53a976636b4bda77cb6214.image"
+
+[deps]
+
+source_file="res://assets/Tileset/smooth_wall_2_normals.png"
+dest_files=["res://.godot/imported/smooth_wall_2_normals.png-4ff972323d53a976636b4bda77cb6214.image"]
+
+[params]
+

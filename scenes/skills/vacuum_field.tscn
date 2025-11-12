@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://drseddrbs22i1"]
+
+[ext_resource type="Script" uid="uid://cfwpic8iu553t" path="res://scripts/ability/ability_object/vacuum_field.gd" id="1_dkcpl"]
+[ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://icon.svg" id="1_yodmt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dkcpl"]
+radius = 80.024994
+
+[node name="VacuumField" type="Area2D"]
+script = ExtResource("1_dkcpl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dkcpl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_yodmt")

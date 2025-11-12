@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://ibysvhpadcp3"
+path="res://.godot/imported/floors_normals.png-51b81b3bcbcaa53b2c0d787d15f7594d.image"
+
+[deps]
+
+source_file="res://assets/Tileset/floors_normals.png"
+dest_files=["res://.godot/imported/floors_normals.png-51b81b3bcbcaa53b2c0d787d15f7594d.image"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://ck03vhf55j6eo"
+path="res://.godot/imported/brick_wall_normals.png-5f2917d787a791711a6e6c079093649c.image"
+
+[deps]
+
+source_file="res://assets/Tileset/brick_wall_normals.png"
+dest_files=["res://.godot/imported/brick_wall_normals.png-5f2917d787a791711a6e6c079093649c.image"]
+
+[params]
+
