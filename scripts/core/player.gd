@@ -8,6 +8,7 @@ const DASH_DURATION := 0.2
 const DASH_COOLDOWN := 1.2
 const MELEE_DAMAGE := 1
 const KNOCKBACK_FORCE := 300.0
+const SNORE_COOLDOWN := 4.0
 
 # EXPORTS
 @export_group("Properties")
@@ -29,6 +30,9 @@ signal update_health(current_health, max_health)
 @onready var invulnerability_timer: Timer = $InvulnerabilityTimer
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var run_timer: Timer = $RunTimer
+@onready var sfx_hit: AudioStreamPlayer2D = $hit
+@onready var sfx_snore1: AudioStreamPlayer2D = $snore1
+@onready var sfx_walk: AudioStreamPlayer2D = $walk
 
 # PLAYER STATE
 var current_health: int
@@ -40,6 +44,7 @@ var is_dead: bool = false
 # TIMERS
 var dash_timer := 0.0
 var dash_cooldown_timer := 0.0
+var snore_cooldown_timer := 0.0
 
 var input : Vector2
 var facing_direction : Vector2 = Vector2.RIGHT
@@ -55,6 +60,8 @@ func _ready():
 	_base_speed = speed
 	_base_melee_damage = melee_damage
 	run_timer.wait_time = run_threshold_time
+
+	# (Note) We play the hit SFX just before pausing the tree in take_damage()
 
 
 func _process(delta):
@@ -112,6 +119,15 @@ func handle_movement_and_animation():
 		else:
 			play_animation_if_not_playing("idle")
 
+	# Walk SFX: start/stop depending on movement and states
+	if sfx_walk:
+		if input != Vector2.ZERO and not is_dashing and not is_hurt and not is_dead:
+			if not sfx_walk.playing:
+				sfx_walk.play()
+		else:
+			if sfx_walk.playing:
+				sfx_walk.stop()
+
 	if is_dashing:
 		velocity = input * DASH_SPEED
 	else:
@@ -122,6 +138,16 @@ func handle_movement_and_animation():
 func update_timers(delta):
 	if dash_cooldown_timer > 0.0:
 		dash_cooldown_timer -= delta
+
+	# Snore cooldown timer decrement
+	if snore_cooldown_timer > 0.0:
+		snore_cooldown_timer -= delta
+
+	# Play snore when idle, not hurt/dead, and cooldown elapsed
+	if sfx_snore1 and input == Vector2.ZERO and not is_hurt and not is_dead and snore_cooldown_timer <= 0.0:
+		if not sfx_snore1.playing:
+			sfx_snore1.play()
+			snore_cooldown_timer = SNORE_COOLDOWN
 
 func check_enemy_collision():
 	if self.velocity.length() <= 0.1:
@@ -146,6 +172,12 @@ func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_
 	
 	stop_running()
 
+	# mark as hurt and play hit SFX immediately
+	is_hurt = true
+	if sfx_hit:
+		sfx_hit.play()
+
+	# small freeze-frame effect
 	get_tree().paused = true
 	await get_tree().create_timer(0.05).timeout
 	get_tree().paused = false
