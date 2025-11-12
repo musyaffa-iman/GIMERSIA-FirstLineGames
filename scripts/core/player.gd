@@ -2,11 +2,11 @@ class_name Player
 extends CharacterBody2D
 
 # CONSTANTS
-const ACCELERATION = 10.0
-const DASH_SPEED := 10000.0
+const ACCELERATION = 50.0
+const DASH_SPEED := 500.0
 const DASH_DURATION := 0.2
 const DASH_COOLDOWN := 1.2
-
+const MELEE_DAMAGE := 1
 const KNOCKBACK_FORCE := 300.0
 
 # EXPORTS
@@ -77,9 +77,9 @@ func handle_input():
 	
 	# Handle orientation
 	if input.x > 0:
-		animated_sprite.flip_h = false
-	elif input.x < 0:
 		animated_sprite.flip_h = true
+	elif input.x < 0:
+		animated_sprite.flip_h = false
 
 func get_movement_input() -> Vector2:
 	if is_hurt or is_dead:

@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://ciebr8eu82h4m"]
+
+[ext_resource type="Script" uid="uid://dxw2q3gyw3kpo" path="res://scripts/UI/basebutton.gd" id="1_2dsqw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_th31r"]
+bg_color = Color(0, 0.5579879, 0.81115556, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2dsqw"]
+bg_color = Color(0.3802818, 0.7581022, 0.9999998, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 12
+shadow_color = Color(1, 1, 1, 0.6)
+shadow_size = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_th31r"]
+
+[node name="BaseButton" type="Button" groups=["Button"]]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_th31r")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2dsqw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_th31r")
+script = ExtResource("1_2dsqw")
+
+[node name="Sfx" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

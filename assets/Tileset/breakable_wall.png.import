@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ecx65y7g831e"
-path="res://.godot/imported/slash.png-9d6fc8d00c2c4b636f5f828ef443da74.ctex"
+uid="uid://c6lebdos0tx2j"
+path="res://.godot/imported/breakable_wall.png-0c9dd4265a42fa87f0a87013668b8c3f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Projectile/slash.png"
-dest_files=["res://.godot/imported/slash.png-9d6fc8d00c2c4b636f5f828ef443da74.ctex"]
+source_file="res://assets/Tileset/breakable_wall.png"
+dest_files=["res://.godot/imported/breakable_wall.png-0c9dd4265a42fa87f0a87013668b8c3f.ctex"]
 
 [params]
 

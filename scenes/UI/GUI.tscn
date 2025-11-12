@@ -1,0 +1,133 @@
+[gd_scene load_steps=6 format=3 uid="uid://dhh4k3ucue3np"]
+
+[ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://icon.svg" id="1_nq88q"]
+[ext_resource type="PackedScene" uid="uid://ciebr8eu82h4m" path="res://scenes/UI/BaseButton.tscn" id="2_c20p6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5j4t3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_nq88q")
+}],
+"loop": true,
+"name": &"Rotation",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jbthi"]
+bg_color = Color(0.6277908, 1.9131974e-06, 3.3691526e-07, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 1, 0, 1)
+border_blend = true
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+shadow_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5j4t3"]
+bg_color = Color(1, 0, 0, 1)
+
+[node name="GUI" type="CanvasLayer"]
+
+[node name="Keys" type="AnimatedSprite2D" parent="."]
+position = Vector2(75, 75)
+sprite_frames = SubResource("SpriteFrames_5j4t3")
+animation = &"Rotation"
+metadata/_edit_group_ = true
+
+[node name="Text" type="Control" parent="Keys"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -64.0
+offset_right = -64.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Count" type="Label" parent="Keys/Text"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "10X"
+metadata/_edit_use_anchors_ = true
+
+[node name="HPBar" type="ProgressBar" parent="."]
+anchors_preset = -1
+anchor_left = 0.013020833
+anchor_top = 0.9259259
+anchor_right = 0.4574653
+anchor_bottom = 0.97530866
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_jbthi")
+theme_override_styles/fill = SubResource("StyleBoxFlat_5j4t3")
+value = 12.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="PowerUpIcon" type="VBoxContainer" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 14.0
+offset_top = -163.0
+offset_right = 142.0
+offset_bottom = 229.0
+grow_vertical = 2
+
+[node name="RevolvingFlames" type="TextureProgressBar" parent="PowerUpIcon"]
+layout_mode = 2
+value = 37.0
+fill_mode = 4
+texture_progress = ExtResource("1_nq88q")
+
+[node name="EnemyFreeze" type="TextureProgressBar" parent="PowerUpIcon"]
+layout_mode = 2
+value = 37.0
+fill_mode = 4
+texture_progress = ExtResource("1_nq88q")
+
+[node name="MirrorMirror" type="TextureProgressBar" parent="PowerUpIcon"]
+layout_mode = 2
+value = 37.0
+fill_mode = 4
+texture_progress = ExtResource("1_nq88q")
+
+[node name="Timer" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -36.5
+offset_right = 36.5
+offset_bottom = 88.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 64
+text = "32"
+
+[node name="BaseButton" parent="." instance=ExtResource("2_c20p6")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -74.0
+offset_top = 9.0
+offset_right = -10.0
+offset_bottom = 73.0
+grow_horizontal = 0

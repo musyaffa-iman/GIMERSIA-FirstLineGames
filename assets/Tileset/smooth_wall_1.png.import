@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brvkoudyg5mon"
-path="res://.godot/imported/arrow.png-d93b8c35e4a8e2e24a024ec0040b97a9.ctex"
+uid="uid://dh54hl3o7i387"
+path="res://.godot/imported/smooth_wall_1.png-f8ec20be779ccec70aa8e4e8221d98d0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Projectile/arrow.png"
-dest_files=["res://.godot/imported/arrow.png-d93b8c35e4a8e2e24a024ec0040b97a9.ctex"]
+source_file="res://assets/Tileset/smooth_wall_1.png"
+dest_files=["res://.godot/imported/smooth_wall_1.png-f8ec20be779ccec70aa8e4e8221d98d0.ctex"]
 
 [params]
 

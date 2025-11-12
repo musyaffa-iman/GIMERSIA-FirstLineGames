@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="VacuumMagicAbility" load_steps=3 format=3 uid="uid://cylwwyopxtsor"]
 
 [ext_resource type="Script" uid="uid://btgssqnxvyvk" path="res://scripts/ability/vacuum_magic_ability.gd" id="1_g32e1"]
-[ext_resource type="PackedScene" uid="uid://drseddrbs22i1" path="res://scenes/vacuum_field.tscn" id="2_jvauf"]
+[ext_resource type="PackedScene" uid="uid://drseddrbs22i1" path="res://scenes/skills/vacuum_field.tscn" id="2_jvauf"]
 
 [resource]
 script = ExtResource("1_g32e1")

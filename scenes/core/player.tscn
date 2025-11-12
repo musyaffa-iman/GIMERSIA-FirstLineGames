@@ -1,11 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://0vq5s3xjx0s1"]
+[gd_scene load_steps=12 format=3 uid="uid://0vq5s3xjx0s1"]
 
-[ext_resource type="Script" uid="uid://q2ptla7rsxjf" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://q2ptla7rsxjf" path="res://scripts/core/player.gd" id="1_g2els"]
 [ext_resource type="Script" uid="uid://crso1hkaafsq7" path="res://scripts/ability/base_ability.gd" id="2_dqkch"]
 [ext_resource type="Script" uid="uid://bd6xaxxqu7mfi" path="res://scripts/ability/dash_ability.gd" id="3_dqkch"]
 [ext_resource type="Script" uid="uid://bye0tonpmqsgp" path="res://scripts/ability/enemy_freeze_ability.gd" id="4_qlg0r"]
-[ext_resource type="PackedScene" uid="uid://drrywdbhqlsmt" path="res://scenes/mirror_clone.tscn" id="5_tuyoq"]
+[ext_resource type="PackedScene" uid="uid://drrywdbhqlsmt" path="res://scenes/skills/mirror_clone.tscn" id="5_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://k58dlpma6y56" path="res://assets/horse/southwest_horse.png" id="6_tuyoq"]
+[ext_resource type="Script" uid="uid://v2x2lfyg6dm5" path="res://scripts/utils/camera_2d.gd" id="7_bkcae"]
 
 [sub_resource type="Resource" id="Resource_qlg0r"]
 script = ExtResource("3_dqkch")
@@ -35,10 +36,11 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fhbv5"]
-size = Vector2(800, 800)
+size = Vector2(502, 415)
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 2
+motion_mode = 1
 script = ExtResource("1_g2els")
 speed = 3000.0
 melee_knockback_force = 10000.0
@@ -50,6 +52,7 @@ sprite_frames = SubResource("SpriteFrames_qm0ti")
 animation = &"move"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(40, 226)
 shape = SubResource("RectangleShape2D_fhbv5")
 
 [node name="InvulnerabilityTimer" type="Timer" parent="."]
@@ -57,6 +60,12 @@ one_shot = true
 
 [node name="RunTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Camera" type="Camera2D" parent="."]
+zoom = Vector2(0.2, 0.2)
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+script = ExtResource("7_bkcae")
 
 [connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]
 [connection signal="timeout" from="RunTimer" to="." method="_on_run_timer_timeout"]
