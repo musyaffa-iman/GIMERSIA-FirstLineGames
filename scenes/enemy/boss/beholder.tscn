@@ -1,8 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://d04qpfxwvxlx"]
+[gd_scene load_steps=15 format=3 uid="uid://d04qpfxwvxlx"]
 
 [ext_resource type="PackedScene" uid="uid://f55s8lwq7h1j" path="res://scenes/enemy/boss/base_boss.tscn" id="1_a1wow"]
 [ext_resource type="Script" uid="uid://cu54kkcrdnc7w" path="res://scripts/boss/beholder/beholder.gd" id="2_beholder"]
-[ext_resource type="Texture2D" uid="uid://c0qgwa8vtkr87" path="res://assets/enemies/Monster/Beholder.png" id="3_0h3ha"]
+[ext_resource type="Texture2D" uid="uid://c0qgwa8vtkr87" path="res://assets/Monster/Beholder.png" id="3_0h3ha"]
+[ext_resource type="PackedScene" uid="uid://cbnkhmycyihnf" path="res://scenes/polyphonic_audio_player.tscn" id="4_5ikva"]
+[ext_resource type="Script" uid="uid://mg3clxcy0rhq" path="res://scripts/audio/AudioLibrary.gd" id="5_va5mv"]
+[ext_resource type="Script" uid="uid://bcnpyl8t252dq" path="res://scripts/audio/soundEffect.gd" id="6_13sxn"]
+[ext_resource type="AudioStream" uid="uid://bd1848ykhqurh" path="res://assets/audio/sfx/behold_laser1.wav" id="7_5j44w"]
+[ext_resource type="AudioStream" uid="uid://wrjhnmvqlupq" path="res://assets/audio/sfx/behold_thunder1.wav" id="8_goitn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5ikva"]
 size = Vector2(1000, 1000)
@@ -22,6 +27,23 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Resource" id="Resource_qjynp"]
+script = ExtResource("6_13sxn")
+tag = "beholderLaser"
+stream = ExtResource("7_5j44w")
+metadata/_custom_type_script = "uid://bcnpyl8t252dq"
+
+[sub_resource type="Resource" id="Resource_0wc02"]
+script = ExtResource("6_13sxn")
+tag = "beholderLightning"
+stream = ExtResource("8_goitn")
+metadata/_custom_type_script = "uid://bcnpyl8t252dq"
+
+[sub_resource type="Resource" id="Resource_5j44w"]
+script = ExtResource("5_va5mv")
+sound_effects = Array[ExtResource("6_13sxn")]([SubResource("Resource_qjynp"), SubResource("Resource_0wc02")])
+metadata/_custom_type_script = "uid://mg3clxcy0rhq"
+
 [node name="Beholder" instance=ExtResource("1_a1wow")]
 platform_on_leave = 2
 script = ExtResource("2_beholder")
@@ -33,3 +55,6 @@ shape = SubResource("RectangleShape2D_5ikva")
 
 [node name="AnimatedSprite2D" parent="." index="2"]
 sprite_frames = SubResource("SpriteFrames_va5mv")
+
+[node name="PolyphonicAudioPlayer" parent="." index="3" instance=ExtResource("4_5ikva")]
+audio_library = SubResource("Resource_5j44w")

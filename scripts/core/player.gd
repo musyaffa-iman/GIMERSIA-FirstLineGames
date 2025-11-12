@@ -81,12 +81,7 @@ func _process(delta):
 func handle_input():
 	input = get_movement_input()
 	facing_direction = input if input != Vector2.ZERO else facing_direction
-	
-	# Handle orientation
-	if input.x > 0:
-		animated_sprite.flip_h = true
-	elif input.x < 0:
-		animated_sprite.flip_h = false
+	# Note: flip handled by animation-selection logic to support 6-direction mirroring
 
 func get_movement_input() -> Vector2:
 	if is_hurt or is_dead:
@@ -112,12 +107,11 @@ func can_dash() -> bool:
 	return not is_dashing and dash_cooldown_timer <= 0.0 and input != Vector2.ZERO and not is_dead
 
 func handle_movement_and_animation():
-	# Animation logic
+	# Animation logic (select 8-direction animation based on facing_direction)
 	if not is_hurt and not is_dead:
-		if input != Vector2.ZERO:
-			play_animation_if_not_playing("move")
-		else:
-			play_animation_if_not_playing("idle")
+		var moving = input != Vector2.ZERO
+		var anim_name = _get_direction_anim_name(facing_direction, moving)
+		play_animation_if_not_playing(anim_name)
 
 	# Walk SFX: start/stop depending on movement and states
 	if sfx_walk:
@@ -134,6 +128,54 @@ func handle_movement_and_animation():
 		velocity = input * speed
 
 	move_and_slide()
+
+
+func _get_direction_anim_name(dir: Vector2, moving: bool) -> String:
+	# Mapping according to user's specification (no mirroring):
+	# 1. up = north
+	# 2. down = south
+	# 3. down+right = southEast
+	# 4. down+left = southWest
+	# 5. up+right = northEast
+	# 6. up+left = northWest
+	# 7. right = southEast
+	# 8. left = southWest
+	# Idle names use the same base with an "idle" prefix (e.g. idleNorthEast)
+
+	var eps := 0.01
+	if dir == Vector2.ZERO:
+		dir = facing_direction if facing_direction != Vector2.ZERO else Vector2.DOWN
+
+	var dx = dir.x
+	var dy = dir.y
+	var abs_dx = abs(dx)
+	var abs_dy = abs(dy)
+
+	var base := "south"
+
+	# Pure vertical
+	if abs_dx < eps and abs_dy >= eps:
+		base = "north" if dy < 0 else "south"
+	# Pure horizontal -> map right to southEast, left to southWest
+	elif abs_dy < eps and abs_dx >= eps:
+		base = "southEast" if dx > 0 else "southWest"
+	else:
+		# Diagonals
+		if dx > 0 and dy < 0:
+			base = "northEast"
+		elif dx < 0 and dy < 0:
+			base = "northWest"
+		elif dx > 0 and dy > 0:
+			base = "southEast"
+		elif dx < 0 and dy > 0:
+			base = "southWest"
+
+	if moving:
+		return base
+
+	# Idle variant: e.g. "idleNorthEast"
+	var suffix = base[0].to_upper() + base.substr(1)
+	return "idle" + suffix
 
 func update_timers(delta):
 	if dash_cooldown_timer > 0.0:
@@ -165,7 +207,7 @@ func check_enemy_collision():
 				collider.take_damage(melee_damage, direction, melee_knockback_force)
 				velocity = -direction * (melee_knockback_force)
 
-func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = KNOCKBACK_FORCE):
+func take_damage(amount: int, _from_direction: Vector2 = Vector2.ZERO, _knockback_force: float = KNOCKBACK_FORCE):
 	if not can_take_damage or is_dead:
 		return
 	can_take_damage = false
@@ -217,7 +259,7 @@ func play_animation_if_not_playing(anim_name: String):
 	if animated_sprite.animation != anim_name:
 		animated_sprite.play(anim_name)
 
-func update_run_state(delta):
+func update_run_state(_delta):
 	if input != Vector2.ZERO:
 		if not is_running:
 			if not run_timer.is_stopped():
@@ -256,7 +298,7 @@ func start_ability_cooldown(ability: BaseAbility, time: float):
 	ability.is_on_cooldown = false
 
 #region dash ability
-func start_dash(dash_distance: float=0, invincibility_duration: float=0):
+func start_dash(_dash_distance: float=0, _invincibility_duration: float=0):
 	if can_dash():
 		is_dashing = true
 		dash_timer = DASH_DURATION
@@ -307,7 +349,7 @@ func spawn_rotating_shell(duration: float, shell_scene: PackedScene):
 
 #region stunning stomp ability
 func create_stomp_effect(radius: float, damage_multiplier: float= 1.0):
-	var duration = 0.75
+	var _duration = 0.75
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	for enemy in enemies:
 		if global_position.distance_to(enemy.global_position) <= radius:

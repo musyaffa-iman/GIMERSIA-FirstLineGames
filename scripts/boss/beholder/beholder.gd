@@ -22,6 +22,17 @@ extends BossBase
 @export var lightning_orb_count: int = 5
 @export var lightning_orb_interval: float = 0.2
 
+# Sound effect tags (keys into AudioLibrary)
+@export_group("Sound Effects")
+@export var sfx_bite: String = ""
+@export var sfx_lightning_orb: String = ""
+@export var sfx_lightning_strike: String = "beholderLightning"
+@export var sfx_lightning_burst: String = ""
+@export var sfx_eye_beam: String = "beholderLaser"
+@export var sfx_transform: String = ""
+@export var sfx_hurt: String = ""
+@export var sfx_die: String = ""
+
 # Lightning Strike (Phase 1+)
 @export_group("Lightning Strike")
 @export var lightning_strike_scene: PackedScene = null
@@ -69,6 +80,16 @@ var strikes_completed: int = 0
 var is_transformed: bool = false
 var anchor_position: Vector2 = Vector2.ZERO
 
+@onready var polyphonic_audio_player := $PolyphonicAudioPlayer if has_node("PolyphonicAudioPlayer") else null
+
+func _play_sfx(tag: String) -> void:
+	if not tag or tag == "":
+		return
+	if not polyphonic_audio_player:
+		return
+	if polyphonic_audio_player.has_method("play_sound_effect_from_library"):
+		polyphonic_audio_player.play_sound_effect_from_library(tag)
+
 func _ready() -> void:
 	# Apply GDD HP before base setup
 	max_health = 100
@@ -108,7 +129,7 @@ func _ready() -> void:
 		if _a and _a is PackedScene:
 			eye_aberration_scene = _a
 
-func enemy_behavior(delta: float) -> void:
+func enemy_behavior(_delta: float) -> void:
 	if not player or not is_instance_valid(player):
 		return
 	
@@ -215,6 +236,8 @@ func perform_bite() -> void:
 	
 	# Apply damage and knockback
 	player.take_damage(final_damage, direction, bite_knockback)
+	# Play bite SFX
+	_play_sfx(sfx_bite)
 	#print("Beholder: BITE! Damage=", final_damage)
 
 func perform_lightning_orb() -> void:
@@ -227,6 +250,8 @@ func perform_lightning_orb() -> void:
 	orb_count = 0
 	orb_spawn_timer = 0.0
 	current_attack_type = "lightning_orb"
+	# Play orb-launch SFX (one-shot)
+	_play_sfx(sfx_lightning_orb)
 	#print("Beholder: Starting Lightning Orb attack")
 
 func perform_lightning_strike() -> void:
@@ -241,6 +266,8 @@ func perform_lightning_strike() -> void:
 	strike_timer = 0.0
 	strike_target_position = player.global_position
 	current_attack_type = "lightning_strike"
+	# Play telegraph/start SFX
+	_play_sfx(sfx_lightning_strike)
 	#print("Beholder: Starting Lightning Strike attack (3x)")
 	
 	# Start first telegraph
@@ -254,6 +281,9 @@ func perform_lightning_burst() -> void:
 	
 	var num_projectiles = randi_range(lightning_burst_min_projectiles, lightning_burst_max_projectiles)
 	var angle_step = TAU / num_projectiles
+
+	# Play burst SFX once at start
+	_play_sfx(sfx_lightning_burst)
 	
 	for i in range(num_projectiles):
 		var angle = i * angle_step
@@ -303,6 +333,8 @@ func perform_eye_beam() -> void:
 			beam.set_owner_enemy(self)
 		
 		get_tree().current_scene.add_child(beam)
+		# Play eye beam SFX
+		_play_sfx(sfx_eye_beam)
 	
 	#print("Beholder: Eye Beam (laser) fired!")
 
@@ -334,6 +366,9 @@ func transform_to_eye_aberration() -> void:
 		get_tree().current_scene.add_child(aberration)
 	
 	is_transformed = true
+
+	# Play transform SFX
+	_play_sfx(sfx_transform)
 
 func enter_phase_two() -> void:
 	"""Transition to Phase 2 at 50% HP"""
@@ -391,7 +426,9 @@ func update_lightning_orb_spawn(delta: float) -> void:
 				if orb.has_method("set_owner_atk"):
 					orb.set_owner_atk(float(atk))
 				
-				get_tree().current_scene.add_child(orb)
+					get_tree().current_scene.add_child(orb)
+					# Play orb SFX for each spawned orb
+					_play_sfx(sfx_lightning_orb)
 		
 		orb_count += 1
 		orb_spawn_timer = 0.0
@@ -462,6 +499,8 @@ func spawn_lightning_strike() -> void:
 			strike.set_owner_enemy(self)
 		
 		get_tree().current_scene.add_child(strike)
+		# Play strike SFX when spawned
+		_play_sfx(sfx_lightning_strike)
 		#print("Beholder: Lightning strike #", strikes_completed + 1, " spawned at ", strike_target_position)
 
 func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, knockback_force: float = 300.0) -> void:

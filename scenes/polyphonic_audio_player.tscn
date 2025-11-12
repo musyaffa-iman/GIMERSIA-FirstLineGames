@@ -1,0 +1,13 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbnkhmycyihnf"]
+
+[ext_resource type="Script" uid="uid://bpiewmlbi3fge" path="res://scripts/audio/polyphonic_audio_player.gd" id="1_eqa44"]
+[ext_resource type="Script" uid="uid://mg3clxcy0rhq" path="res://scripts/audio/AudioLibrary.gd" id="2_ex4x5"]
+[ext_resource type="Script" uid="uid://bcnpyl8t252dq" path="res://scripts/audio/soundEffect.gd" id="3_lcwcw"]
+
+[sub_resource type="Resource" id="Resource_8bf4a"]
+script = ExtResource("2_ex4x5")
+metadata/_custom_type_script = "uid://mg3clxcy0rhq"
+
+[node name="PolyphonicAudioPlayer" type="AudioStreamPlayer2D"]
+script = ExtResource("1_eqa44")
+audio_library = SubResource("Resource_8bf4a")

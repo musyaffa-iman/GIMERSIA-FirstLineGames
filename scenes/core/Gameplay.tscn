@@ -1,20 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://cbuu8aicue6gp"]
+[gd_scene load_steps=5 format=3 uid="uid://cbuu8aicue6gp"]
 
 [ext_resource type="Script" uid="uid://ct067bs7jk6md" path="res://scripts/core/game.gd" id="1_1rjx2"]
 [ext_resource type="PackedScene" uid="uid://0vq5s3xjx0s1" path="res://scenes/core/player.tscn" id="2_ii0vi"]
-[ext_resource type="Script" uid="uid://crso1hkaafsq7" path="res://scripts/ability/base_ability.gd" id="3_mu13l"]
-[ext_resource type="Resource" uid="uid://w7guvvq3ecdm" path="res://resource/ability/dash_ability.tres" id="4_87p7b"]
-[ext_resource type="Resource" uid="uid://c3ktgxg08flx8" path="res://resource/ability/enemy_freeze_ability.tres" id="5_yv0a8"]
 [ext_resource type="PackedScene" uid="uid://dhh4k3ucue3np" path="res://scenes/UI/GUI.tscn" id="6_ii0vi"]
+[ext_resource type="PackedScene" uid="uid://d04qpfxwvxlx" path="res://scenes/enemy/boss/beholder.tscn" id="7_mu13l"]
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_1rjx2")
 
-[node name="Player" parent="." groups=["player"] instance=ExtResource("2_ii0vi")]
-position = Vector2(1, 0)
-max_health = 1000
-melee_damage = 10
-melee_knockback_force = 5000.0
-abilities = Array[ExtResource("3_mu13l")]([ExtResource("4_87p7b"), ExtResource("5_yv0a8")])
+[node name="Player" parent="." instance=ExtResource("2_ii0vi")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="GUI" parent="." instance=ExtResource("6_ii0vi")]
+
+[node name="Beholder" parent="." instance=ExtResource("7_mu13l")]
