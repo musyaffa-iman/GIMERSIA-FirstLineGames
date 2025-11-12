@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://q2ptla7rsxjf" path="res://scripts/core/player.gd" id="1_g2els"]
 [ext_resource type="Script" uid="uid://crso1hkaafsq7" path="res://scripts/ability/base_ability.gd" id="2_dqkch"]
 [ext_resource type="Script" uid="uid://bd6xaxxqu7mfi" path="res://scripts/ability/dash_ability.gd" id="3_dqkch"]
-[ext_resource type="Script" uid="uid://bye0tonpmqsgp" path="res://scripts/ability/enemy_freeze_ability.gd" id="4_qlg0r"]
+[ext_resource type="Resource" uid="uid://banm3dodxbe82" path="res://resource/ability/revolving_flames_ability.tres" id="4_ah5co"]
 [ext_resource type="PackedScene" uid="uid://drrywdbhqlsmt" path="res://scenes/skills/mirror_clone.tscn" id="5_tuyoq"]
 [ext_resource type="Script" uid="uid://v2x2lfyg6dm5" path="res://scripts/utils/camera_2d.gd" id="7_bkcae"]
 [ext_resource type="Texture2D" uid="uid://djtvny2wtrtu7" path="res://assets/horse/north_1.png" id="7_smnyw"]
@@ -56,10 +56,6 @@
 [sub_resource type="Resource" id="Resource_qlg0r"]
 script = ExtResource("3_dqkch")
 metadata/_custom_type_script = "uid://bd6xaxxqu7mfi"
-
-[sub_resource type="Resource" id="Resource_tuyoq"]
-script = ExtResource("4_qlg0r")
-metadata/_custom_type_script = "uid://bye0tonpmqsgp"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pism7"]
 atlas = ExtResource("30_r38fw")
@@ -281,13 +277,18 @@ motion_mode = 1
 script = ExtResource("1_g2els")
 speed = 3000.0
 melee_knockback_force = 10000.0
-abilities = Array[ExtResource("2_dqkch")]([SubResource("Resource_qlg0r"), SubResource("Resource_tuyoq")])
+abilities = Array[ExtResource("2_dqkch")]([SubResource("Resource_qlg0r"), ExtResource("4_ah5co")])
 mirror_clone_scene = ExtResource("5_tuyoq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qm0ti")
 animation = &"idleSouthEast"
 autoplay = "idleSouthWest"
+
+[node name="FireAnimation" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_bly60")
+animation = &"revolving_flame"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-39, 111)
