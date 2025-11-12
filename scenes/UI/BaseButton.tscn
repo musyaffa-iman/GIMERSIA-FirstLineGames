@@ -11,14 +11,17 @@
 [node name="BaseButton" type="Button" groups=["Button"]]
 offset_right = 8.0
 offset_bottom = 8.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3l2ad")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_hqdfh")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_th31r")
-alignment = 0
 script = ExtResource("1_2dsqw")
 
 [node name="Sfx" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]

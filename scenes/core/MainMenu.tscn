@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://c64n46a1mo78e"]
+[gd_scene load_steps=23 format=4 uid="uid://c64n46a1mo78e"]
 
 [ext_resource type="Script" uid="uid://uqlcxs4ni425" path="res://scripts/core/mainmenu.gd" id="1_0ykhv"]
 [ext_resource type="PackedScene" uid="uid://ciebr8eu82h4m" path="res://scenes/UI/BaseButton.tscn" id="1_yqorp"]
+[ext_resource type="TileSet" uid="uid://cub84d78xeh7b" path="res://resource/tileset/Tileset.tres" id="2_dsrf1"]
 [ext_resource type="AudioStream" uid="uid://wtypa08mf6l0" path="res://assets/audio/song/song_menu.mp3" id="3_gto4g"]
 [ext_resource type="PackedScene" uid="uid://cbnkhmycyihnf" path="res://scenes/polyphonic_audio_player.tscn" id="4_7vvmf"]
 [ext_resource type="Script" uid="uid://mg3clxcy0rhq" path="res://scripts/audio/AudioLibrary.gd" id="5_36hce"]
@@ -9,7 +10,9 @@
 [ext_resource type="AudioStream" uid="uid://1mqo7tpeq515" path="res://assets/audio/sfx/ui_click1.wav" id="7_sgmvx"]
 [ext_resource type="AudioStream" uid="uid://cjxmd11twoa41" path="res://assets/audio/sfx/ui_play1.wav" id="8_dsrf1"]
 [ext_resource type="AudioStream" uid="uid://yobr7tfwhnih" path="res://assets/audio/sfx/ui_hover1.wav" id="9_5xsof"]
-[ext_resource type="FontFile" uid="uid://bm2sr4gmnwlq0" path="res://assets/Font/Quivert.ttf" id="10_n2ugg"]
+[ext_resource type="Texture2D" uid="uid://d0chqacqkqsbv" path="res://assets/horse/northwest_1.png" id="12_5xsof"]
+[ext_resource type="Texture2D" uid="uid://bfyia387egvps" path="res://assets/light.png" id="13_5xsof"]
+[ext_resource type="Texture2D" uid="uid://bgct36dl5brw7" path="res://assets/UI/Chronicorn.svg" id="13_cxumm"]
 
 [sub_resource type="Resource" id="Resource_cxumm"]
 script = ExtResource("6_n2ugg")
@@ -31,6 +34,62 @@ script = ExtResource("5_36hce")
 sound_effects = Array[ExtResource("6_n2ugg")]([SubResource("Resource_cxumm"), SubResource("Resource_5smjv"), SubResource("Resource_pkqc8")])
 metadata/_custom_type_script = "uid://mg3clxcy0rhq"
 
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5xsof"]
+width = 32
+height = 32
+seamless = true
+as_normal_map = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cxumm"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 98, 0)
+linear_accel_min = -100.0
+linear_accel_max = 99.99999
+radial_accel_min = -100.0
+radial_accel_max = 99.99999
+tangential_accel_min = -100.0
+tangential_accel_max = 99.99999
+
+[sub_resource type="Animation" id="Animation_5xsof"]
+resource_name = "Fade_out"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cxumm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5smjv"]
+_data = {
+&"Fade_out": SubResource("Animation_5xsof"),
+&"RESET": SubResource("Animation_cxumm")
+}
+
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -42,38 +101,54 @@ mouse_filter = 1
 script = ExtResource("1_0ykhv")
 metadata/_edit_lock_ = true
 
+[node name="Background_tile" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+scale = Vector2(0.2, 0.2)
+tile_map_data = PackedByteArray("AAAAAAAAAgADAAAAAAAAAAEAAgAAAAAAAAAAAAIAAgAEAAAAAAAAAAMAAgAEAAAAAAAAAAQAAgAEAAAAAAAAAAUAAgAAAAAAAAAAAAcAAgACAAAAAAAAAAgAAgABAAAAAAAAAAkAAgAEAAAAAAAAAAoAAgABAAAAAAAFAP//AgAAAAAAAAAEAP//AgABAAAAAAADAP//AgABAAAAAAACAP//AgADAAAAAAABAP//AgABAAAAAAAAAP//AgABAAAAAAAFAAEAAgABAAAAAAAFAAAAAgAEAAAAAAAEAAEAAgAAAAAAAAAEAAAAAgADAAAAAAADAAEAAgACAAAAAAADAAAAAgABAAAAAAACAAEAAgABAAAAAAACAAAAAgAEAAAAAAABAAEAAgACAAAAAAABAAAAAgABAAAAAAABAAIAAgADAAAAAAABAAMAAgABAAAAAAACAAIAAgADAAAAAAACAAMAAgABAAAAAAADAAIAAgACAAAAAAADAAMAAgAEAAAAAAAEAAIAAgABAAAAAAAEAAMAAgABAAAAAAAFAAIAAgADAAAAAAAFAAMAAgAEAAAAAAAFAAUAAgAEAAAAAAAFAAQAAgADAAAAAAAEAAUAAgADAAAAAAAEAAQAAgABAAAAAAADAAUAAgADAAAAAAADAAQAAgADAAAAAAACAAUAAgADAAAAAAACAAQAAgAAAAAAAAABAAUAAgAEAAAAAAABAAQAAgAAAAAAAAABAAYAAgAEAAAAAAABAAcAAgABAAAAAAACAAYAAgABAAAAAAACAAcAAgAEAAAAAAADAAYAAgAEAAAAAAADAAcAAgABAAAAAAAEAAYAAgABAAAAAAAEAAcAAgAEAAAAAAAFAAYAAgAEAAAAAAAFAAcAAgACAAAAAAAFAAkAAgAEAAAAAAAFAAgAAgAEAAAAAAAEAAkAAgADAAAAAAAEAAgAAgABAAAAAAADAAkAAgAAAAAAAAADAAgAAgAAAAAAAAACAAkAAgAAAAAAAAACAAgAAgABAAAAAAABAAkAAgABAAAAAAABAAgAAgADAAAAAAABAAoAAgACAAAAAAAAAAsAAgADAAAAAAACAAoAAgABAAAAAAACAAsAAgACAAAAAAADAAoAAgAAAAAAAAADAAsAAgAAAAAAAAAEAAoAAgACAAAAAAAEAAsAAgAEAAAAAAAFAAoAAgAEAAAAAAAEAAwAAgADAAAAAAADAAwAAgABAAAAAAACAAwAAgADAAAAAAABAAsAAgAAAAAAAAAFAAwAAgAEAAAAAAAFAAsAAgAAAAAAAAD//wsAAgAAAAAAAAD//wkAAgAAAAAAAAD//wcAAgAAAAAAAAD//wMAAgABAAAAAAD/////AgABAAAAAAAAAAwAAgABAAAAAAABAAwAAgADAAAAAAD//wUAAgABAAAAAAAAAAYAAgADAAAAAAD//wEAAgABAAAAAAA=")
+tile_set = ExtResource("2_dsrf1")
+metadata/_edit_lock_ = true
+
 [node name="Control_Button" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.043402776
-anchor_top = 0.5756173
-anchor_right = 0.265625
-anchor_bottom = 0.962963
-offset_top = -3.0517578e-05
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.5
+offset_top = -27.0
+offset_right = 123.5
+offset_bottom = 209.0
+grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+metadata/_edit_group_ = true
 
 [node name="Play" parent="Control_Button" instance=ExtResource("1_yqorp")]
+light_mask = 0
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
 text = "Play"
 
 [node name="Setting" parent="Control_Button" instance=ExtResource("1_yqorp")]
+light_mask = 0
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
 text = "Setting"
 
 [node name="Tutorial" parent="Control_Button" instance=ExtResource("1_yqorp")]
+light_mask = 0
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
 text = "How to play"
 
 [node name="Credits" parent="Control_Button" instance=ExtResource("1_yqorp")]
+light_mask = 0
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
 text = "Credits"
 
 [node name="Exit" parent="Control_Button" instance=ExtResource("1_yqorp")]
+light_mask = 0
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
 text = "Quit"
@@ -95,16 +170,58 @@ autoplay = true
 [node name="PolyphonicAudioPlayer" parent="." instance=ExtResource("4_7vvmf")]
 audio_library = SubResource("Resource_6etek")
 
-[node name="Title" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -481.0
-offset_top = 31.0
-offset_right = -18.0
-offset_bottom = 118.0
-grow_horizontal = 0
-theme_override_fonts/font = ExtResource("10_n2ugg")
-theme_override_font_sizes/font_size = 90
-text = "Chronicorn"
+[node name="Sprite" type="Sprite2D" parent="."]
+self_modulate = Color(0.25323758, 0.25323758, 0.25323758, 1)
+position = Vector2(1007, 481)
+scale = Vector2(0.307, 0.3)
+texture = ExtResource("12_5xsof")
+
+[node name="Light" type="PointLight2D" parent="."]
+position = Vector2(940.99994, 490)
+scale = Vector2(0.75423175, 0.6376953)
+energy = 3.0
+range_layer_max = 1
+texture = ExtResource("13_5xsof")
+texture_scale = 3.0
+height = 1024.0
+metadata/_edit_lock_ = true
+
+[node name="Dark2" type="PointLight2D" parent="."]
+position = Vector2(1191, 57)
+energy = 0.5
+blend_mode = 1
+texture = ExtResource("13_5xsof")
+texture_scale = 6.0
+height = 1024.0
+metadata/_edit_lock_ = true
+
+[node name="Dark" type="PointLight2D" parent="."]
+position = Vector2(192, 70)
+energy = 0.8
+blend_mode = 1
+texture = ExtResource("13_5xsof")
+texture_scale = 6.0
+height = 1024.0
+metadata/_edit_lock_ = true
+
+[node name="DarkEssence" type="GPUParticles2D" parent="."]
+visible = false
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(634, 408)
+texture = SubResource("NoiseTexture2D_5xsof")
+explosiveness = 0.38
+randomness = 0.25
+process_material = SubResource("ParticleProcessMaterial_cxumm")
+
+[node name="Chronicorn" type="Sprite2D" parent="."]
+light_mask = 0
+position = Vector2(576, 186)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("13_cxumm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5smjv")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

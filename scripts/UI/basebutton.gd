@@ -6,6 +6,7 @@ var active := false
 # Optional
 @export var ClickSound : AudioStream = null
 @export var HoverSound : AudioStream = null
+@export var type : String
 
 func _on_pressed() -> void:
 	var parent = get_parent_control()
@@ -26,6 +27,10 @@ func fade():
 
 
 func _on_mouse_entered() -> void:
+	self.set_self_modulate(Color("929292"))
 	if HoverSound != null :
 		sfx.set_stream(HoverSound)
 		sfx.play()
+
+func _on_mouse_exited() -> void:
+	self.set_self_modulate(Color("ffffff"))

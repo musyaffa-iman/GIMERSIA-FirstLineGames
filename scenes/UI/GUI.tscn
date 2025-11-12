@@ -104,12 +104,14 @@ scale = Vector2(0.60512805, 0.6)
 texture = ExtResource("5_mmei8")
 
 [node name="KEYA" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(1079.9999, 595)
 scale = Vector2(0.05, 0.05)
 sprite_frames = SubResource("SpriteFrames_hukw7")
 autoplay = "default"
 
 [node name="KEYB" type="AnimatedSprite2D" parent="."]
+visible = false
 self_modulate = Color(1, 0, 0, 1)
 position = Vector2(1000, 595)
 scale = Vector2(0.05, 0.05)
@@ -117,6 +119,7 @@ sprite_frames = SubResource("SpriteFrames_hukw7")
 autoplay = "default"
 
 [node name="KEYC" type="AnimatedSprite2D" parent="."]
+visible = false
 self_modulate = Color(0, 1, 0, 1)
 position = Vector2(920, 595)
 scale = Vector2(0.05, 0.05)
