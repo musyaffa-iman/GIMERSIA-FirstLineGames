@@ -23,7 +23,6 @@ func _ready() -> void:
 func enemy_behavior(delta: float) -> void:
 	if debug_logs:
 		print("Zombie: _physics_process tick; player valid?", player and is_instance_valid(player))
-
 	var to_player = player.global_position - global_position
 	var dist = to_player.length()
 

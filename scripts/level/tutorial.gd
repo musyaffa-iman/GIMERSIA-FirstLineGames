@@ -3,10 +3,10 @@ extends Node
 ## Variable Node
 @onready var player: CharacterBody2D = $Player
 @onready var walls_layer: TileMapLayer = $Walls
-onready var spawnpoints = $Spawnpoint
+@onready var spawnpoints = $Spawnpoint
 @onready var times = $GUI/Timer
-@onready var bgm_normal: AudioStreamPlayer2D = $bgmNormal
-@onready var bgm_low: AudioStreamPlayer2D = $bgmLowHealth
+@onready var bgm_normal: AudioStreamPlayer = $bgmNormal
+@onready var bgm_low: AudioStreamPlayer = $bgmLowHealth
 var zombiescene = preload("res://scenes/enemy/zombie_grunt.tscn")
 var magescene = preload("res://scenes/enemy/mage.tscn")
 var skeletonscene = preload("res://scenes/enemy/skeleton_enemy.tscn")
@@ -46,10 +46,6 @@ func _ready() -> void:
 		# start muted
 		bgm_low.volume_db = -80.0
 		bgm_low.play()
-
-	# Connect to player's health updates to trigger ambient changes
-	if is_instance_valid(player) and player.has_signal("update_health"):
-		player.connect("update_health", callable(self, "_on_player_health_updated"))
 
 func spawnmonster():
 	for i in range(spawnpoints.get_child_count() - 1) :

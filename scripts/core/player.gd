@@ -34,6 +34,7 @@ signal update_health(current_health, max_health)
 @onready var sfx_hit: AudioStreamPlayer2D = $hit
 @onready var sfx_snore1: AudioStreamPlayer2D = $snore1
 @onready var sfx_walk: AudioStreamPlayer2D = $walk
+@onready var gfx_dash := GPUParticles2D
 
 # PLAYER STATE
 var current_health: int
@@ -255,6 +256,7 @@ func reset():
 func die():
 	velocity = Vector2.ZERO
 	is_dead = true
+	get_parent().resets()
 	print("Player has died.")
 	# Play a one-shot ambient SFX (ambients3) at the player's location.
 	# Add the player as a sibling so the sound continues after the player node is freed.
@@ -272,8 +274,6 @@ func die():
 		# free the player-created audio node when it finishes playing
 		# AudioStreamPlayer2D emits "finished" when the stream ends
 		ap.connect("finished", Callable(ap, "queue_free"))
-
-	queue_free()
 	#play_animation_if_not_playing("death")
 
 func play_animation_if_not_playing(anim_name: String):
@@ -324,6 +324,7 @@ func start_dash(_dash_distance: float=0, _invincibility_duration: float=0):
 		is_dashing = true
 		dash_timer = DASH_DURATION
 		dash_cooldown_timer = DASH_COOLDOWN
+		
 
 func cleave_attack():
 	# Simple cleave attack: damage all enemies in a radius around the player
@@ -337,7 +338,7 @@ func cleave_attack():
 
 #region mirror mirror ability
 func spawn_mirror_clone(duration: float=5.0):
-	var clone = mirror_clone_scene.instantiate() as MirrorClone
+	var clone = mirror_clone_scene.instantiate()
 	clone.set_name("MirrorClone")
 	clone.set_position(global_position + 50 * facing_direction)
 	clone.set_rotation(rotation)

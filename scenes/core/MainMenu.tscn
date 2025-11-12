@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c64n46a1mo78e"]
+[gd_scene load_steps=15 format=3 uid="uid://c64n46a1mo78e"]
 
 [ext_resource type="Script" uid="uid://uqlcxs4ni425" path="res://scripts/core/mainmenu.gd" id="1_0ykhv"]
 [ext_resource type="PackedScene" uid="uid://ciebr8eu82h4m" path="res://scenes/UI/BaseButton.tscn" id="1_yqorp"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://1mqo7tpeq515" path="res://assets/audio/sfx/ui_click1.wav" id="7_sgmvx"]
 [ext_resource type="AudioStream" uid="uid://cjxmd11twoa41" path="res://assets/audio/sfx/ui_play1.wav" id="8_dsrf1"]
 [ext_resource type="AudioStream" uid="uid://yobr7tfwhnih" path="res://assets/audio/sfx/ui_hover1.wav" id="9_5xsof"]
+[ext_resource type="FontFile" uid="uid://bm2sr4gmnwlq0" path="res://assets/Font/Quivert.ttf" id="10_n2ugg"]
 
 [sub_resource type="Resource" id="Resource_cxumm"]
 script = ExtResource("6_n2ugg")
@@ -93,3 +94,17 @@ autoplay = true
 
 [node name="PolyphonicAudioPlayer" parent="." instance=ExtResource("4_7vvmf")]
 audio_library = SubResource("Resource_6etek")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -481.0
+offset_top = 31.0
+offset_right = -18.0
+offset_bottom = 118.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("10_n2ugg")
+theme_override_font_sizes/font_size = 90
+text = "Chronicorn"

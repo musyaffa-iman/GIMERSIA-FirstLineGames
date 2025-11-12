@@ -21,6 +21,10 @@ player=""
 enemy=""
 projectile=""
 
+[gui]
+
+theme/custom_font="uid://jitcq4ljvamg"
+
 [input]
 
 move_right={

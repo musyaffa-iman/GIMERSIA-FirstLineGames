@@ -6,8 +6,9 @@
 [ext_resource type="AudioStream" uid="uid://cbsxxt1dvcgml" path="res://assets/audio/sfx/skeleton_walk1.wav" id="4_h7tu1"]
 [ext_resource type="AudioStream" uid="uid://cq1ppx4w7yapa" path="res://assets/audio/sfx/skeleton_shoot1.wav" id="5_n5rsm"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_khi1u"]
-size = Vector2(527, 1026)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h7tu1"]
+radius = 244.5
+height = 744.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fuyfl"]
 atlas = ExtResource("3_khi1u")
@@ -45,8 +46,8 @@ preferred_range_max = 32000.0
 dash_speed = 5000.0
 
 [node name="CollisionShape2D" parent="." index="0"]
-position = Vector2(-42.5, -13)
-shape = SubResource("RectangleShape2D_khi1u")
+position = Vector2(-42.5, 100)
+shape = SubResource("CapsuleShape2D_h7tu1")
 
 [node name="DashTimer" type="Timer" parent="." index="2"]
 one_shot = true
