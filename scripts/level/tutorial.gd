@@ -1,7 +1,17 @@
 extends Node
 
-@onready var player: CharacterBody2D = $Gameplay/Player
+## Variable Node
+@onready var player: CharacterBody2D = $Player
 @onready var walls_layer: TileMapLayer = $Walls
+@onready var spawnpoints = $Spawnpoint
+@onready var times = $GUI/Timer
+var zombiescene = preload("res://scenes/enemy/zombie_grunt.tscn")
+var magescene = preload("res://scenes/enemy/mage.tscn")
+var skeletonscene = preload("res://scenes/enemy/skeleton_enemy.tscn")
+var enemylist = []
+var time_speed : int = 1
+var time_left : int = 60
+var keys = false
 
 ## Jarak deteksi dalam 'tile'. 
 @export var detection_radius: int = 2
@@ -14,6 +24,32 @@ extends Node
 
 var is_occluded: bool = false
 var active_tween: Tween
+
+func _ready() -> void:
+	time_left = 60
+	for i in range(spawnpoints.get_child_count()) :
+		enemylist.push_front(randi_range(0,2))
+	spawnmonster()
+
+func spawnmonster():
+	for i in range(spawnpoints.get_child_count() - 1) :
+		var spawnpos = spawnpoints.get_child(i)
+		var newMonster
+		if enemylist[i] == 0 : newMonster = zombiescene.instantiate()
+		elif enemylist[i] == 1 : newMonster = skeletonscene.instantiate()
+		else : newMonster = magescene.instantiate()
+		newMonster.position = spawnpos.get_position()
+		add_child(newMonster)
+
+func _process(delta: float) -> void:
+	times.set_text(str(time_left))
+	if time_left <= 0 :
+		time_left = 60
+		$Timer.start(1)
+		time_speed = 1
+		player.reset()
+		spawnmonster()
+		player.position = $Spawnpoint/PlayerSpawn.get_position()
 
 func _physics_process(delta):
 	if not is_instance_valid(player) or not is_instance_valid(walls_layer):
@@ -45,8 +81,24 @@ func update_wall_alpha():
 		target_alpha = xray_alpha # Transparan
 	if active_tween and active_tween.is_valid():
 		active_tween.kill()
-
 	# Buat tween baru untuk fade alpha
 	active_tween = create_tween()
 	active_tween.set_trans(Tween.TRANS_SINE) # Transisi yang mulus
 	active_tween.tween_property(walls_layer, "modulate:a", target_alpha, fade_speed)
+
+
+func _on_next_level_body_entered(body: Node2D) -> void:
+	if body.name == "Player" :
+		get_tree().change_scene_to_packed(load("res://scenes/Level/Level1.tscn"))
+
+func _on_timer_timeout() -> void:
+	time_left -= time_speed
+
+func _on_speed_up_body_entered(body: Node2D) -> void:
+	if body.name == "Player" :
+		time_speed = 3
+		$Timer.start(0.1)
+
+func _on_speed_up_body_exited(body: Node2D) -> void:
+	if body.name == "Player" :
+		time_speed = 1

@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 # CONSTANTS
 const ACCELERATION = 50.0
-const DASH_SPEED := 500.0
+const DASH_SPEED := 10000.0
 const DASH_DURATION := 0.2
 const DASH_COOLDOWN := 1.2
 const MELEE_DAMAGE := 1
@@ -247,6 +247,9 @@ func take_damage(amount: int, _from_direction: Vector2 = Vector2.ZERO, _knockbac
 	if current_health <= 0:
 		die()
 		return
+
+func reset():
+	current_health = max_health
 
 func die():
 	is_dead = true

@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhh4k3ucue3np"]
+[gd_scene load_steps=7 format=3 uid="uid://dhh4k3ucue3np"]
 
+[ext_resource type="Script" uid="uid://c3jojxe5beogx" path="res://scripts/UI/gui.gd" id="1_c20p6"]
 [ext_resource type="Texture2D" uid="uid://d0ibaocsno63n" path="res://icon.svg" id="1_nq88q"]
 [ext_resource type="PackedScene" uid="uid://ciebr8eu82h4m" path="res://scenes/UI/BaseButton.tscn" id="2_c20p6"]
 
@@ -36,6 +37,7 @@ shadow_color = Color(1, 0, 0, 1)
 bg_color = Color(1, 0, 0, 1)
 
 [node name="GUI" type="CanvasLayer"]
+script = ExtResource("1_c20p6")
 
 [node name="Keys" type="AnimatedSprite2D" parent="."]
 position = Vector2(75, 75)
