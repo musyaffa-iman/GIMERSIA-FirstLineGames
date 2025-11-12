@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cqt7xtgsmn3e"
-path="res://.godot/imported/Cult_Mage.png-83a580cf23d7b3d16bfa357f8105b653.ctex"
+path="res://.godot/imported/Cult_Mage.png-12037965116d52fbcdce1e163f8a6c57.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemies/Monster/Cult_Mage.png"
-dest_files=["res://.godot/imported/Cult_Mage.png-83a580cf23d7b3d16bfa357f8105b653.ctex"]
+source_file="res://assets/Monster/Cult_Mage.png"
+dest_files=["res://.godot/imported/Cult_Mage.png-12037965116d52fbcdce1e163f8a6c57.ctex"]
 
 [params]
 
