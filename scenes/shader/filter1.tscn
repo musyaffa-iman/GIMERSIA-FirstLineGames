@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://dc5k73whctgrb"]
+
+[ext_resource type="Shader" path="res://scripts/shader/filter1.gdshader" id="1_iow2t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6cyd6"]
+shader = ExtResource("1_iow2t")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 0.70400003344
+shader_parameter/smoothness = 0.2830000134425
+shader_parameter/intensity = 0.6930000329175
+shader_parameter/vignette_color = Vector4(0, 0, 0, 1)
+shader_parameter/noise_strength = 0.055
+shader_parameter/noise_scale = 0.98
+shader_parameter/noise_speed = 0.2
+shader_parameter/noise_color = Vector3(1, 1, 1)
+shader_parameter/scanline_strength = 0.0
+shader_parameter/scanline_count = 800.0
+shader_parameter/blur_strength = 10.14
+shader_parameter/blur_radius = 0.455
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_6cyd6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
