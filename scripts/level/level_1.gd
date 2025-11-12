@@ -8,7 +8,6 @@ var zombiescene = preload("res://scenes/enemy/zombie_grunt.tscn")
 var magescene = preload("res://scenes/enemy/mage.tscn")
 var skeletonscene = preload("res://scenes/enemy/skeleton_enemy.tscn")
 var spiderscene = preload("res://scenes/enemy/spider.tscn")
-var level1scene = preload("res://scenes/Level/Level2.tscn")
 var enemylist = []
 var enemypool = []
 var time_speed : int = 1

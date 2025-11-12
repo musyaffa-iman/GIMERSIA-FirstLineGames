@@ -43,7 +43,7 @@ func _on_play_pressed() -> void:
 	if menu_music and menu_music.playing:
 		menu_music.stop()
 	# Change to Level1 scene
-	var level_path := "res://scenes/Level/Level1.tscn"
+	var level_path := "res://scenes/Level/Tutorial.tscn"
 	if ResourceLoader.exists(level_path):
 		get_tree().change_scene_to_file(level_path)
 	else:

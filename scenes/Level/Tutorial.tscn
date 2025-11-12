@@ -167,6 +167,10 @@ polygon = PackedVector2Array(6689, 16882, 8183, 16117, 11277, 17652, 9745, 18429
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 
+[node name="bgmNormal" type="AudioStreamPlayer" parent="."]
+
+[node name="bgmLowHealth" type="AudioStreamPlayer" parent="."]
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="RoomEffect/SpeedUp" to="." method="_on_speed_up_body_entered"]
 [connection signal="body_exited" from="RoomEffect/SpeedUp" to="." method="_on_speed_up_body_exited"]

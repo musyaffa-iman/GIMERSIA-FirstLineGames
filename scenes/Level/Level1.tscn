@@ -1,23 +1,12 @@
-<<<<<<< Updated upstream
-[gd_scene load_steps=22 format=4 uid="uid://cl314xdisqnqc"]
-=======
-[gd_scene load_steps=20 format=4 uid="uid://cl314xdisqnqc"]
->>>>>>> Stashed changes
+[gd_scene load_steps=20 format=4 uid="uid://dg2k4u1p85ung"]
 
 [ext_resource type="Script" uid="uid://dgci7y5kvivnp" path="res://scripts/level/level_1.gd" id="1_s5y6n"]
 [ext_resource type="Texture2D" uid="uid://c6lebdos0tx2j" path="res://assets/Tileset/breakable_wall.png" id="2_2meft"]
 [ext_resource type="Texture2D" uid="uid://dxe3m02eapq3d" path="res://assets/Tileset/brick_wall.png" id="4_ipmer"]
 [ext_resource type="Texture2D" uid="uid://b4yyl10yme1pc" path="res://assets/Tileset/floors.png" id="5_av1gt"]
 [ext_resource type="Texture2D" uid="uid://dh54hl3o7i387" path="res://assets/Tileset/smooth_wall_1.png" id="7_2ouud"]
-<<<<<<< Updated upstream
-[ext_resource type="AudioStream" uid="uid://cgccbbdvapoub" path="res://assets/audio/sfx/ambients1.wav" id="9_rsq5u"]
-[ext_resource type="Texture2D" uid="uid://bfl8k23i0vw85" path="res://assets/Tileset/smooth_wall_2.png" id="9_t46sy"]
-[ext_resource type="AudioStream" uid="uid://cvk1wpujlxej1" path="res://assets/audio/sfx/ambients2.wav" id="10_a7ub4"]
-[ext_resource type="Script" uid="uid://ojwceli5jatt" path="res://scripts/level/walls.gd" id="11_u4kti"]
-=======
 [ext_resource type="PackedScene" uid="uid://dhh4k3ucue3np" path="res://scenes/UI/GUI.tscn" id="7_rsq5u"]
 [ext_resource type="Texture2D" uid="uid://bfl8k23i0vw85" path="res://assets/Tileset/smooth_wall_2.png" id="9_t46sy"]
->>>>>>> Stashed changes
 [ext_resource type="PackedScene" uid="uid://0vq5s3xjx0s1" path="res://scenes/core/player.tscn" id="12_0ybwg"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_wl8cv"]
@@ -85,16 +74,11 @@ sources/2 = SubResource("TileSetAtlasSource_l206y")
 sources/3 = SubResource("TileSetAtlasSource_ei5ly")
 sources/4 = SubResource("TileSetAtlasSource_m6ekv")
 
-<<<<<<< Updated upstream
-[node name="Tutorial" type="Node2D"]
-script = ExtResource("1_jxjwb")
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_s5y6n")
 detection_radius = null
 xray_alpha = null
 fade_speed = null
-=======
-[node name="Level1" type="Node2D"]
-script = ExtResource("1_s5y6n")
->>>>>>> Stashed changes
 
 [node name="Ground" type="TileMapLayer" parent="."]
 y_sort_enabled = true
@@ -114,16 +98,6 @@ navigation_visibility_mode = 2
 [node name="Player" parent="." instance=ExtResource("12_0ybwg")]
 position = Vector2(7032, -1700)
 
-<<<<<<< Updated upstream
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(0.1, 0.1)
-
-[node name="bgmNormal" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("9_rsq5u")
-
-[node name="bgmLowHealth" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("10_a7ub4")
-=======
 [node name="Spawnmarker" type="Node2D" parent="."]
 
 [node name="Roomeffect" type="Node2D" parent="."]
@@ -131,4 +105,3 @@ stream = ExtResource("10_a7ub4")
 [node name="Timer" type="Timer" parent="."]
 process_callback = 0
 autostart = true
->>>>>>> Stashed changes
