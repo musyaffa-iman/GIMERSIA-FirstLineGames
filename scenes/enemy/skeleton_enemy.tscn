@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://ck8ofg0rug4mn"]
+[gd_scene load_steps=10 format=3 uid="uid://ck8ofg0rug4mn"]
 
 [ext_resource type="PackedScene" uid="uid://d1m1ventjvf1o" path="res://scenes/enemy/base_enemy.tscn" id="1_jeyaq"]
 [ext_resource type="Script" uid="uid://c1faap32lk8yp" path="res://scripts/enemy/skeleton/Skeleton.gd" id="2_khi1u"]
-[ext_resource type="Texture2D" uid="uid://dym6nbmoopccc" path="res://assets/enemies/Monster/skeleton_shooter.png" id="3_khi1u"]
+[ext_resource type="Texture2D" uid="uid://dym6nbmoopccc" path="res://assets/Monster/skeleton_shooter.png" id="3_khi1u"]
+[ext_resource type="AudioStream" uid="uid://cbsxxt1dvcgml" path="res://assets/audio/sfx/skeleton_walk1.wav" id="4_h7tu1"]
+[ext_resource type="AudioStream" uid="uid://cq1ppx4w7yapa" path="res://assets/audio/sfx/skeleton_shoot1.wav" id="5_n5rsm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_khi1u"]
 size = Vector2(527, 1026)
@@ -62,6 +64,14 @@ one_shot = true
 sprite_frames = SubResource("SpriteFrames_h7tu1")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="walk" type="AudioStreamPlayer2D" parent="." index="7"]
+unique_name_in_owner = true
+stream = ExtResource("4_h7tu1")
+
+[node name="shoot" type="AudioStreamPlayer2D" parent="." index="8"]
+unique_name_in_owner = true
+stream = ExtResource("5_n5rsm")
 
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]
