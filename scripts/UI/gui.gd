@@ -13,14 +13,14 @@ func _process(delta: float) -> void:
 
 func update(key: int):
 	if key == 0 : 
-		if !$KEYA.get_visible():
+		if $KEYA.visible == false:
 			$KEYA.set_visible(true)
 		else : $KEYA.set_visible(false)
 	elif key == 1 : 
-		if !$KEYB.get_visible():
+		if $KEYA.visible == false:
 			$KEYB.set_visible(true)
 		else : $KEYB.set_visible(false)
 	elif  key == 2 : 
-		if !$KEYC.get_visible():
+		if $KEYA.visible == false:
 			$KEYC.set_visible(true)
 		else : $KEYC.set_visible(false)

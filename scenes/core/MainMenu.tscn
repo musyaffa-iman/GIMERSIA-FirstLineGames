@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://c64n46a1mo78e"]
+[gd_scene load_steps=21 format=4 uid="uid://c64n46a1mo78e"]
 
 [ext_resource type="Script" uid="uid://uqlcxs4ni425" path="res://scripts/core/mainmenu.gd" id="1_0ykhv"]
 [ext_resource type="PackedScene" uid="uid://ciebr8eu82h4m" path="res://scenes/UI/BaseButton.tscn" id="1_yqorp"]
@@ -33,25 +33,6 @@ metadata/_custom_type_script = "uid://bcnpyl8t252dq"
 script = ExtResource("5_36hce")
 sound_effects = Array[ExtResource("6_n2ugg")]([SubResource("Resource_cxumm"), SubResource("Resource_5smjv"), SubResource("Resource_pkqc8")])
 metadata/_custom_type_script = "uid://mg3clxcy0rhq"
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5xsof"]
-width = 32
-height = 32
-seamless = true
-as_normal_map = true
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cxumm"]
-particle_flag_align_y = true
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 1.0
-gravity = Vector3(0, 98, 0)
-linear_accel_min = -100.0
-linear_accel_max = 99.99999
-radial_accel_min = -100.0
-radial_accel_max = 99.99999
-tangential_accel_min = -100.0
-tangential_accel_max = 99.99999
 
 [sub_resource type="Animation" id="Animation_5xsof"]
 resource_name = "Fade_out"
@@ -203,15 +184,6 @@ texture = ExtResource("13_5xsof")
 texture_scale = 6.0
 height = 1024.0
 metadata/_edit_lock_ = true
-
-[node name="DarkEssence" type="GPUParticles2D" parent="."]
-visible = false
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(634, 408)
-texture = SubResource("NoiseTexture2D_5xsof")
-explosiveness = 0.38
-randomness = 0.25
-process_material = SubResource("ParticleProcessMaterial_cxumm")
 
 [node name="Chronicorn" type="Sprite2D" parent="."]
 light_mask = 0

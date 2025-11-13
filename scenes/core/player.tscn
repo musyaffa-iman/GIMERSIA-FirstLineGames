@@ -1,10 +1,6 @@
-[gd_scene load_steps=59 format=3 uid="uid://0vq5s3xjx0s1"]
+[gd_scene load_steps=53 format=3 uid="uid://0vq5s3xjx0s1"]
 
 [ext_resource type="Script" uid="uid://q2ptla7rsxjf" path="res://scripts/core/player.gd" id="1_g2els"]
-[ext_resource type="Script" uid="uid://crso1hkaafsq7" path="res://scripts/ability/base_ability.gd" id="2_dqkch"]
-[ext_resource type="Script" uid="uid://bd6xaxxqu7mfi" path="res://scripts/ability/dash_ability.gd" id="3_dqkch"]
-[ext_resource type="Script" uid="uid://bye0tonpmqsgp" path="res://scripts/ability/enemy_freeze_ability.gd" id="4_qlg0r"]
-[ext_resource type="PackedScene" uid="uid://drrywdbhqlsmt" path="res://scenes/skills/mirror_clone.tscn" id="5_tuyoq"]
 [ext_resource type="Script" uid="uid://v2x2lfyg6dm5" path="res://scripts/utils/camera_2d.gd" id="7_bkcae"]
 [ext_resource type="Texture2D" uid="uid://djtvny2wtrtu7" path="res://assets/horse/north_1.png" id="7_smnyw"]
 [ext_resource type="Texture2D" uid="uid://cdtpgfs1prhsg" path="res://assets/horse/north_2.png" id="8_1dwmi"]
@@ -52,14 +48,6 @@
 [ext_resource type="Texture2D" uid="uid://lskj8eyobp68" path="res://assets/horse/southeast_7.png" id="36_bly60"]
 [ext_resource type="AudioStream" uid="uid://hcsaj0a13fvc" path="res://assets/audio/sfx/ambients3.wav" id="51_ntscv"]
 [ext_resource type="Texture2D" uid="uid://bfyia387egvps" path="res://assets/light.png" id="52_6f5nc"]
-
-[sub_resource type="Resource" id="Resource_qlg0r"]
-script = ExtResource("3_dqkch")
-metadata/_custom_type_script = "uid://bd6xaxxqu7mfi"
-
-[sub_resource type="Resource" id="Resource_tuyoq"]
-script = ExtResource("4_qlg0r")
-metadata/_custom_type_script = "uid://bye0tonpmqsgp"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pism7"]
 atlas = ExtResource("30_r38fw")
@@ -279,10 +267,6 @@ scale_min = 0.0
 collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_g2els")
-speed = 3000.0
-melee_knockback_force = 10000.0
-abilities = Array[ExtResource("2_dqkch")]([SubResource("Resource_qlg0r"), SubResource("Resource_tuyoq")])
-mirror_clone_scene = ExtResource("5_tuyoq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qm0ti")

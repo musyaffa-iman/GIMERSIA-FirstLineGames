@@ -24,6 +24,7 @@ const SNORE_COOLDOWN := 4.0
 @export var abilities: Array[BaseAbility] = []  # Drag & drop abilities in Inspector
 @export var ability_keys := ["ability_1", "ability_2"] # Input names for abilities
 @export var mirror_clone_scene: PackedScene
+@export var walls_material: ShaderMaterial
 
 signal update_health(current_health, max_health)
 
@@ -61,14 +62,16 @@ func _ready():
 	_base_speed = speed
 	_base_melee_damage = melee_damage
 	run_timer.wait_time = run_threshold_time
-
+	if not walls_material:
+		printerr("Material 'Walls' belum di-assign di Inspector Player!")
 	# (Note) We play the hit SFX just before pausing the tree in take_damage()
 
 
 func _process(delta):
 	if is_dead:
 		return
-		
+	if walls_material:
+		walls_material.set_shader_parameter("player_world_pos", global_position)
 	handle_input()
 	handle_dash_logic(delta)
 	handle_movement_and_animation()
