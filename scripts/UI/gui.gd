@@ -3,6 +3,9 @@ extends CanvasLayer
 @onready var hpbar = $HPBar
 
 @export var player : Player
+@onready var key_a: AnimatedSprite2D = $KEYA
+@onready var key_b: AnimatedSprite2D = $KEYB
+@onready var key_c: AnimatedSprite2D = $KEYC
 
 func _ready() -> void:
 	if player != null : hpbar.max_value = player.max_health
@@ -13,14 +16,8 @@ func _process(delta: float) -> void:
 
 func update(key: int):
 	if key == 0 : 
-		if !$KEYA.get_visible():
-			$KEYA.set_visible(true)
-		else : $KEYA.set_visible(false)
+		key_a.visible = !key_a.visible
 	elif key == 1 : 
-		if !$KEYB.get_visible():
-			$KEYB.set_visible(true)
-		else : $KEYB.set_visible(false)
+		key_b.visible = !key_b.visible
 	elif  key == 2 : 
-		if !$KEYC.get_visible():
-			$KEYC.set_visible(true)
-		else : $KEYC.set_visible(false)
+		key_a.visible = !key_a.visible

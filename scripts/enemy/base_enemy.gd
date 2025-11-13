@@ -6,6 +6,7 @@ class_name Enemy
 @export var move_speed: float = 800.0
 @export var damage: int = 1
 @export var knockback_resistance: float = 0.5  # 0 = full knockback, 1 = no knockback
+@export var use_line_of_sight: bool = true  # If true, enemies can't see/target player through walls
 
 @onready var player: Node2D = null
 @onready var freeze_animation: AnimatedSprite2D = $FreezeAnimation
@@ -89,3 +90,36 @@ func freeze(duration: float) -> void:
 	await get_tree().create_timer(duration).timeout
 	set_physics_process(true)
 	freeze_animation.visible = false
+
+func has_line_of_sight_to_player() -> bool:
+	# Raycast from enemy to player to check if there are walls blocking the view
+	if not player or not is_instance_valid(player):
+		return false
+	
+	var space := get_world_2d().direct_space_state
+	var params = PhysicsRayQueryParameters2D.new()
+	params.from = global_position
+	params.to = player.global_position
+	params.exclude = [self]
+	params.collide_with_bodies = true
+	params.collide_with_areas = false
+	
+	var result = space.intersect_ray(params)
+	
+	# If nothing hit, line is clear
+	if not result or result.is_empty():
+		return true
+	
+	# If the collider is the player, line is clear
+	var collider = result.get("collider")
+	if collider == player:
+		return true
+	
+	# Something else is blocking (likely a wall)
+	return false
+
+func can_see_player() -> bool:
+	# Helper function that checks if line-of-sight is enabled and if player is visible
+	if not use_line_of_sight:
+		return true  # Line-of-sight disabled, always can "see" player
+	return has_line_of_sight_to_player()

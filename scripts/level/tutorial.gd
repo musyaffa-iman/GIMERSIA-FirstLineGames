@@ -159,21 +159,5 @@ func _on_next_level_body_entered(body: Node2D) -> void:
 func _on_timer_timeout() -> void:
 	time_left -= time_speed
 
-func _on_speed_up_body_entered(body: Node2D) -> void:
-	if body.name == "Player" :
-		if !KEYA :
-			time_speed = 13
-			$Timer.start(0.1)
-
-func _on_speed_up_body_exited(body: Node2D) -> void:
-	if body.name == "Player" :
-		time_speed = 1
-
-func _on_speed_up_2_body_entered(body: Node2D) -> void:
-	if body.name == "Player" :
-		time_speed = 7
-		$Timer.start(0.01)
-
-func _on_speed_up_2_body_exited(body: Node2D) -> void:
-	if body.name == "Player" :
-		time_speed = 1
+# Speed up functions are now handled by SpeedUpArea script
+# which can be attached to any Area2D node in any level

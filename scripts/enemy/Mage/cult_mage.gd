@@ -28,7 +28,10 @@ func enemy_behavior(delta: float) -> void:
 	# Check if player is in range
 	var distance_to_player = global_position.distance_to(player.global_position)
 	
-	if distance_to_player <= detection_range:
+	# Check if mage can see the player
+	var can_see = can_see_player()
+	
+	if distance_to_player <= detection_range and can_see:
 		# Handle attack state machine
 		if is_telegraphing:
 			# Currently showing telegraph
@@ -51,6 +54,14 @@ func enemy_behavior(delta: float) -> void:
 		else:
 			# Ready to attack - start telegraph
 			start_telegraph()
+	else:
+		# Can't see player or out of range - reset attack state
+		if is_telegraphing:
+			# Cancel telegraph if player moves behind wall
+			is_telegraphing = false
+			if telegraph_instance and is_instance_valid(telegraph_instance):
+				telegraph_instance.queue_free()
+				telegraph_instance = null
 
 func start_telegraph():
 	animated_sprite_2d.play("telegraph")

@@ -91,6 +91,9 @@ func get_movement_input() -> Vector2:
 	var movement_input = Vector2()
 	movement_input.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	movement_input.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
+	
+	if movement_input.x == 0 and movement_input.y != 0:
+		movement_input.y *= 0.3
 		
 	return movement_input.normalized()
 
@@ -113,6 +116,12 @@ func handle_movement_and_animation():
 		var moving = input != Vector2.ZERO
 		var anim_name = _get_direction_anim_name(facing_direction, moving)
 		play_animation_if_not_playing(anim_name)
+		
+		# Increase animation speed when dashing
+		if is_dashing:
+			animated_sprite.speed_scale = 2.5
+		else:
+			animated_sprite.speed_scale = 1.0
 
 	# Walk SFX: start/stop depending on movement and states
 	if sfx_walk:
@@ -219,6 +228,14 @@ func take_damage(amount: int, _from_direction: Vector2 = Vector2.ZERO, _knockbac
 	is_hurt = true
 	if sfx_hit:
 		sfx_hit.play()
+
+	# Apply knockback
+	if _from_direction != Vector2.ZERO:
+		velocity = -_from_direction.normalized() * _knockback_force
+	
+	# Return to idle animation
+	var idle_anim = _get_direction_anim_name(facing_direction, false)
+	play_animation_if_not_playing(idle_anim)
 
 	# small freeze-frame effect
 	get_tree().paused = true

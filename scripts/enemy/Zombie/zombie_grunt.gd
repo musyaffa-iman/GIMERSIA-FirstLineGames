@@ -26,7 +26,10 @@ func enemy_behavior(delta: float) -> void:
 	var to_player = player.global_position - global_position
 	var dist = to_player.length()
 
-	if dist <= detection_range:
+	# Check if zombie can see the player
+	var can_see = can_see_player()
+
+	if dist <= detection_range and can_see:
 		# chase when outside attack range
 		if dist > attack_range:
 			var dir = to_player.normalized()
@@ -44,7 +47,7 @@ func enemy_behavior(delta: float) -> void:
 					print("Zombie: in attack range (dist=", dist, ") — attacking")
 				perform_attack()
 	else:
-		# idle
+		# idle - either out of range or can't see player through walls
 		velocity = Vector2.ZERO
 	
 func perform_attack() -> void:

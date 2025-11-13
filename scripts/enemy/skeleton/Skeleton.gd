@@ -21,7 +21,6 @@ extends Enemy
 @export var dash_cooldown: float = 5.0
 
 # Optional features
-@export var use_los_check: bool = false # If true, only shoot when there's direct line-of-sight to player
 @export var invulnerable_during_dash: bool = true
 
 # Dash state
@@ -124,10 +123,8 @@ func shoot_behavior(delta: float) -> void:
 	if not is_resting:
 		if can_shoot and arrows_shot < MAX_ARROWS:
 			animated_sprite_2d.play("attack")
-			# Line-of-sight check (optional)
-			var can_fire := true
-			if use_los_check and player:
-				can_fire = has_line_of_sight_to_player()
+			# Line-of-sight check using base class method
+			var can_fire := can_see_player()
 			if can_fire:
 				shoot_arrow()
 				can_shoot = false
@@ -166,27 +163,6 @@ func shoot_arrow():
 	# Play shooting SFX
 	if sfx_shoot:
 		sfx_shoot.play()
-
-func has_line_of_sight_to_player() -> bool:
-	# Raycast from skeleton to player to detect walls/obstacles.
-	if not player:
-		return false
-	var space := get_world_2d().direct_space_state
-	var params = PhysicsRayQueryParameters2D.new()
-	params.from = global_position
-	params.to = player.global_position
-	params.exclude = [self]
-	params.collide_with_bodies = true
-	params.collide_with_areas = true
-	# Leave collision_mask default so walls and bodies are detected
-	var res = space.intersect_ray(params)
-	# If nothing hit, line is clear. If collider is the player, also clear.
-	if not res or res.empty():
-		return true
-	var collider = res.get("collider")
-	if collider == player:
-		return true
-	return false
 
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false

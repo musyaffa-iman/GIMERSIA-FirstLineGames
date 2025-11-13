@@ -38,8 +38,11 @@ func enemy_behavior(delta: float) -> void:
 	var to_player = player.global_position - global_position
 	var dist = to_player.length()
 
-	# If player is far, idle
-	if dist > detection_range:
+	# Check if spider can see the player
+	var can_see = can_see_player()
+
+	# If player is far or can't be seen, idle
+	if dist > detection_range or not can_see:
 		velocity = Vector2.ZERO
 		return
 
